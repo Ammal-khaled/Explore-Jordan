@@ -1,0 +1,122 @@
+[
+  {
+    "id": "petra",
+    "name": "Petra",
+    "city": "Wadi Musa",
+    "category": "Heritage",
+    "shortDescription": "Petra is Jordan's most famous archaeological site, known for monumental facades carved into rose-colored sandstone.",
+    "longDescription": "Enter Petra through the narrow Siq and arrive at the Treasury, one of the most recognizable landmarks in the region. The ancient Nabataean city rewards slow exploration, with tombs, temples, trails, viewpoints, and layers of Roman and local history.",
+    "image": "assets/images/Petra.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Petra+Jordan",
+    "officialLink": "https://www.visitpetra.jo/en",
+    "tags": ["UNESCO", "archaeology", "history", "hiking"]
+  },
+  {
+    "id": "wadi-rum",
+    "name": "Wadi Rum",
+    "city": "Wadi Rum Village",
+    "category": "Desert",
+    "shortDescription": "Wadi Rum is a protected desert landscape of red sand, sandstone mountains, and wide-open skies.",
+    "longDescription": "Known as the Valley of the Moon, Wadi Rum is best experienced with local Bedouin guides who understand its routes, camps, and stories. Visitors can explore by jeep, camel, or on foot, then stay overnight for sunset, stargazing, and traditional hospitality.",
+    "image": "assets/images/Wadi Rum.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Wadi+Rum+Jordan",
+    "officialLink": "https://wadirum.jo/",
+    "tags": ["desert", "bedouin", "stargazing", "adventure"]
+  },
+  {
+    "id": "dead-sea",
+    "name": "Dead Sea",
+    "city": "Dead Sea Region",
+    "category": "Nature",
+    "shortDescription": "The Dead Sea is famous for mineral-rich water, dramatic views, and effortless floating at the lowest point on Earth.",
+    "longDescription": "The Jordanian side of the Dead Sea offers resort stays, spa treatments, and striking views across the water and surrounding cliffs. It is a relaxing stop between Amman, Madaba, Wadi Mujib, and southern Jordan.",
+    "image": "assets/images/Dead sea.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Dead+Sea+Jordan",
+    "officialLink": "https://jordan.gov.jo/EN/Pages/Dead_Sea",
+    "tags": ["wellness", "nature", "floating", "spa"]
+  },
+  {
+    "id": "amman",
+    "name": "Amman",
+    "city": "Amman",
+    "category": "City",
+    "shortDescription": "Amman blends ancient ruins, busy markets, modern cafes, galleries, and a strong food culture.",
+    "longDescription": "Jordan's capital is a practical and rewarding base for a wider trip through the country. Visit the Citadel, Roman Theater, downtown souqs, local restaurants, and creative neighborhoods to see how ancient and modern Jordan meet.",
+    "image": "assets/images/Amman.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Amman+Jordan",
+    "officialLink": "https://jordan.gov.jo/EN/Pages/Amman",
+    "tags": ["capital", "food", "culture", "history"]
+  },
+  {
+    "id": "aqaba",
+    "name": "Aqaba",
+    "city": "Aqaba",
+    "category": "Coast",
+    "shortDescription": "Aqaba is Jordan's Red Sea gateway, with beaches, coral reefs, diving, and a relaxed coastal pace.",
+    "longDescription": "The city adds a warm seaside finish to desert and heritage itineraries. Travelers come for snorkeling, diving, boat trips, seafood, and easy access to Wadi Rum and southern Jordan.",
+    "image": "assets/images/Aqaba.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Aqaba+Jordan",
+    "officialLink": "https://www.visitaqaba.com.jo/EN",
+    "tags": ["red sea", "diving", "beach", "snorkeling"]
+  },
+  {
+    "id": "jerash",
+    "name": "Jerash",
+    "city": "Jerash",
+    "category": "Heritage",
+    "shortDescription": "Jerash is one of the region's best-preserved Roman cities, with colonnaded streets, plazas, temples, and theaters.",
+    "longDescription": "The archaeological site is an easy day trip from Amman and a highlight for travelers interested in classical history. Its scale and preservation make it easy to imagine the rhythm of public life in the ancient city.",
+    "image": "assets/images/Jerash.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Jerash+Archaeological+Site+Jordan",
+    "officialLink": "https://jordan.gov.jo/EN/Pages/Jerash",
+    "tags": ["roman", "archaeology", "day trip", "history"]
+  },
+  {
+    "id": "dana-biosphere-reserve",
+    "name": "Dana Biosphere Reserve",
+    "city": "Dana",
+    "category": "Nature Reserve",
+    "shortDescription": "Dana Biosphere Reserve protects rugged valleys, mountain views, wildlife habitats, and quiet village landscapes.",
+    "longDescription": "Jordan's largest nature reserve offers trails for different fitness levels, from scenic village walks to longer routes through dramatic terrain. It is a strong choice for hikers, nature lovers, and travelers who want a slower rural stay.",
+    "image": "assets/images/Dana-Biosphere.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Dana+Biosphere+Reserve+Jordan",
+    "officialLink": "https://www.rscn.org.jo/dana",
+    "tags": ["nature reserve", "hiking", "wildlife", "eco travel"]
+  },
+  {
+    "id": "madaba",
+    "name": "Madaba",
+    "city": "Madaba",
+    "category": "Heritage",
+    "shortDescription": "Madaba is known for Byzantine and Umayyad mosaics, including the famous sixth-century map of the Holy Land.",
+    "longDescription": "The city's churches, mosaic workshops, and calm streets make it a rewarding cultural stop southwest of Amman. Madaba also pairs well with Mount Nebo, the Dead Sea, and the King's Highway.",
+    "image": "assets/images/Madaba.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Madaba+Jordan",
+    "officialLink": "https://jordan.gov.jo/EN/Pages/Madaba",
+    "tags": ["mosaics", "churches", "culture", "day trip"]
+  },
+  {
+    "id": "ajloun-castle",
+    "name": "Ajloun Castle",
+    "city": "Ajloun",
+    "category": "Heritage",
+    "shortDescription": "Ajloun Castle is a 12th-century hilltop fortress overlooking forests, olive groves, and the Jordan Valley.",
+    "longDescription": "Built for defense and regional control, the castle remains one of northern Jordan's most atmospheric historic sites. Its towers, corridors, and viewpoints combine military history with some of the country's greenest scenery.",
+    "image": "assets/images/Ajloun.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Ajloun+Castle+Jordan",
+    "officialLink": "https://en.visitjordan.com/",
+    "tags": ["castle", "history", "northern jordan", "views"]
+  },
+  {
+    "id": "wadi-mujib",
+    "name": "Wadi Mujib",
+    "city": "Dead Sea Region",
+    "category": "Nature Reserve",
+    "shortDescription": "Wadi Mujib is a dramatic canyon near the Dead Sea, known for seasonal water trails and narrow sandstone cliffs.",
+    "longDescription": "The reserve is a memorable adventure stop for travelers who are comfortable with water, uneven terrain, and guided seasonal routes. Its canyon scenery, waterfalls, and proximity to the Dead Sea make it one of Jordan's most distinctive nature experiences.",
+    "image": "assets/images/Wadi Mujib.jpg",
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Wadi+Mujib+Jordan",
+    "officialLink": "https://www.rscn.org.jo",
+    "tags": ["canyoning", "nature reserve", "water trail", "adventure"]
+  }
+]
