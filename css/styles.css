@@ -820,3 +820,292 @@ section .bg-white.rounded-xl img {
   border-radius: var(--radius-standard);
   box-shadow: var(--shadow-standard);
 }
+
+/* ===== Mobile Responsiveness ===== */
+html,
+body {
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .site-nav__inner {
+    min-height: 58px;
+    padding: 0 1rem;
+  }
+
+  .site-nav__brand,
+  .mobile-sidebar__brand {
+    font-size: 1.15rem;
+  }
+
+  .site-nav__toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .mobile-sidebar {
+    width: min(300px, 88vw);
+    padding: 1rem 1.15rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-sidebar__links a {
+    padding: 1rem 0;
+    font-size: 1rem;
+  }
+
+  .hero-slider,
+  .hero-section,
+  .featured-slide {
+    min-height: calc(100vh - 58px) !important;
+  }
+
+  .hero-slider {
+    padding: 5rem 1rem 2.5rem !important;
+  }
+
+  .hero-section {
+    height: auto !important;
+    min-height: 560px !important;
+    padding: 5rem 1rem 3rem;
+  }
+
+  .hero-slider h1,
+  .hero-section h1,
+  .featured-slide h1 {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+    line-height: 1.12 !important;
+    margin-bottom: 1rem !important;
+    overflow-wrap: break-word;
+  }
+
+  .hero-slider p,
+  .hero-section p,
+  .featured-slide p {
+    font-size: clamp(1rem, 4.5vw, 1.2rem) !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .hero-section .flex.justify-center,
+  .hero-slider .max-w-3xl {
+    width: 100%;
+  }
+
+  .hero-section .flex.justify-center {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.85rem !important;
+  }
+
+  .hero-section .flex.justify-center > * {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+  }
+
+  .hero-slider a,
+  .hero-section button,
+  .featured-slide a,
+  .button-78 {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0.85rem 1.25rem !important;
+    white-space: normal;
+    text-align: center;
+  }
+
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  section:not(.hero-slider):not(.hero-section) {
+    padding-top: 2.75rem !important;
+    padding-bottom: 2.75rem !important;
+  }
+
+  section:not(.hero-slider):not(.hero-section) h2,
+  .experience-section h2,
+  main h1,
+  header h1 {
+    font-size: clamp(1.75rem, 8vw, 2.25rem) !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  section:not(.hero-slider):not(.hero-section) h2 + p,
+  .text-center > p {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .grid {
+    gap: 1.25rem !important;
+  }
+
+  .destination-card,
+  .experience-card,
+  .card-shadow {
+    width: 100%;
+  }
+
+  .card-shadow,
+  .card-hover,
+  .experience-card,
+  .destination-card > div,
+  section .bg-white.rounded-lg,
+  section .bg-white.rounded-xl {
+    border-radius: 10px !important;
+  }
+
+  .card-shadow img,
+  .card-hover img,
+  .experience-card img,
+  .destination-card img,
+  section .bg-white.rounded-lg img,
+  section .bg-white.rounded-xl img {
+    height: 190px !important;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .Top-Destinations .owl-stage {
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .Top-Destinations .item {
+    height: 320px;
+    margin: 0 0.5rem 1rem;
+  }
+
+  .Top-Destinations .item-title {
+    bottom: 5rem;
+    padding: 0 1rem;
+  }
+
+  .Top-Destinations .item-title h3 {
+    font-size: 1.3rem !important;
+  }
+
+  .Top-Destinations .item-desc {
+    padding: 1rem;
+  }
+
+  .options {
+    flex-direction: column;
+    height: auto;
+    min-width: 0;
+    overflow: visible;
+    gap: 0.85rem;
+  }
+
+  .option,
+  .option.active,
+  .option:not(.active) {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 190px;
+    margin: 0;
+    flex-grow: 0;
+    border-radius: 16px;
+    background-size: cover !important;
+  }
+
+  .option.active {
+    height: 230px;
+    border-radius: 18px;
+  }
+
+  .option:not(.active) .shadow,
+  .option.active .shadow {
+    bottom: 0;
+    box-shadow: inset 0 -120px 120px -80px rgba(0,0,0,0.72);
+  }
+
+  .option:not(.active) .label,
+  .option.active .label {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .option:not(.active) .info > div {
+    left: 0;
+    opacity: 1;
+  }
+
+  .main {
+    font-size: 1rem;
+  }
+
+  .sub {
+    font-size: 0.82rem;
+  }
+
+  #map {
+    height: 320px;
+    min-height: 320px;
+  }
+
+  .lang-switch {
+    top: 72px;
+    right: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    min-height: 520px !important;
+  }
+
+  .hero-slider h1,
+  .hero-section h1,
+  .featured-slide h1 {
+    font-size: clamp(1.75rem, 11vw, 2.45rem) !important;
+  }
+
+  .featured-slide .text-center {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .card-shadow img,
+  .card-hover img,
+  .experience-card img,
+  .destination-card img,
+  section .bg-white.rounded-lg img,
+  section .bg-white.rounded-xl img {
+    height: 175px !important;
+  }
+
+  .Top-Destinations .item {
+    height: 290px;
+  }
+
+  .option,
+  .option:not(.active) {
+    height: 170px;
+  }
+
+  .option.active {
+    height: 210px;
+  }
+
+  #map {
+    height: 280px;
+    min-height: 280px;
+  }
+}
