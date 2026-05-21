@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Discover the Magic of Jordan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Owl Carousel JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<button id="language-switcher" class="lang-switch fixed top-5 right-5 z-50 bg-yellow-400 text-gray-900 p-3 rounded-full shadow-md cursor-pointer">
+  <i class="fas fa-globe"></i>
+</button>
+<div id="lang-en">
+  <!-- Hero Section with Background Slider -->
+  <section class="hero-slider min-h-screen relative flex flex-col justify-center items-center text-white px-5 pt-24 pb-12 text-center">
+    <div class="hero-slide active" style="background-image: url('images/Background.jpg');"></div>
+    <div class="hero-slide active" style="background-image: url('images/Background1.JPG');"></div>
+    <div class="hero-slide" style="background-image: url('images/Background2.JPG');"></div>
+    <div class="hero-slide" style="background-image: url('images/Background3.JPG');"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="max-w-3xl z-10 fade-in">
+      <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Discover the Magic of Jordan</h1>
+      <p class="text-xl mb-8">Unveil Jordan: Where History Meets Adventure.</p>
+      <a href="#destinations-en" class="inline-block px-8 py-3 bg-yellow-400 text-gray-900 font-bold rounded hover:bg-yellow-300 transition">
+        <i class="fas fa-map-marker-alt mr-2"></i>Start Your Journey
+      </a>
+    </div>
+  </section>
+
+  <section class="section-gold py-10 px-5 fade-in">
+    <div class="max-w-5xl mx-auto text-white">
+      <h2 class="text-4xl font-bold mb-4">Jordan: A Cultural Tapestry</h2>
+      <p class="mb-2">Experience Jordan's rich heritage shaped by Nabataean, Roman, and Islamic cultures.</p>
+      <p class="mb-2">Jordan welcomed 5.6 million visitors in 2023.</p>
+      <p class="text-left mt-6 text-lg font-semibold" dir="ltr">Welcome to Jordan, where heritage and hospitality are ever-renewed. Enjoy the warm generosity of our close-knit people.</p>
+    </div>
+  </section>
+<!-- Top Destinations Section: Responsive Card Slider -->
+<section class="Top-Destinations fade-in">
+  <h2 class="text-3xl font-bold text-center mb-10">Top Destinations</h2>
+
+  <div class="owl-carousel custom-carousel owl-theme">
+    <!-- Card 1 - Petra -->
+    <div class="item active" style="background-image: url('images/Petra.jpg');">
+      <div class="item-title">
+        <h3>An Ancient Masterpiece Petra:</h3>
+      </div>
+      <div class="item-desc">
+        <p>Carved from rose-red sandstone, this UNESCO World Heritage site awakens the senses and transports you back in time.</p>
+      </div>
+    </div>
+
+    <!-- Card 2 - Wadi Rum -->
+    <div class="item" style="background-image: url('images/Wadi Rum.jpg');">
+      <div class="item-title">
+        <h3>Valley of the Moon Wadi Rum:</h3>
+      </div>
+      <div class="item-desc">
+        <p>Vast desert landscapes and traditional Bedouin camps offer a serene adventure in the desert.</p>
+      </div>
+    </div>
+
+    <!-- Card 3 - Aqaba -->
+    <div class="item" style="background-image: url('images/Aqaba.jpg');">
+      <div class="item-title">
+        <h3>Beneath the Waves of Aqaba:</h3>
+      </div>
+      <div class="item-desc">
+        <p>Plunge into a turquoise wonderland, where the underwater world of Aqaba beckons with its vibrant marine life and kaleidoscope of colors.</p>
+      </div>
+    </div>
+
+    <!-- Card 4 - Amman -->
+    <div class="item" style="background-image: url('images/Amman.jpg');">
+      <div class="item-title">
+        <h3>The Capital City Amman:</h3>
+      </div>
+      <div class="item-desc">
+        <p>A vibrant mix of ancient ruins and modern life bustling with culture and cuisine.</p>
+      </div>
+    </div>
+
+    <!-- Card 5 - Dead Sea -->
+    <div class="item" style="background-image: url('images/Dead sea.jpg');">
+      <div class="item-title">
+        <h3>The Healing Waters Dead Sea:</h3>
+      </div>
+      <div class="item-desc">
+        <p>Float effortlessly at the Earth's lowest point, famous for its high salinity and therapeutic mud.</p>
+      </div>
+    </div>
+
+    <!-- NEW CARD 6 - Jerash -->
+    <div class="item" style="background-image: url('images/Jerash.jpg');">
+      <div class="item-title">
+        <h3>The Roman City of Jerash:</h3>
+      </div>
+      <div class="item-desc">
+        <p>Walk through one of the best preserved Roman provincial towns in the world with its colonnaded streets and ancient theaters.</p>
+      </div>
+    </div>
+
+    <!-- NEW CARD 7 - Dana Biosphere -->
+    <div class="item" style="background-image: url('images/Dana-Biosphere.jpg');">
+      <div class="item-title">
+        <h3>Dana Biosphere Reserve:</h3>
+      </div>
+      <div class="item-desc">
+        <p>Jordan's largest nature reserve with stunning mountain scenery and diverse wildlife across four different bio-geographical zones.</p>
+      </div>
+    </div>
+
+    <!-- NEW CARD 8 - Madaba -->
+    <div class="item" style="background-image: url('images/Madaba.jpg');">
+      <div class="item-title">
+        <h3>The Mosaic City of Madaba:</h3>
+      </div>
+      <div class="item-desc">
+        <p>Famous for its spectacular Byzantine and Umayyad mosaics, especially the 6th century map of Jerusalem and Holy Land.</p>
+      </div>
+    </div>
+
+    <!-- NEW CARD 9 - Ajloun -->
+    <div class="item" style="background-image: url('images/Ajloun.jpg');">
+      <div class="item-title">
+        <h3>Ajloun Castle:</h3>
+      </div>
+      <div class="item-desc">
+        <p>A 12th century Islamic castle built atop Mount 'Auf with panoramic views of the Jordan Valley.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Explore Button -->
+  <div class="text-center my-10">
+    <a href="top-destinations.html" class="button-78" role="button">
+      🌍 Explore Top Destinations
+    </a>
+  </div>
+</section>
+
+
+<!-- travil tips -->
+  <section class="section-gold py-12 px-5 fade-in">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-white mb-6 text-center">Travel Tips</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg p-4 flex items-start">
+          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-calendar-alt"></i></span>
+          <div><h3 class="font-bold">Best Time to Visit</h3><p>Spring (Mar-May) and Autumn (Sep-Nov) offer mild weather and vivid views.</p></div>
+        </div>
+        <div class="bg-white rounded-lg p-4 flex items-start">
+          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-utensils"></i></span>
+          <div><h3 class="font-bold">Cuisine</h3><p>Must-tries include Mansaf (national dish), falafel, hummus, and Kanafeh for dessert.</p></div>
+        </div>
+        <div class="bg-white rounded-lg p-4 flex items-start">
+          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-handshake"></i></span>
+          <div><h3 class="font-bold">Etiquette</h3><p>Respect local customs, dress modestly especially in religious sites, accept tea/coffee when offered.</p></div>
+        </div>
+        <div class="bg-white rounded-lg p-4 flex items-start">
+          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-money-bill-wave"></i></span>
+          <div><h3 class="font-bold">Currency</h3><p>Jordanian Dinar (JOD). Mid-range budget: approx. $75–$150 USD per day.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Updated Experiences Section -->
+<section class="py-14 px-5 bg-white fade-in">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10">Experiences Await</h2>
+    
+    <div class="options">
+      <!-- Hiking -->
+      <div class="option active" style="--optionBackground:url('images/Hiking in Dana.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-hiking"></i>
+          </div>
+          <div class="info">
+            <div class="main">Hiking in Dana</div>
+            <div class="sub">Explore Jordan's largest nature reserve</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Diving -->
+      <div class="option" style="--optionBackground:url('images/Diving in Aqaba.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-swimmer"></i>
+          </div>
+          <div class="info">
+            <div class="main">Diving in Aqaba</div>
+            <div class="sub">Discover vibrant coral reefs</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hot Air Balloon - Updated with correct icon -->
+      <div class="option" style="--optionBackground:url('images/Hot Air Ballooning Wadi Rum.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-mountain-sun"></i>
+          </div>
+          <div class="info">
+            <div class="main">Hot Air Ballooning</div>
+            <div class="sub">Breathtaking views of Wadi Rum</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Camel Trekking -->
+      <div class="option" style="--optionBackground:url('images/Camel Trekking.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-horse"></i>
+          </div>
+          <div class="info">
+            <div class="main">Camel Trekking</div>
+            <div class="sub">Traditional Bedouin experience</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New: Petra by Night -->
+      <div class="option" style="--optionBackground:url('images/Petra by Night.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-moon"></i>
+          </div>
+          <div class="info">
+            <div class="main">Petra by Night</div>
+            <div class="sub">Magical candlelit experience</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New: Dead Sea Floating -->
+      <div class="option" style="--optionBackground:url('images/DeadSea.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-water"></i>
+          </div>
+          <div class="info">
+            <div class="main">Dead Sea Floating</div>
+            <div class="sub">Unique buoyancy experience</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New: Jerash Ruins -->
+      <div class="option" style="--optionBackground:url('images/Jerash Ruins.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-landmark"></i>
+          </div>
+          <div class="info">
+            <div class="main">Jerash Ruins</div>
+            <div class="sub">Explore ancient Roman city</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New: Wadi Rum Jeep Tour -->
+      <div class="option" style="--optionBackground:url('images/Wadi Rum Jeep.jpg')">
+        <div class="shadow"></div>
+        <div class="label">
+          <div class="icon">
+            <i class="fas fa-car"></i>
+          </div>
+          <div class="info">
+            <div class="main">Wadi Rum Jeep Tour</div>
+            <div class="sub">Adventure through desert landscapes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <section class="py-14 px-5 bg-gray-50 fade-in">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-10">Accommodation Spotlight</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+         <div class="card-shadow bg-white rounded-lg overflow-hidden">
+           <img src="images/Luxury Stays.jpg" alt="Luxury Hotel Example" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="font-bold text-xl mb-2">Luxury Stays</h3>
+              <p>Indulge in world-class hotels offering stunning views and amenities.</p>
+            </div>
+         </div>
+          <div class="card-shadow bg-white rounded-lg overflow-hidden">
+           <img src="images/Eco Lodges.jpg" alt="Eco Lodge Example" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="font-bold text-xl mb-2">Eco Lodges</h3>
+              <p>Connect with nature in sustainable lodges nestled in reserves like Dana.</p>
+            </div>
+         </div>
+          <div class="card-shadow bg-white rounded-lg overflow-hidden">
+           <img src="images/Desert Camps.jpg" alt="Bedouin Camp Example" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="font-bold text-xl mb-2">Desert Camps</h3>
+              <p>Experience authentic Bedouin hospitality under the stars in Wadi Rum.</p>
+            </div>
+         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 px-5 bg-gray-50 fade-in">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 id="map-title" class="text-3xl font-bold mb-6">Explore Jordan on the Map</h2>
+      <div id="map" class="w-full"></div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="md:w-1/2 text-center md:text-left">
+          <h2 class="text-4xl font-bold mb-4">Ready to Explore Jordan?</h2>
+          <p class="text-lg mb-6">Plan your trip today and create unforgettable memories in a land of history, culture, and adventure!</p>
+          <a href="https://ar.visitjordan.com/" target="_blank" 
+             class="inline-block px-8 py-3 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-600 transition duration-300">
+            Book Now
+          </a>
+        </div>
+        <div class="md:w-1/2">
+          <img src="images/camel.jpg" alt="Wadi Rum desert landscape" 
+               class="rounded-lg shadow-lg w-full h-auto max-h-80 object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="english-only">
+    &copy; 2025 Discover Jordan | Created for Girls in ICT Competition by Jana Khaled Naser
+  </footer> 
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="script.js"></script>
+</body>
+</html>

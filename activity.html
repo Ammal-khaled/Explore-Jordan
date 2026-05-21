@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordan Experiences - Discover Authentic Adventures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .experience-card {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .experience-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+        }
+        .category-tab {
+            transition: all 0.3s ease;
+        }
+        .category-tab:hover, .category-tab.active {
+            background-color: #4F772D;
+            color: white;
+            transform: scale(1.05);
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1518635163951-56d493cee9d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            animation: pulse 8s infinite;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, transparent 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .scroll-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4F772D 0%, #90A955 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .hover-grow {
+            transition: transform 0.3s ease;
+        }
+        .hover-grow:hover {
+            transform: scale(1.05);
+        }
+        .floating-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .floating-dots span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            animation: float 15s linear infinite;
+            bottom: -150px;
+        }
+        .floating-dots span:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            animation-duration: 12s;
+        }
+        .floating-dots span:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 15s;
+        }
+        .floating-dots span:nth-child(3) {
+            left: 70%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 4s;
+            animation-duration: 18s;
+        }
+        .floating-dots span:nth-child(4) {
+            left: 40%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 22s;
+        }
+        .floating-dots span:nth-child(5) {
+            left: 65%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 0s;
+            animation-duration: 14s;
+        }
+        .floating-dots span:nth-child(6) {
+            left: 75%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 3s;
+            animation-duration: 20s;
+        }
+        .floating-dots span:nth-child(7) {
+            left: 35%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 7s;
+            animation-duration: 25s;
+        }
+        .floating-dots span:nth-child(8) {
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            animation-delay: 15s;
+            animation-duration: 45s;
+        }
+        .floating-dots span:nth-child(9) {
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            animation-delay: 2s;
+            animation-duration: 35s;
+        }
+        .floating-dots span:nth-child(10) {
+            left: 85%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 0s;
+            animation-duration: 30s;
+        }
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 30px;
+            animation: float 2s ease-in-out infinite;
+            z-index: 10;
+            cursor: pointer;
+        }
+        .rotating-icon {
+            animation: rotate 8s linear infinite;
+        }
+        .slide-in {
+            animation: slideIn 1s ease-out forwards;
+        }
+        .fade-in {
+            animation: fadeIn 2s ease-in forwards;
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2 hover-grow">
+                <i class="fas fa-mountain text-2xl text-green-800 floating"></i>
+                <span class="text-xl font-bold text-green-800">Jordan Tours</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-700 hover:text-green-800 transition-colors duration-300">Home</a>
+                <a href="#" class="text-green-800 font-semibold hover-grow">Experiences</a>
+                <a href="#" class="text-gray-700 hover:text-green-800 transition-colors duration-300">Destinations</a>
+                <a href="#" class="text-gray-700 hover:text-green-800 transition-colors duration-300">About</a>
+                <a href="#" class="text-gray-700 hover:text-green-800 transition-colors duration-300">Contact</a>
+            </div>
+            <button class="md:hidden text-gray-700 hover:text-green-800 transition-colors duration-300">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white">
+        <div class="floating-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="container mx-auto px-4 text-center hero-content">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-shadow slide-in" style="animation-delay: 0.3s;">Discover Jordan's <span class="gradient-text">Authentic Experiences</span></h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-shadow fade-in" style="animation-delay: 0.6s;">From ancient wonders to breathtaking landscapes, immerse yourself in Jordan's rich culture and adventure</p>
+            <div class="flex justify-center space-x-4 fade-in" style="animation-delay: 0.9s;">
+                <button class="bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full font-semibold mr-4 transition duration-300 hover-grow">
+                    Explore Experiences
+                </button>
+                <button class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-full font-semibold transition duration-300 hover-grow">
+                    <i class="fas fa-play mr-2"></i> Watch Video
+                </button>
+            </div>
+        </div>
+        <div class="scroll-down" onclick="document.querySelector('#experience-grid').scrollIntoView({ behavior: 'smooth' })">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <section class="py-8 bg-white sticky top-16 z-40 shadow-sm" data-aos="fade-down" data-aos-duration="800" id="experience-grid">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto scroll-container space-x-2 pb-2">
+                <button class="category-tab active px-6 py-2 rounded-full whitespace-nowrap bg-green-800 text-white" data-category="all">
+                    All Experiences
+                </button>
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="cultural">
+                    Cultural Experiences
+                </button>
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="adventure">
+                    Adventure & Outdoor
+                </button>
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="festivals">
+                    Festivals & Events
+                </button>
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="traditions">
+                    Local Traditions
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiences Grid -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <!-- Cultural Experiences -->
+            <div class="mb-16 experience-section" data-category="cultural" data-aos="fade-up">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">Cultural Experiences</h2>
+                    <a href="#" class="text-green-700 hover:text-green-800 font-semibold flex items-center hover-grow">
+                        View All <i class="fas fa-chevron-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Petra Experience -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1513415277900-a62401e19be4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Petra" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-green-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Cultural
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">The Lost City of Petra</h3>
+                            <p class="text-gray-600 mb-4">Explore the ancient Nabatean city carved into pink sandstone cliffs, Jordan's most iconic archaeological site.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-gray-600 ml-2">4.7</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Jerash Experience -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1582719188393-bb71ca45d2b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Jerash" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-green-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Cultural
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Roman Ruins of Jerash</h3>
+                            <p class="text-gray-600 mb-4">Walk through one of the best-preserved Roman provincial towns in the world with its colonnaded streets and temples.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-gray-600 ml-2">4.9</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amman Citadel -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-158007787166-858b6ae71b3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Amman Citadel" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-green-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Cultural
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Amman Citadel & Museum</h3>
+                            <p class="text-gray-600 mb-4">Discover 7,000 years of history at this hilltop site featuring Roman, Byzantine, and early Islamic remains.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-600 ml-2">4.5</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adventure & Outdoor -->
+            <div class="mb-16 experience-section" data-category="adventure" data-aos="fade-up">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">Adventure & Outdoor Activities</h2>
+                    <a href="#" class="text-green-700 hover:text-green-800 font-semibold flex items-center hover-grow">
+                        View All <i class="fas fa-chevron-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Wadi Rum -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1558024920-b41e1887dc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Wadi Rum" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-blue-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Adventure
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Wadi Rum Desert Safari</h3>
+                            <p class="text-gray-600 mb-4">Experience the Martian-like landscape of Wadi Rum with 4x4 tours, camel rides, and overnight Bedouin camps.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-gray-600 ml-2">5.0</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dead Sea -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-158007787166-858b6ae71b3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Dead Sea" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-blue-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Adventure
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Dead Sea Floating Experience</h3>
+                            <p class="text-gray-600 mb-4">Float effortlessly in the hypersaline waters of the Dead Sea, the lowest point on Earth, and enjoy therapeutic mud treatments.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-gray-600 ml-2">4.7</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wadi Mujib -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1582719188393-bb71ca45d2b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Wadi Mujib" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-blue-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Adventure
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Canyoning in Wadi Mujib</h3>
+                            <p class="text-gray-600 mb-4">Challenge yourself with this thrilling hike through water-filled canyons in Jordan's Grand Canyon.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-600 ml-2">4.3</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Festivals & Events -->
+            <div class="mb-16 experience-section" data-category="festivals" data-aos="fade-up">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">Festivals & Events</h2>
+                    <a href="#" class="text-green-700 hover:text-green-800 font-semibold flex items-center hover-grow">
+                        View All <i class="fas fa-chevron-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Jerash Festival -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1513415277900-a62401e19be4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Jerash Festival" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-purple-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Festival
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Jerash Festival of Culture & Arts</h3>
+                            <p class="text-gray-600 mb-4">Annual summer festival featuring international and local performers in music, dance, and theater amid Roman ruins.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-gray-600 ml-2">4.6</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amman Book Fair -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-158007787166-858b6ae71b3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Amman Book Fair" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-purple-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Festival
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Amman International Book Fair</h3>
+                            <p class="text-gray-600 mb-4">The largest literary event in Jordan featuring Arab and international publishers, authors, and cultural activities.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-600 ml-2">4.2</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Aqaba Festival -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1582719188393-bb71ca45d2b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Aqaba Festival" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-purple-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Festival
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Aqaba Traditional Arts Festival</h3>
+                            <p class="text-gray-600 mb-4">Celebration of Jordanian and regional folk arts, crafts, music, and dance in the coastal city of Aqaba.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-600 ml-2">3.8</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local Traditions -->
+            <div class="mb-16 experience-section" data-category="traditions" data-aos="fade-up">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">Local Traditions & Crafts</h2>
+                    <a href="#" class="text-green-700 hover:text-green-800 font-semibold flex items-center hover-grow">
+                        View All <i class="fas fa-chevron-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Madaba Mosaics -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1513415277900-a62401e19be4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Madaba Mosaics" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-amber-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Tradition
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Madaba Mosaic Workshops</h3>
+                            <p class="text-gray-600 mb-4">Learn the ancient art of Byzantine mosaic-making from local artisans in the "City of Mosaics".</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-gray-600 ml-2">4.6</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bedouin Experience -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-158007787166-858b6ae71b3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Bedouin Experience" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-amber-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Tradition
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Bedouin Lifestyle Experience</h3>
+                            <p class="text-gray-600 mb-4">Spend a day with Bedouin tribes, learning about their traditions, cuisine, and desert survival skills.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-gray-600 ml-2">5.0</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Jordanian Cooking -->
+                    <div class="experience-card bg-white rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1582719188393-bb71ca45d2b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Jordanian Cooking" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-amber-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+                                Tradition
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Jordanian Cooking Class</h3>
+                            <p class="text-gray-600 mb-4">Master the art of preparing authentic Jordanian dishes like mansaf, maqluba, and kunafa with local chefs.</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-600 ml-2">4.4</span>
+                                </div>
+                                <a href="#" class="text-green-700 hover:text-green-800 font-semibold hover-grow">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="py-32 parallax" style="background-image: url('https://images.unsplash.com/photo-1558024920-b41e1887dc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');" data-aos="fade" data-aos-duration="1000">
+        <div class="container mx-auto px-4 text-center text-white">
+            <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">Ready for Your Jordan Adventure?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">Book your unforgettable experiences today and discover the magic of Jordan</p>
+            <button class="bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full font-semibold transition duration-300 hover-grow" data-aos="fade-up" data-aos-delay="200">
+                Book Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-mountain text-2xl text-green-500 floating"></i>
+                        <span class="text-xl font-bold">Jordan Tours</span>
+                    </div>
+                    <p class="text-gray-400">Discover the authentic beauty and rich heritage of Jordan through unforgettable experiences.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-grow"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-grow"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-grow"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 hover-grow"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Experiences</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Destinations</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Jordan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Popular Experiences</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Petra by Night</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Wadi Rum Camping</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Dead Sea Spa</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Jerash Festival</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Jordanian Cooking Class</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-3"></i> Amman, Jordan</li>
+                        <li class="flex items-center"><i class="fas fa-phone-alt mr-3"></i> +962 6 123 4567</li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-3"></i> info@jordantours.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Jordan Tours. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation library
+        AOS.init({
+            once: true,
+            duration: 800,
+            easing: 'ease-in-out',
+        });
+
+        // Category filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.category-tab');
+            const experienceSections = document.querySelectorAll('.experience-section');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-green-800', 'text-white');
+                        t.classList.add('bg-gray-100', 'hover:bg-gray-200');
+                    });
+                    this.classList.add('active', 'bg-green-800', 'text-white');
+                    this.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+                    
+                    const category = this.dataset.category;
+                    
+                    // Show/hide sections based on category
+                    experienceSections.forEach(section => {
+                        if (category === 'all' || section.dataset.category === category) {
+                            section.style.display = 'block';
+                            // Reinitialize animations for newly shown elements
+                            AOS.refresh();
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-lg');
+                    navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                    navbar.style.backdropFilter = 'blur(5px)';
+                } else {
+                    navbar.classList.remove('shadow-lg');
+                    navbar.style.backgroundColor = 'rgb(255, 255, 255)';
+                    navbar.style.backdropFilter = 'none';
+                }
+            });
+
+            // Floating dots animation
+            const floatingDots = document.querySelector('.floating-dots');
+            if (floatingDots) {
+                for (let i = 0; i < 15; i++) {
+                    const dot = document.createElement('span');
+                    dot.style.left = Math.random() * 100 + '%';
+                    dot.style.width = Math.random() * 30 + 10 + 'px';
+                    dot.style.height = dot.style.width;
+                    dot.style.animationDuration = Math.random() * 20 + 10 + 's';
+                    dot.style.animationDelay = Math.random() * 5 + 's';
+                    dot.style.opacity = Math.random() * 0.5 + 0.1;
+                    floatingDots.appendChild(dot);
+                }
+            }
+        });
+        <!-- Add this JavaScript to make category tabs functional -->
+
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Remove active class from all tabs
+      document.querySelectorAll('.category-tab').forEach(t => {
+        t.classList.remove('active', 'bg-green-800', 'text-white');
+        t.classList.add('bg-gray-100', 'hover:bg-gray-200');
+      });
+      
+      // Add active class to clicked tab
+      this.classList.add('active', 'bg-green-800', 'text-white');
+      this.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+      
+      // Filter experiences
+      const category = this.dataset.category;
+      document.querySelectorAll('.experience-section').forEach(section => {
+        section.style.display = (category === 'all' || section.dataset.category === category) 
+          ? 'block' 
+          : 'none';
+      });
+    });
+  });
+
+    </script>
+</body>
+</html>

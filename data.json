@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Dana Biosphere Reserve",
+    "description": "Jordan’s largest reserve with rugged mountains, ancient villages, and trails for all skill levels.",
+    "city": "Dana",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Dana_Biosphere_Reserve.jpg",
+    "link": "https://www.rscn.org.jo/dana"
+  },
+  {
+    "name": "Wadi Al-Mujib",
+    "description": "Adventure-filled canyon with waterfalls, requiring swimming and climbing through rushing water.",
+    "city": "Dead Sea region",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Wadi_Mujib.jpg",
+    "link": "https://www.jdtours.com/activities/"
+  }
+]
