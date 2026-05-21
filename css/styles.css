@@ -821,6 +821,16 @@ section .bg-white.rounded-xl img {
   box-shadow: var(--shadow-standard);
 }
 
+.empty-state {
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-dark-brown);
+  background: var(--color-white);
+  border-radius: var(--radius-standard);
+  box-shadow: var(--shadow-standard);
+}
+
 /* ===== Mobile Responsiveness ===== */
 html,
 body {
