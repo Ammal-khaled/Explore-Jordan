@@ -1,3 +1,12 @@
+:root {
+  --color-primary-gold: #bfa03e;
+  --color-dark-brown: #5C4E3D;
+  --color-soft-cream: #fff7d9;
+  --color-dark-overlay: rgba(31, 41, 55, 0.85);
+  --color-white: #ffffff;
+  --radius-standard: 12px;
+  --shadow-standard: 0 12px 30px rgba(31, 41, 55, 0.13);
+}
 
 /* ===== Global Styles ===== */
 body {
@@ -11,7 +20,7 @@ body:lang(ar) {
 }
 h1, h2, h3, h4 {
   font-family: 'Libre Baskerville', serif;
-  color: #5C4E3D;
+  color: var(--color-dark-brown);
 }
 h1:lang(ar), h2:lang(ar), h3:lang(ar), h4:lang(ar) {
   font-family: 'Cairo', sans-serif;
@@ -36,19 +45,21 @@ h1:lang(ar), h2:lang(ar), h3:lang(ar), h4:lang(ar) {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(31, 41, 55, 0.85);
+  background: var(--color-dark-overlay);
   z-index: 2;
 }
-.hero-slider h1,p{
-color: #fff7d9;  
-}
-.hero-slider p{
-color: #fff7d9;  
+.hero-slider h1,
+.hero-slider p {
+  color: var(--color-soft-cream);
 }
 
 /* ===== Utility Classes ===== */
-.section-gold { background-color: #bfa03e; }
+.section-gold { background-color: var(--color-primary-gold); }
 .hidden { display: none !important; }
+.gold-accent { background-color: var(--color-primary-gold) !important; }
+.gold-accent-text { color: var(--color-primary-gold) !important; }
+.cream-beige { background-color: var(--color-soft-cream) !important; }
+.dark-brown-text { color: var(--color-dark-brown) !important; }
 
 /* ===== Shared Navigation ===== */
 .site-nav {
@@ -74,7 +85,7 @@ color: #fff7d9;
 
 .site-nav__brand,
 .mobile-sidebar__brand {
-  color: #5C4E3D;
+  color: var(--color-dark-brown);
   font-family: 'Libre Baskerville', serif;
   font-size: 1.35rem;
   font-weight: 700;
@@ -99,7 +110,7 @@ color: #fff7d9;
 
 .site-nav__links a:hover,
 .mobile-sidebar__links a:hover {
-  color: #bfa03e;
+  color: var(--color-primary-gold);
 }
 
 .site-nav__toggle {
@@ -120,7 +131,7 @@ color: #fff7d9;
   display: block;
   width: 24px;
   height: 2px;
-  background: #5C4E3D;
+  background: var(--color-dark-brown);
   border-radius: 999px;
 }
 
@@ -142,7 +153,7 @@ color: #fff7d9;
   width: min(320px, 86vw);
   height: 100vh;
   padding: 1.25rem;
-  background: #fff;
+  background: var(--color-white);
   box-shadow: -18px 0 40px rgba(31, 41, 55, 0.22);
   transform: translateX(100%);
   transition: transform 0.25s ease;
@@ -157,8 +168,8 @@ color: #fff7d9;
   justify-content: center;
   border: 0;
   border-radius: 8px;
-  background: #fff7d9;
-  color: #5C4E3D;
+  background: var(--color-soft-cream);
+  color: var(--color-dark-brown);
   cursor: pointer;
   font-weight: 800;
 }
@@ -253,7 +264,7 @@ body.nav-open .mobile-sidebar {
 /* ===== Footer ===== */
 footer {
   background-color: #1a1a1a;
-  color: white;
+  color: var(--color-white);
   padding: 1.5rem 0;
   text-align: center;
 }
@@ -333,14 +344,14 @@ footer {
   left: 0;
   width: 100%;
   padding: 0 1.5rem;
-  color: #fff;
+  color: var(--color-white);
   z-index: 3;
 }
 .Top-Destinations .item-title h3 {
   font-size: 1.75rem;
   line-height: 1.3;
   margin: 0 0 0.75rem;
-  color: #fff7d9;
+  color: var(--color-soft-cream);
   font-weight: 700;
   letter-spacing: 0.5px;
 }
@@ -351,7 +362,7 @@ footer {
 /* Description */
 .Top-Destinations .item-desc {
   padding: 1.5rem;
-  color: #fff;
+  color: var(--color-white);
   position: relative;
   z-index: 2;
   width: 100%;
@@ -362,7 +373,7 @@ footer {
   transform: translateY(0);
 }
 .Top-Destinations .item-desc p {
-  color: #fff7d9;
+  color: var(--color-soft-cream);
   font-size: 1.1rem;
   line-height: 1.5;
 }
@@ -473,7 +484,7 @@ footer {
   right: 0;
   height: 40px;
   transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
-  color: white;
+  color: var(--color-white);
 }
 
 .option.active .label {
@@ -494,8 +505,8 @@ footer {
   max-width: 40px;
   height: 40px;
   border-radius: 100%;
-  background-color: white;
-  color: #bfa03e; /* Using your gold color */
+  background-color: var(--color-white);
+  color: var(--color-primary-gold); /* Using your gold color */
 }
 
 .info {
@@ -503,7 +514,7 @@ footer {
   flex-direction: column;
   justify-content: center;
   margin-left: 10px;
-  color: white;
+  color: var(--color-white);
 }
 
 .info > div {
@@ -576,7 +587,7 @@ footer {
   background-image: none;
   border-style: none;
   box-sizing: border-box;
-  color: #fff;
+  color: var(--color-white);
   cursor: pointer;
   display: inline-block;
   flex-direction: row;
@@ -617,7 +628,7 @@ footer {
 }
 
 .button-78:before {
-  background-image: linear-gradient(92.83deg, #D4AF37 0%, #BFA03E 100%);
+  background-image: linear-gradient(92.83deg, #D4AF37 0%, var(--color-primary-gold) 100%);
   content: "";
   display: block;
   height: 100%;
@@ -644,7 +655,7 @@ footer {
 }
 
 .button-78:hover:not(:disabled):before {
-  background: linear-gradient(92.83deg, #C9AD4B 0%, #BFA03E 100%);
+  background: linear-gradient(92.83deg, #C9AD4B 0%, var(--color-primary-gold) 100%);
 }
 
 .button-78:hover:not(:disabled):after {
@@ -675,4 +686,137 @@ footer {
 .button-78:disabled {
   cursor: default;
   opacity: .24;
+}
+
+/* ===== Shared Visual System ===== */
+.site-nav,
+.mobile-sidebar,
+.card-shadow,
+.card-hover,
+.experience-card,
+.destination-card > div,
+section .bg-white.rounded-lg,
+section .bg-white.rounded-xl {
+  border-radius: var(--radius-standard);
+}
+
+section:not(.hero-slider):not(.hero-section) h2,
+.experience-section h2,
+main h1,
+header h1 {
+  color: var(--color-dark-brown) !important;
+  font-family: 'Libre Baskerville', serif !important;
+  font-size: clamp(2rem, 4vw, 2.75rem) !important;
+  line-height: 1.2 !important;
+  margin-bottom: 1rem !important;
+  text-align: center !important;
+}
+
+section:not(.hero-slider):not(.hero-section) h2 + p,
+.text-center > p {
+  color: #454240 !important;
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+}
+
+.experience-section > .flex {
+  align-items: center !important;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.button-78,
+.gold-accent,
+.hero-section button,
+.hero-slider a,
+a[class*="bg-yellow"],
+a[class*="bg-green"],
+button[class*="bg-green"] {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 999px !important;
+  background: var(--color-primary-gold) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--color-primary-gold) !important;
+  box-shadow: 0 8px 18px rgba(191, 160, 62, 0.24);
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease !important;
+}
+
+.button-78:hover,
+.gold-accent:hover,
+.hero-section button:hover,
+.hero-slider a:hover,
+a[class*="bg-yellow"]:hover,
+a[class*="bg-green"]:hover,
+button[class*="bg-green"]:hover {
+  background: #a9892d !important;
+  box-shadow: 0 12px 24px rgba(191, 160, 62, 0.3);
+  transform: translateY(-2px);
+}
+
+.hero-section button.bg-transparent,
+a.inline-block.border,
+.filter-btn:not(.category-active),
+.category-tab:not(.active) {
+  background: var(--color-white) !important;
+  color: var(--color-dark-brown) !important;
+  border: 1px solid rgba(92, 78, 61, 0.2) !important;
+  box-shadow: none;
+}
+
+.hero-section button.bg-transparent {
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: var(--color-white) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.card-shadow,
+.card-hover,
+.experience-card,
+.destination-card > div,
+section .bg-white.rounded-lg,
+section .bg-white.rounded-xl {
+  overflow: hidden;
+  background: var(--color-white) !important;
+  box-shadow: var(--shadow-standard) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.card-shadow:hover,
+.card-hover:hover,
+.experience-card:hover,
+.destination-card > div:hover,
+section .bg-white.rounded-lg:hover,
+section .bg-white.rounded-xl:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 38px rgba(31, 41, 55, 0.18) !important;
+}
+
+.card-shadow img,
+.card-hover img,
+.experience-card img,
+.destination-card img,
+section .bg-white.rounded-lg img,
+section .bg-white.rounded-xl img {
+  width: 100%;
+  height: 220px !important;
+  object-fit: cover;
+}
+
+.Top-Destinations .item img,
+.option img {
+  height: auto !important;
+}
+
+.section-gold {
+  background: linear-gradient(135deg, var(--color-primary-gold), #a9892d);
+}
+
+#map {
+  border-radius: var(--radius-standard);
+  box-shadow: var(--shadow-standard);
 }
