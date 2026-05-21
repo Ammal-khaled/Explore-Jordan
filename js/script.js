@@ -121,11 +121,52 @@ async function fetchJSON(path) {
 }
 
 function showEmptyState(container, message) {
-  container.innerHTML = `<p class="empty-state">${escapeHTML(message)}</p>`;
+  renderEmptyState(container, message);
 }
 
 function renderNoResults(container, message) {
   showEmptyState(container, message);
+}
+
+function renderLoading(container, message) {
+  if (!container) {
+    return;
+  }
+
+  const skeletonCount = container.classList.contains('custom-carousel') || container.classList.contains('options') ? 4 : 3;
+  const skeletons = Array.from({ length: skeletonCount }, () => '<span class="loading-skeleton-card"></span>').join('');
+  container.innerHTML = `
+    <div class="data-state data-state--loading">
+      <p>${escapeHTML(message)}</p>
+      <div class="loading-skeleton-grid">${skeletons}</div>
+    </div>
+  `;
+}
+
+function renderError(container, message) {
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="data-state data-state--error">
+      <i class="fas fa-circle-exclamation"></i>
+      <p>${escapeHTML(message)}</p>
+    </div>
+  `;
+}
+
+function renderEmptyState(container, message) {
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="data-state data-state--empty">
+      <i class="fas fa-map-signs"></i>
+      <p>${escapeHTML(message)}</p>
+    </div>
+  `;
 }
 
 function destinationCategories(destination) {
@@ -216,7 +257,7 @@ function renderDestinationCards(data, container) {
   }
 
   if (!Array.isArray(data) || data.length === 0) {
-    showEmptyState(container, 'No destination cards are available right now.');
+    renderEmptyState(container, 'No destination cards are available right now.');
     return;
   }
 
@@ -276,7 +317,7 @@ function renderActivityCards(data, container) {
   }
 
   if (!Array.isArray(data) || data.length === 0) {
-    showEmptyState(container, 'No activity cards are available right now.');
+    renderEmptyState(container, 'No activity cards are available right now.');
     return;
   }
 
@@ -336,7 +377,7 @@ function renderAccommodationCards(data, container) {
   }
 
   if (!Array.isArray(data) || data.length === 0) {
-    showEmptyState(container, 'No accommodation cards are available right now.');
+    renderEmptyState(container, 'No accommodation cards are available right now.');
     return;
   }
 
@@ -685,35 +726,45 @@ async function initDynamicContent() {
   const tasks = [];
 
   if (homeDestinationsContainer || pageDestinationsContainer) {
+    renderLoading(homeDestinationsContainer, 'Loading destinations...');
+    renderLoading(pageDestinationsContainer, 'Loading destinations...');
     tasks.push(fetchJSON(getDataPath('destinations.json'))
       .then(data => {
         destinationsData = Array.isArray(data) ? data : [];
         renderDestinationCards(data, homeDestinationsContainer);
         renderDestinationCards(data, pageDestinationsContainer);
       })
-      .catch(() => {
-        if (homeDestinationsContainer) showEmptyState(homeDestinationsContainer, 'Destinations could not load. Please try again later.');
-        if (pageDestinationsContainer) showEmptyState(pageDestinationsContainer, 'Destinations could not load. Please try again later.');
+      .catch(error => {
+        console.error('Failed to load destinations.json:', error);
+        renderError(homeDestinationsContainer, 'Destinations could not load. Please try again later.');
+        renderError(pageDestinationsContainer, 'Destinations could not load. Please try again later.');
       }));
   }
 
   if (homeActivitiesContainer || pageActivitiesContainer) {
+    renderLoading(homeActivitiesContainer, 'Loading activities...');
+    renderLoading(pageActivitiesContainer, 'Loading activities...');
     tasks.push(fetchJSON(getDataPath('activities.json'))
       .then(data => {
         activitiesData = Array.isArray(data) ? data : [];
         renderActivityCards(data, homeActivitiesContainer);
         renderActivityCards(data, pageActivitiesContainer);
       })
-      .catch(() => {
-        if (homeActivitiesContainer) showEmptyState(homeActivitiesContainer, 'Activities could not load. Please try again later.');
-        if (pageActivitiesContainer) showEmptyState(pageActivitiesContainer, 'Activities could not load. Please try again later.');
+      .catch(error => {
+        console.error('Failed to load activities.json:', error);
+        renderError(homeActivitiesContainer, 'Activities could not load. Please try again later.');
+        renderError(pageActivitiesContainer, 'Activities could not load. Please try again later.');
       }));
   }
 
   if (homeAccommodationsContainer) {
+    renderLoading(homeAccommodationsContainer, 'Loading accommodation ideas...');
     tasks.push(fetchJSON(getDataPath('accommodations.json'))
       .then(data => renderAccommodationCards(data, homeAccommodationsContainer))
-      .catch(() => showEmptyState(homeAccommodationsContainer, 'Accommodation cards could not load. Please try again later.')));
+      .catch(error => {
+        console.error('Failed to load accommodations.json:', error);
+        renderError(homeAccommodationsContainer, 'Accommodation cards could not load. Please try again later.');
+      }));
   }
 
   await Promise.all(tasks);
