@@ -24,6 +24,34 @@
 <body>
 <link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
+<nav class="site-nav" id="navbar">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="index.html">Explore Jordan</a>
+    <div class="site-nav__links">
+      <a href="index.html">Home</a>
+      <a href="pages/top.html">Top Destinations</a>
+      <a href="pages/activity.html">Activities</a>
+      <a href="pages/attraction.html">Attractions</a>
+    </div>
+    <button class="site-nav__toggle" type="button" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false" data-nav-open>
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+<div class="site-nav__backdrop" data-nav-backdrop></div>
+<aside class="mobile-sidebar" id="mobile-menu" aria-hidden="true" data-mobile-sidebar>
+  <button class="mobile-sidebar__close" type="button" aria-label="Close menu" data-nav-close>X</button>
+  <a class="mobile-sidebar__brand" href="index.html">Explore Jordan</a>
+  <nav class="mobile-sidebar__links" aria-label="Mobile navigation">
+    <a href="index.html" data-nav-link>Home</a>
+    <a href="pages/top.html" data-nav-link>Top Destinations</a>
+    <a href="pages/activity.html" data-nav-link>Activities</a>
+    <a href="pages/attraction.html" data-nav-link>Attractions</a>
+  </nav>
+</aside>
+
 <button id="language-switcher" class="lang-switch fixed top-5 right-5 z-50 bg-yellow-400 text-gray-900 p-3 rounded-full shadow-md cursor-pointer">
   <i class="fas fa-globe"></i>
 </button>

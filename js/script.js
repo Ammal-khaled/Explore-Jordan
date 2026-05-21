@@ -181,7 +181,46 @@ function initExperienceCards() {
   }
 }
 
+function initResponsiveNav() {
+  const sidebar = document.querySelector('[data-mobile-sidebar]');
+  const openButton = document.querySelector('[data-nav-open]');
+  const closeButton = document.querySelector('[data-nav-close]');
+  const backdrop = document.querySelector('[data-nav-backdrop]');
+  const sidebarLinks = document.querySelectorAll('[data-nav-link]');
+
+  if (!sidebar || !openButton || !closeButton || !backdrop) {
+    return;
+  }
+
+  function openMenu() {
+    document.body.classList.add('nav-open');
+    sidebar.setAttribute('aria-hidden', 'false');
+    openButton.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    document.body.classList.remove('nav-open');
+    sidebar.setAttribute('aria-hidden', 'true');
+    openButton.setAttribute('aria-expanded', 'false');
+  }
+
+  openButton.addEventListener('click', openMenu);
+  closeButton.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeMenu();
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  initResponsiveNav();
   initMap();
   initFadeAnimations();
   initLanguageSwitcher();
