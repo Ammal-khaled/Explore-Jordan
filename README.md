@@ -17,4 +17,13 @@ Explore Jordan is a tourism web platform designed to help users discover destina
 - JavaScript
 - Leaflet.js for maps
 - JSON (current data structure)
-- Planned: Structured database (e.g., SQL or NoSQL) for destinations, accommodations, and activities
+- Planned: Supabase PostgreSQL for destinations, accommodations, activities, and categories
+
+## Database Plan
+
+Supabase PostgreSQL is planned for a future data layer. The current frontend still uses the JSON files in `data/`, and no Supabase connection has been added yet.
+
+Database planning files have been added in `database/`:
+
+- `supabase-schema.sql` contains the planned table definitions.
+- `seed-data-notes.md` documents how the current JSON fields can map to database columns later.
