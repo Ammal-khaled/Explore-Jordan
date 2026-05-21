@@ -877,6 +877,48 @@ section .bg-white.rounded-xl img {
   cursor: pointer;
 }
 
+.favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-dark-brown);
+  box-shadow: 0 8px 20px rgba(31, 41, 55, 0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  z-index: 5;
+}
+
+.favorite-button:hover,
+.favorite-button:focus-visible {
+  transform: translateY(-2px) scale(1.04);
+  background: var(--color-white);
+  color: #b45309;
+  box-shadow: 0 12px 26px rgba(31, 41, 55, 0.22);
+  outline: none;
+}
+
+.favorite-button--overlay {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+}
+
+.favorite-button--active {
+  background: var(--color-primary-gold);
+  color: var(--color-white);
+}
+
+.favorite-button--active:hover,
+.favorite-button--active:focus-visible {
+  background: #a9892d;
+  color: var(--color-white);
+}
+
 /* ===== Mobile Responsiveness ===== */
 html,
 body {

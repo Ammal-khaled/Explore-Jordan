@@ -23,6 +23,8 @@ const activityIcons = {
   'wadi-rum-jeep-tour': 'fa-car'
 };
 
+const favoritesStorageKey = 'exploreJordanFavorites';
+
 function isPagesDirectory() {
   return window.location.pathname.includes('/pages/');
 }
@@ -50,6 +52,53 @@ function escapeHTML(value) {
     };
 
     return entities[character];
+  });
+}
+
+function getFavorites() {
+  try {
+    const favorites = JSON.parse(localStorage.getItem(favoritesStorageKey)) || [];
+    return Array.isArray(favorites) ? favorites : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveFavorites(favorites) {
+  localStorage.setItem(favoritesStorageKey, JSON.stringify(favorites));
+}
+
+function isFavorite(type, id) {
+  return getFavorites().some(favorite => favorite.type === type && favorite.id === id);
+}
+
+function toggleFavorite(type, id) {
+  const favorites = getFavorites();
+  const existingIndex = favorites.findIndex(favorite => favorite.type === type && favorite.id === id);
+
+  if (existingIndex >= 0) {
+    favorites.splice(existingIndex, 1);
+  } else {
+    favorites.push({ type, id });
+  }
+
+  saveFavorites(favorites);
+  updateFavoriteButtons();
+}
+
+function updateFavoriteButtons() {
+  document.querySelectorAll('[data-favorite-type][data-favorite-id]').forEach(button => {
+    const active = isFavorite(button.dataset.favoriteType, button.dataset.favoriteId);
+    const icon = button.querySelector('i');
+
+    button.classList.toggle('favorite-button--active', active);
+    button.setAttribute('aria-pressed', String(active));
+    button.setAttribute('aria-label', active ? 'Remove from favorites' : 'Add to favorites');
+
+    if (icon) {
+      icon.classList.toggle('fas', active);
+      icon.classList.toggle('far', !active);
+    }
   });
 }
 
@@ -176,6 +225,9 @@ function renderDestinationCards(data, container) {
   if (isCarousel) {
     container.innerHTML = data.map((destination, index) => `
       <div class="item${index === 0 ? ' active' : ''}" style="background-image: url('${resolveAssetPath(destination.image)}');">
+        <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="destination" data-favorite-id="${escapeHTML(destination.id)}" aria-label="Add to favorites" aria-pressed="false">
+          <i class="far fa-heart"></i>
+        </button>
         <div class="item-title">
           <h3>${escapeHTML(destination.name)}</h3>
         </div>
@@ -184,13 +236,19 @@ function renderDestinationCards(data, container) {
         </div>
       </div>
     `).join('');
+    updateFavoriteButtons();
     return;
   }
 
   container.innerHTML = data.map(destination => `
     <div class="destination-card" data-categories="${escapeHTML(destinationCategories(destination))}">
       <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
-        <img src="${resolveAssetPath(destination.image)}" alt="${escapeHTML(destination.name)}" class="w-full h-48 object-cover">
+        <div class="relative">
+          <img src="${resolveAssetPath(destination.image)}" alt="${escapeHTML(destination.name)}" class="w-full h-48 object-cover">
+          <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="destination" data-favorite-id="${escapeHTML(destination.id)}" aria-label="Add to favorites" aria-pressed="false">
+            <i class="far fa-heart"></i>
+          </button>
+        </div>
         <div class="p-6">
           <div class="flex flex-wrap gap-2 mb-3">
             ${tagList(destination.tags)}
@@ -209,6 +267,7 @@ function renderDestinationCards(data, container) {
       </div>
     </div>
   `).join('');
+  updateFavoriteButtons();
 }
 
 function renderActivityCards(data, container) {
@@ -226,6 +285,9 @@ function renderActivityCards(data, container) {
   if (isExperienceStrip) {
     container.innerHTML = data.map((activity, index) => `
       <div class="option${index === 0 ? ' active' : ''}" style="--optionBackground:url('${resolveAssetPath(activity.image)}')">
+        <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="activity" data-favorite-id="${escapeHTML(activity.id)}" aria-label="Add to favorites" aria-pressed="false">
+          <i class="far fa-heart"></i>
+        </button>
         <div class="shadow"></div>
         <div class="label">
           <div class="icon">
@@ -238,6 +300,7 @@ function renderActivityCards(data, container) {
         </div>
       </div>
     `).join('');
+    updateFavoriteButtons();
     return;
   }
 
@@ -245,7 +308,10 @@ function renderActivityCards(data, container) {
     <div class="experience-card bg-white rounded-xl overflow-hidden" data-category="${escapeHTML(String(activity.category || '').toLowerCase())}" data-aos="fade-up" data-aos-delay="${100 + (index % 3) * 100}">
       <div class="relative">
         <img src="${resolveAssetPath(activity.image)}" alt="${escapeHTML(activity.name)}" class="w-full h-64 object-cover">
-        <div class="absolute top-4 right-4 bg-green-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
+        <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="activity" data-favorite-id="${escapeHTML(activity.id)}" aria-label="Add to favorites" aria-pressed="false">
+          <i class="far fa-heart"></i>
+        </button>
+        <div class="absolute top-4 right-16 bg-green-800 text-white px-3 py-1 rounded-full text-sm font-semibold hover-grow">
           ${escapeHTML(activity.category)}
         </div>
       </div>
@@ -261,6 +327,7 @@ function renderActivityCards(data, container) {
       </div>
     </div>
   `).join('');
+  updateFavoriteButtons();
 }
 
 function renderAccommodationCards(data, container) {
@@ -464,6 +531,22 @@ function initExperienceCards() {
   if (document.querySelectorAll('.option.active').length === 0) {
     options[0].classList.add('active');
   }
+}
+
+function initFavorites() {
+  document.addEventListener('click', function(event) {
+    const button = event.target.closest('[data-favorite-type][data-favorite-id]');
+
+    if (!button) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    toggleFavorite(button.dataset.favoriteType, button.dataset.favoriteId);
+  });
+
+  updateFavoriteButtons();
 }
 
 function initDestinationFilters() {
@@ -679,6 +762,7 @@ function initResponsiveNav() {
 
 document.addEventListener('DOMContentLoaded', async function() {
   initResponsiveNav();
+  initFavorites();
   initMap();
   initFadeAnimations();
   initLanguageSwitcher();
