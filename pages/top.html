@@ -175,33 +175,39 @@
     <!-- Category Navigation -->
     <div class="sticky top-16 bg-white shadow-md z-40" id="destinations">
         <div class="max-w-7xl mx-auto px-4">
+            <div class="tourism-search-bar">
+                <label class="tourism-search-field" for="destinationSearch">
+                    <i class="fas fa-search"></i>
+                    <input type="search" id="destinationSearch" placeholder="Search destinations, cities, tags..." autocomplete="off" data-destination-search>
+                </label>
+                <label class="tourism-select-field" for="destinationCityFilter">
+                    <span>City</span>
+                    <select id="destinationCityFilter" data-destination-city-filter>
+                        <option value="all">All cities</option>
+                    </select>
+                </label>
+            </div>
             <div class="flex overflow-x-auto py-4 space-x-4 hide-scrollbar px-2">
                 <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full category-active" data-category="all">
                     <i class="fas fa-globe mr-2"></i>All Places
                 </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="outdoor">
-                    <i class="fas fa-tree mr-2"></i>Outdoor
+                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="heritage">
+                    <i class="fas fa-landmark mr-2"></i>Heritage
                 </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="indoor">
-                    <i class="fas fa-home mr-2"></i>Indoor
+                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="desert">
+                    <i class="fas fa-mountain-sun mr-2"></i>Desert
                 </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="historical">
-                    <i class="fas fa-landmark mr-2"></i>Historical
+                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="nature">
+                    <i class="fas fa-tree mr-2"></i>Nature
                 </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="natural">
-                    <i class="fas fa-mountain mr-2"></i>Natural
+                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="nature reserve">
+                    <i class="fas fa-leaf mr-2"></i>Nature Reserve
                 </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="religious">
-                    <i class="fas fa-place-of-worship mr-2"></i>Religious
+                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="city">
+                    <i class="fas fa-city mr-2"></i>City
                 </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="cultural">
-                    <i class="fas fa-theater-masks mr-2"></i>Cultural
-                </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="adventure">
-                    <i class="fas fa-hiking mr-2"></i>Adventure
-                </button>
-                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="urban">
-                    <i class="fas fa-city mr-2"></i>Urban
+                <button class="filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text" data-category="coast">
+                    <i class="fas fa-water mr-2"></i>Coast
                 </button>
             </div>
         </div>

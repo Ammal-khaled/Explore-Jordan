@@ -823,12 +823,58 @@ section .bg-white.rounded-xl img {
 
 .empty-state {
   width: 100%;
+  grid-column: 1 / -1;
   padding: 2rem;
   text-align: center;
   color: var(--color-dark-brown);
   background: var(--color-white);
   border-radius: var(--radius-standard);
   box-shadow: var(--shadow-standard);
+}
+
+.tourism-search-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  padding: 1rem 0 0.25rem;
+  align-items: center;
+}
+
+.tourism-search-field,
+.tourism-select-field {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 46px;
+  padding: 0.65rem 0.9rem;
+  background: var(--color-white);
+  border: 1px solid rgba(92, 78, 61, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(31, 41, 55, 0.08);
+  color: var(--color-dark-brown);
+}
+
+.tourism-search-field input,
+.tourism-select-field select {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-dark-brown);
+  font: inherit;
+}
+
+.tourism-search-field i,
+.tourism-select-field span {
+  color: var(--color-primary-gold);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tourism-select-field select {
+  min-width: 9rem;
+  cursor: pointer;
 }
 
 /* ===== Mobile Responsiveness ===== */
@@ -962,6 +1008,21 @@ img {
 
   .grid {
     gap: 1.25rem !important;
+  }
+
+  .tourism-search-bar {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    padding-top: 0.85rem;
+  }
+
+  .tourism-search-field,
+  .tourism-select-field {
+    width: 100%;
+  }
+
+  .tourism-select-field select {
+    min-width: 0;
   }
 
   .destination-card,

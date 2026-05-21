@@ -279,21 +279,33 @@
     <!-- Category Tabs -->
     <section class="py-8 bg-white sticky top-16 z-40 shadow-sm" data-aos="fade-down" data-aos-duration="800">
         <div class="container mx-auto px-4">
+            <div class="tourism-search-bar">
+                <label class="tourism-search-field" for="activitySearch">
+                    <i class="fas fa-search"></i>
+                    <input type="search" id="activitySearch" placeholder="Search activities, locations, tags..." autocomplete="off" data-activity-search>
+                </label>
+            </div>
             <div class="flex overflow-x-auto scroll-container space-x-2 pb-2">
                 <button class="category-tab active px-6 py-2 rounded-full whitespace-nowrap bg-green-800 text-white" data-category="all">
                     All Experiences
                 </button>
                 <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="cultural">
-                    Cultural Experiences
+                    Cultural
                 </button>
                 <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="adventure">
-                    Adventure & Outdoor
+                    Adventure
                 </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="festivals">
-                    Festivals & Events
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="water">
+                    Water
                 </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="traditions">
-                    Local Traditions
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="scenic">
+                    Scenic
+                </button>
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="wellness">
+                    Wellness
+                </button>
+                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="history">
+                    History
                 </button>
             </div>
         </div>

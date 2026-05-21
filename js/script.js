@@ -1,6 +1,8 @@
 let jordanMap = null;
 let mapMarkers = [];
 let fadeObserver = null;
+let destinationsData = [];
+let activitiesData = [];
 
 const markersData = [
   { name: "Petra", name_ar: "\u0627\u0644\u0628\u062a\u0631\u0627\u0621", lat: 30.3285, lng: 35.4444 },
@@ -51,6 +53,14 @@ function escapeHTML(value) {
   });
 }
 
+function normalizeText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+}
+
 async function fetchJSON(path) {
   const response = await fetch(path);
 
@@ -63,6 +73,10 @@ async function fetchJSON(path) {
 
 function showEmptyState(container, message) {
   container.innerHTML = `<p class="empty-state">${escapeHTML(message)}</p>`;
+}
+
+function renderNoResults(container, message) {
+  showEmptyState(container, message);
 }
 
 function destinationCategories(destination) {
@@ -95,6 +109,56 @@ function tagList(tags) {
   return (tags || []).slice(0, 3).map(tag => {
     return `<span class="text-xs px-2 py-1 bg-gray-100 rounded-full">${escapeHTML(tag)}</span>`;
   }).join('');
+}
+
+function destinationSearchText(destination) {
+  return normalizeText([
+    destination.name,
+    destination.city,
+    destination.category,
+    destination.shortDescription,
+    destination.longDescription,
+    ...(destination.tags || [])
+  ].join(' '));
+}
+
+function activitySearchText(activity) {
+  return normalizeText([
+    activity.name,
+    activity.location,
+    activity.category,
+    activity.shortDescription,
+    activity.longDescription,
+    ...(activity.tags || [])
+  ].join(' '));
+}
+
+function filterDestinations(data, filters = {}) {
+  const query = normalizeText(filters.query);
+  const category = normalizeText(filters.category || 'all');
+  const city = normalizeText(filters.city || 'all');
+
+  return (Array.isArray(data) ? data : []).filter(destination => {
+    const destinationCategory = normalizeText(destination.category);
+    const categories = destinationCategories(destination).split(',').map(normalizeText);
+    const matchesQuery = !query || destinationSearchText(destination).includes(query);
+    const matchesCategory = category === 'all' || destinationCategory === category || categories.includes(category);
+    const matchesCity = city === 'all' || normalizeText(destination.city) === city;
+
+    return matchesQuery && matchesCategory && matchesCity;
+  });
+}
+
+function filterActivities(data, filters = {}) {
+  const query = normalizeText(filters.query);
+  const category = normalizeText(filters.category || 'all');
+
+  return (Array.isArray(data) ? data : []).filter(activity => {
+    const matchesQuery = !query || activitySearchText(activity).includes(query);
+    const matchesCategory = activityMatchesTab(activity.category, category);
+
+    return matchesQuery && matchesCategory;
+  });
 }
 
 function renderDestinationCards(data, container) {
@@ -403,21 +467,60 @@ function initExperienceCards() {
 }
 
 function initDestinationFilters() {
+  const container = document.querySelector('[data-render="page-destinations"]');
+  const searchInput = document.querySelector('[data-destination-search]');
+  const citySelect = document.querySelector('[data-destination-city-filter]');
   const filterButtons = document.querySelectorAll('.filter-btn');
-  const destinationCards = document.querySelectorAll('.destination-card');
 
-  if (filterButtons.length === 0 || destinationCards.length === 0) {
+  if (!container || destinationsData.length === 0) {
     return;
+  }
+
+  if (citySelect && citySelect.options.length <= 1) {
+    const cities = Array.from(new Set(destinationsData.map(destination => destination.city).filter(Boolean))).sort();
+    citySelect.insertAdjacentHTML('beforeend', cities.map(city => {
+      return `<option value="${escapeHTML(city)}">${escapeHTML(city)}</option>`;
+    }).join(''));
+  }
+
+  function activeCategory() {
+    const activeButton = document.querySelector('.filter-btn.category-active');
+    return activeButton ? activeButton.getAttribute('data-category') : 'all';
+  }
+
+  function renderFilteredDestinations() {
+    const filtered = filterDestinations(destinationsData, {
+      query: searchInput ? searchInput.value : '',
+      category: activeCategory(),
+      city: citySelect ? citySelect.value : 'all'
+    });
+
+    if (filtered.length === 0) {
+      renderNoResults(container, 'No destinations found. Try a different search, category, or city.');
+      return;
+    }
+
+    renderDestinationCards(filtered, container);
+    refreshAOS();
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', renderFilteredDestinations);
+  }
+
+  if (citySelect) {
+    citySelect.addEventListener('change', renderFilteredDestinations);
   }
 
   filterButtons.forEach(button => {
     button.addEventListener('click', function() {
-      const category = this.getAttribute('data-category');
-
-      destinationCards.forEach(card => {
-        const categories = (card.getAttribute('data-categories') || '').split(',');
-        card.style.display = category === 'all' || categories.includes(category) ? 'block' : 'none';
+      filterButtons.forEach(item => {
+        item.classList.remove('category-active');
+        item.classList.add('dark-gray-text');
       });
+      this.classList.add('category-active');
+      this.classList.remove('dark-gray-text');
+      renderFilteredDestinations();
     });
   });
 }
@@ -429,37 +532,56 @@ function activityMatchesTab(activityCategory, selectedCategory) {
 
   const normalized = String(activityCategory || '').toLowerCase();
 
-  if (selectedCategory === 'cultural') {
-    return ['cultural', 'history'].includes(normalized);
-  }
-
-  if (selectedCategory === 'adventure') {
-    return ['adventure', 'water', 'scenic', 'wellness'].includes(normalized);
-  }
-
   return normalized === selectedCategory;
 }
 
 function initActivityFilters() {
+  const container = document.querySelector('[data-render="page-activities"]');
+  const searchInput = document.querySelector('[data-activity-search]');
   const tabs = document.querySelectorAll('.category-tab');
-  const activityCards = document.querySelectorAll('#activitiesContainer .experience-card');
   const activitySection = document.querySelector('#experience-grid .experience-section');
 
-  if (tabs.length === 0 || activityCards.length === 0) {
+  if (!container || activitiesData.length === 0) {
     return;
+  }
+
+  function activeCategory() {
+    const activeTab = document.querySelector('.category-tab.active');
+    return activeTab ? activeTab.dataset.category : 'all';
+  }
+
+  function renderFilteredActivities() {
+    const filtered = filterActivities(activitiesData, {
+      query: searchInput ? searchInput.value : '',
+      category: activeCategory()
+    });
+
+    if (activitySection) {
+      activitySection.style.display = 'block';
+    }
+
+    if (filtered.length === 0) {
+      renderNoResults(container, 'No activities found. Try a different search or category.');
+      return;
+    }
+
+    renderActivityCards(filtered, container);
+    refreshAOS();
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', renderFilteredActivities);
   }
 
   tabs.forEach(tab => {
     tab.addEventListener('click', function() {
-      const category = this.dataset.category;
-
-      if (activitySection) {
-        activitySection.style.display = 'block';
-      }
-
-      activityCards.forEach(card => {
-        card.style.display = activityMatchesTab(card.dataset.category, category) ? 'block' : 'none';
+      tabs.forEach(item => {
+        item.classList.remove('active', 'bg-green-800', 'text-white');
+        item.classList.add('bg-gray-100', 'hover:bg-gray-200');
       });
+      this.classList.add('active', 'bg-green-800', 'text-white');
+      this.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+      renderFilteredActivities();
     });
   });
 }
@@ -482,6 +604,7 @@ async function initDynamicContent() {
   if (homeDestinationsContainer || pageDestinationsContainer) {
     tasks.push(fetchJSON(getDataPath('destinations.json'))
       .then(data => {
+        destinationsData = Array.isArray(data) ? data : [];
         renderDestinationCards(data, homeDestinationsContainer);
         renderDestinationCards(data, pageDestinationsContainer);
       })
@@ -494,6 +617,7 @@ async function initDynamicContent() {
   if (homeActivitiesContainer || pageActivitiesContainer) {
     tasks.push(fetchJSON(getDataPath('activities.json'))
       .then(data => {
+        activitiesData = Array.isArray(data) ? data : [];
         renderActivityCards(data, homeActivitiesContainer);
         renderActivityCards(data, pageActivitiesContainer);
       })
