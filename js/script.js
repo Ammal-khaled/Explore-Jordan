@@ -71,13 +71,19 @@ function setLanguage(lang) {
 
 function initLanguageSwitcher() {
   const switcher = document.getElementById('language-switcher');
-  const hasLanguageContent = document.getElementById('lang-en') || document.getElementById('lang-ar');
+  const englishSection = document.getElementById('lang-en');
+  const arabicSection = document.getElementById('lang-ar');
 
-  if (!switcher || !hasLanguageContent) {
+  if (!englishSection && !arabicSection) {
     return;
   }
 
   let currentLang = document.documentElement.lang || 'en';
+
+  if (!switcher || !englishSection || !arabicSection) {
+    setLanguage(currentLang);
+    return;
+  }
 
   switcher.addEventListener('click', function() {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
