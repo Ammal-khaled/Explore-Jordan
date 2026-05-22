@@ -1,0 +1,70 @@
+:root {
+  --color-primary-gold: #bfa03e;
+  --color-dark-brown: #5C4E3D;
+  --color-soft-cream: #fff7d9;
+  --color-dark-overlay: rgba(31, 41, 55, 0.85);
+  --color-white: #ffffff;
+  --radius-standard: 12px;
+  --shadow-standard: 0 12px 30px rgba(31, 41, 55, 0.13);
+}
+
+/* ===== Global Styles ===== */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: #f9fafb;
+  color: #454240;
+  overflow-x: hidden;
+}
+body:lang(ar) {
+  font-family: 'Cairo', sans-serif;
+}
+h1, h2, h3, h4 {
+  font-family: 'Libre Baskerville', serif;
+  color: var(--color-dark-brown);
+}
+h1:lang(ar), h2:lang(ar), h3:lang(ar), h4:lang(ar) {
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+}
+
+
+/* ===== Utility Classes ===== */
+.section-gold { background-color: var(--color-primary-gold); }
+.hidden { display: none !important; }
+.gold-accent { background-color: var(--color-primary-gold) !important; }
+.gold-accent-text { color: var(--color-primary-gold) !important; }
+.cream-beige { background-color: var(--color-soft-cream) !important; }
+.dark-brown-text { color: var(--color-dark-brown) !important; }
+
+/* ===== Shared Typography ===== */
+section:not(.hero-slider):not(.hero-section) h2,
+.experience-section h2,
+main h1,
+header h1 {
+  color: var(--color-dark-brown) !important;
+  font-family: 'Libre Baskerville', serif !important;
+  font-size: clamp(2rem, 4vw, 2.75rem) !important;
+  line-height: 1.2 !important;
+  margin-bottom: 1rem !important;
+  text-align: center !important;
+}
+
+section:not(.hero-slider):not(.hero-section) h2 + p,
+.text-center > p {
+  color: #454240 !important;
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+}
+
+html,
+body {
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+}
