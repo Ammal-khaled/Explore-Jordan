@@ -235,6 +235,19 @@ img {
     width: 100%;
   }
 
+  .attraction-related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attraction-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attraction-actions .button-78 {
+    max-width: none;
+  }
+
   .card-shadow,
   .card-hover,
   .experience-card,

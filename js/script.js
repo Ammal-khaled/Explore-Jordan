@@ -41,6 +41,12 @@ function resolveAssetPath(path) {
   return isPagesDirectory() ? `../${path}` : path;
 }
 
+function getAttractionDetailPath(destination) {
+  const id = destination.id || destination.slug;
+  const filePath = isPagesDirectory() ? 'attraction.html' : 'pages/attraction.html';
+  return `${filePath}?id=${encodeURIComponent(id)}`;
+}
+
 function escapeHTML(value) {
   return String(value || '').replace(/[&<>"']/g, character => {
     const entities = {
@@ -223,6 +229,30 @@ function activitySearchText(activity) {
   ].join(' '));
 }
 
+function sharesDestinationContext(destination, activity) {
+  const destinationTerms = [
+    destination.name,
+    destination.city,
+    destination.category,
+    ...(destination.tags || [])
+  ].map(normalizeText).filter(Boolean);
+
+  const activityTerms = [
+    activity.name,
+    activity.location,
+    activity.category,
+    ...(activity.tags || [])
+  ].map(normalizeText).filter(Boolean);
+
+  return destinationTerms.some(destinationTerm => {
+    return activityTerms.some(activityTerm => {
+      return destinationTerm === activityTerm ||
+        destinationTerm.includes(activityTerm) ||
+        activityTerm.includes(destinationTerm);
+    });
+  });
+}
+
 function filterDestinations(data, filters = {}) {
   const query = normalizeText(filters.query);
   const category = normalizeText(filters.category || 'all');
@@ -300,7 +330,7 @@ function renderDestinationCards(data, container) {
             <a href="${escapeHTML(destination.mapLink)}" target="_blank" rel="noopener" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
               <i class="fas fa-map-marker-alt mr-2"></i> View Map
             </a>
-            <a href="${escapeHTML(destination.officialLink)}" target="_blank" rel="noopener" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
+            <a href="${escapeHTML(getAttractionDetailPath(destination))}" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
               <i class="fas fa-info-circle mr-2"></i> Details
             </a>
           </div>
@@ -393,6 +423,89 @@ function renderAccommodationCards(data, container) {
       </div>
     </div>
   `).join('');
+}
+
+function renderAttractionDetail(destination, relatedActivities, container) {
+  const tags = (destination.tags || []).map(tag => `<span>${escapeHTML(tag)}</span>`).join('');
+  const relatedMarkup = relatedActivities.length > 0
+    ? `<div class="attraction-related-grid">${relatedActivities.map(activity => `
+        <article class="attraction-related-card">
+          <img src="${resolveAssetPath(activity.image)}" alt="${escapeHTML(activity.name)}">
+          <div>
+            <p>${escapeHTML(activity.category)} · ${escapeHTML(activity.duration)}</p>
+            <h3>${escapeHTML(activity.name)}</h3>
+            <span>${escapeHTML(activity.shortDescription)}</span>
+          </div>
+        </article>
+      `).join('')}</div>`
+    : '<p class="attraction-muted">No closely related activities are listed yet.</p>';
+
+  container.innerHTML = `
+    <article class="attraction-detail-card">
+      <a class="attraction-back" href="top.html">Back to Top Destinations</a>
+      <div class="attraction-hero-image">
+        <img src="${resolveAssetPath(destination.image)}" alt="${escapeHTML(destination.name)}">
+      </div>
+      <div class="attraction-content">
+        <p class="attraction-meta">${escapeHTML(destination.city)} · ${escapeHTML(destination.category)}</p>
+        <h1>${escapeHTML(destination.name)}</h1>
+        <p>${escapeHTML(destination.longDescription || destination.shortDescription)}</p>
+        <div class="attraction-tags">${tags}</div>
+        <div class="attraction-actions">
+          <a href="${escapeHTML(destination.mapLink)}" target="_blank" rel="noopener" class="button-78">View Map</a>
+          <a href="${escapeHTML(destination.officialLink)}" target="_blank" rel="noopener" class="button-78 attraction-secondary-action">Official Link</a>
+        </div>
+      </div>
+    </article>
+    <section class="attraction-related">
+      <h2>Related Activities</h2>
+      ${relatedMarkup}
+    </section>
+  `;
+}
+
+async function initAttractionDetailPage() {
+  const container = document.getElementById('attraction-detail');
+
+  if (!container) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const destinationId = normalizeText(params.get('id'));
+
+  renderLoading(container, 'Loading destination details...');
+
+  if (!destinationId) {
+    renderError(container, 'Choose a destination from the Top Destinations page to view its details.');
+    return;
+  }
+
+  try {
+    const [destinations, activities] = await Promise.all([
+      fetchJSON(getDataPath('destinations.json')),
+      fetchJSON(getDataPath('activities.json'))
+    ]);
+    const destination = (destinations || []).find(item => {
+      return normalizeText(item.id) === destinationId || normalizeText(item.slug) === destinationId;
+    });
+
+    if (!destination) {
+      renderError(container, 'We could not find that destination. Please return to Top Destinations and choose another place.');
+      return;
+    }
+
+    document.title = `${destination.name} | Explore Jordan`;
+    const relatedActivities = (activities || [])
+      .filter(activity => sharesDestinationContext(destination, activity))
+      .slice(0, 3);
+
+    renderAttractionDetail(destination, relatedActivities, container);
+    updateFavoriteButtons();
+  } catch (error) {
+    console.error('Failed to load attraction detail data:', error);
+    renderError(container, 'Destination details could not load. Please try again later.');
+  }
 }
 
 function initMap() {
@@ -818,6 +931,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   initFadeAnimations();
   initLanguageSwitcher();
   initHeroSlider();
+  await initAttractionDetailPage();
   await initDynamicContent();
   initCarousel();
   initExperienceCards();
