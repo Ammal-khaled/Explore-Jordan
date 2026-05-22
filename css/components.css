@@ -401,3 +401,61 @@ section .bg-white.rounded-xl img {
   color: var(--color-white);
 }
 
+.trip-button,
+.trip-clear-button,
+.trip-remove-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--color-primary-gold);
+  border-radius: 999px;
+  background: var(--color-primary-gold);
+  color: var(--color-white);
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.trip-button:hover,
+.trip-clear-button:hover,
+.trip-remove-button:hover,
+.trip-button:focus-visible,
+.trip-clear-button:focus-visible,
+.trip-remove-button:focus-visible {
+  transform: translateY(-2px);
+  background: #a9892d;
+  box-shadow: 0 10px 22px rgba(191, 160, 62, 0.26);
+  outline: none;
+}
+
+.trip-button--active {
+  background: var(--color-dark-brown);
+  border-color: var(--color-dark-brown);
+}
+
+.trip-button--overlay {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 5;
+  min-height: 36px;
+  padding: 0.45rem 0.8rem;
+  background: rgba(191, 160, 62, 0.96);
+  box-shadow: 0 8px 20px rgba(31, 41, 55, 0.18);
+}
+
+.trip-remove-button,
+.trip-clear-button {
+  background: var(--color-white);
+  color: var(--color-dark-brown);
+  border-color: rgba(92, 78, 61, 0.25);
+  box-shadow: none;
+}
+
+.trip-button--detail {
+  min-height: 64px;
+}
+

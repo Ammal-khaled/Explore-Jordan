@@ -24,6 +24,7 @@ const activityIcons = {
 };
 
 const favoritesStorageKey = 'exploreJordanFavorites';
+const tripStorageKey = 'exploreJordanTripItems';
 
 function isPagesDirectory() {
   return window.location.pathname.includes('/pages/');
@@ -106,6 +107,91 @@ function updateFavoriteButtons() {
       icon.classList.toggle('far', !active);
     }
   });
+}
+
+function getTripItems() {
+  try {
+    const items = JSON.parse(localStorage.getItem(tripStorageKey)) || [];
+    return Array.isArray(items) ? items : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveTripItems(items) {
+  localStorage.setItem(tripStorageKey, JSON.stringify(items));
+}
+
+function addToTrip(item) {
+  const items = getTripItems();
+  const exists = items.some(savedItem => savedItem.type === item.type && savedItem.id === item.id);
+
+  if (!exists) {
+    items.push(item);
+    saveTripItems(items);
+  }
+
+  updateTripButtons();
+  renderTripPlanner();
+}
+
+function removeFromTrip(type, id) {
+  const items = getTripItems().filter(item => !(item.type === type && item.id === id));
+  saveTripItems(items);
+  updateTripButtons();
+  renderTripPlanner();
+}
+
+function clearTrip() {
+  saveTripItems([]);
+  updateTripButtons();
+  renderTripPlanner();
+}
+
+function isInTrip(type, id) {
+  return getTripItems().some(item => item.type === type && item.id === id);
+}
+
+function updateTripButtons() {
+  document.querySelectorAll('[data-trip-type][data-trip-id]').forEach(button => {
+    const active = isInTrip(button.dataset.tripType, button.dataset.tripId);
+    button.classList.toggle('trip-button--active', active);
+    button.setAttribute('aria-pressed', String(active));
+    button.textContent = active ? 'Added to Trip' : 'Add to Trip';
+  });
+}
+
+function tripButtonMarkup(item, extraClass = '') {
+  return `<button class="trip-button ${extraClass}" type="button"
+    data-trip-type="${escapeHTML(item.type)}"
+    data-trip-id="${escapeHTML(item.id)}"
+    data-trip-name="${escapeHTML(item.name)}"
+    data-trip-location="${escapeHTML(item.location)}"
+    data-trip-image="${escapeHTML(item.image)}"
+    data-trip-category="${escapeHTML(item.category)}"
+    aria-pressed="false">Add to Trip</button>`;
+}
+
+function destinationTripItem(destination) {
+  return {
+    id: destination.id,
+    type: 'destination',
+    name: destination.name,
+    location: destination.city,
+    image: destination.image,
+    category: destination.category
+  };
+}
+
+function activityTripItem(activity) {
+  return {
+    id: activity.id,
+    type: 'activity',
+    name: activity.name,
+    location: activity.location,
+    image: activity.image,
+    category: activity.category
+  };
 }
 
 function normalizeText(value) {
@@ -299,6 +385,7 @@ function renderDestinationCards(data, container) {
         <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="destination" data-favorite-id="${escapeHTML(destination.id)}" aria-label="Add to favorites" aria-pressed="false">
           <i class="far fa-heart"></i>
         </button>
+        ${tripButtonMarkup(destinationTripItem(destination), 'trip-button--overlay')}
         <div class="item-title">
           <h3>${escapeHTML(destination.name)}</h3>
         </div>
@@ -308,6 +395,7 @@ function renderDestinationCards(data, container) {
       </div>
     `).join('');
     updateFavoriteButtons();
+    updateTripButtons();
     return;
   }
 
@@ -334,11 +422,15 @@ function renderDestinationCards(data, container) {
               <i class="fas fa-info-circle mr-2"></i> Details
             </a>
           </div>
+          <div class="mt-3">
+            ${tripButtonMarkup(destinationTripItem(destination))}
+          </div>
         </div>
       </div>
     </div>
   `).join('');
   updateFavoriteButtons();
+  updateTripButtons();
 }
 
 function renderActivityCards(data, container) {
@@ -359,6 +451,7 @@ function renderActivityCards(data, container) {
         <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="activity" data-favorite-id="${escapeHTML(activity.id)}" aria-label="Add to favorites" aria-pressed="false">
           <i class="far fa-heart"></i>
         </button>
+        ${tripButtonMarkup(activityTripItem(activity), 'trip-button--overlay')}
         <div class="shadow"></div>
         <div class="label">
           <div class="icon">
@@ -372,6 +465,7 @@ function renderActivityCards(data, container) {
       </div>
     `).join('');
     updateFavoriteButtons();
+    updateTripButtons();
     return;
   }
 
@@ -395,10 +489,14 @@ function renderActivityCards(data, container) {
           </div>
           <a href="${escapeHTML(activity.mapLink)}" target="_blank" rel="noopener" class="text-green-700 hover:text-green-800 font-semibold hover-grow">View Map</a>
         </div>
+        <div class="mt-4">
+          ${tripButtonMarkup(activityTripItem(activity))}
+        </div>
       </div>
     </div>
   `).join('');
   updateFavoriteButtons();
+  updateTripButtons();
 }
 
 function renderAccommodationCards(data, container) {
@@ -427,12 +525,13 @@ function renderAccommodationCards(data, container) {
 
 function renderAttractionDetail(destination, relatedActivities, container) {
   const tags = (destination.tags || []).map(tag => `<span>${escapeHTML(tag)}</span>`).join('');
+  const tripItem = destinationTripItem(destination);
   const relatedMarkup = relatedActivities.length > 0
     ? `<div class="attraction-related-grid">${relatedActivities.map(activity => `
         <article class="attraction-related-card">
           <img src="${resolveAssetPath(activity.image)}" alt="${escapeHTML(activity.name)}">
           <div>
-            <p>${escapeHTML(activity.category)} · ${escapeHTML(activity.duration)}</p>
+            <p>${escapeHTML(activity.category)} | ${escapeHTML(activity.duration)}</p>
             <h3>${escapeHTML(activity.name)}</h3>
             <span>${escapeHTML(activity.shortDescription)}</span>
           </div>
@@ -447,13 +546,14 @@ function renderAttractionDetail(destination, relatedActivities, container) {
         <img src="${resolveAssetPath(destination.image)}" alt="${escapeHTML(destination.name)}">
       </div>
       <div class="attraction-content">
-        <p class="attraction-meta">${escapeHTML(destination.city)} · ${escapeHTML(destination.category)}</p>
+        <p class="attraction-meta">${escapeHTML(destination.city)} | ${escapeHTML(destination.category)}</p>
         <h1>${escapeHTML(destination.name)}</h1>
         <p>${escapeHTML(destination.longDescription || destination.shortDescription)}</p>
         <div class="attraction-tags">${tags}</div>
         <div class="attraction-actions">
           <a href="${escapeHTML(destination.mapLink)}" target="_blank" rel="noopener" class="button-78">View Map</a>
           <a href="${escapeHTML(destination.officialLink)}" target="_blank" rel="noopener" class="button-78 attraction-secondary-action">Official Link</a>
+          ${tripButtonMarkup(tripItem, 'trip-button--detail')}
         </div>
       </div>
     </article>
@@ -461,6 +561,47 @@ function renderAttractionDetail(destination, relatedActivities, container) {
       <h2>Related Activities</h2>
       ${relatedMarkup}
     </section>
+  `;
+  updateTripButtons();
+}
+
+function renderTripPlanner() {
+  const container = document.querySelector('[data-trip-planner]');
+
+  if (!container) {
+    return;
+  }
+
+  const items = getTripItems();
+
+  if (items.length === 0) {
+    container.innerHTML = `
+      <div class="data-state data-state--empty">
+        <i class="fas fa-route"></i>
+        <p>Your trip planner is empty. Add destinations and activities to start shaping your Jordan route.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="trip-planner-header">
+      <p>${items.length} saved ${items.length === 1 ? 'item' : 'items'}</p>
+      <button class="trip-clear-button" type="button" data-trip-clear>Clear Trip</button>
+    </div>
+    <div class="trip-planner-grid">
+      ${items.map(item => `
+        <article class="trip-card">
+          <img src="${resolveAssetPath(item.image)}" alt="${escapeHTML(item.name)}">
+          <div class="trip-card__body">
+            <span>${escapeHTML(item.type)} | ${escapeHTML(item.category)}</span>
+            <h3>${escapeHTML(item.name)}</h3>
+            <p>${escapeHTML(item.location)}</p>
+            <button class="trip-remove-button" type="button" data-trip-remove data-trip-type="${escapeHTML(item.type)}" data-trip-id="${escapeHTML(item.id)}">Remove</button>
+          </div>
+        </article>
+      `).join('')}
+    </div>
   `;
 }
 
@@ -703,6 +844,42 @@ function initFavorites() {
   updateFavoriteButtons();
 }
 
+function initTripPlanner() {
+  document.addEventListener('click', function(event) {
+    const addButton = event.target.closest('[data-trip-type][data-trip-id]:not([data-trip-remove])');
+    const removeButton = event.target.closest('[data-trip-remove]');
+    const clearButton = event.target.closest('[data-trip-clear]');
+
+    if (addButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      addToTrip({
+        id: addButton.dataset.tripId,
+        type: addButton.dataset.tripType,
+        name: addButton.dataset.tripName,
+        location: addButton.dataset.tripLocation,
+        image: addButton.dataset.tripImage,
+        category: addButton.dataset.tripCategory
+      });
+      return;
+    }
+
+    if (removeButton) {
+      event.preventDefault();
+      removeFromTrip(removeButton.dataset.tripType, removeButton.dataset.tripId);
+      return;
+    }
+
+    if (clearButton) {
+      event.preventDefault();
+      clearTrip();
+    }
+  });
+
+  renderTripPlanner();
+  updateTripButtons();
+}
+
 function initDestinationFilters() {
   const container = document.querySelector('[data-render="page-destinations"]');
   const searchInput = document.querySelector('[data-destination-search]');
@@ -927,6 +1104,7 @@ function initResponsiveNav() {
 document.addEventListener('DOMContentLoaded', async function() {
   initResponsiveNav();
   initFavorites();
+  initTripPlanner();
   initMap();
   initFadeAnimations();
   initLanguageSwitcher();
@@ -936,3 +1114,4 @@ document.addEventListener('DOMContentLoaded', async function() {
   initCarousel();
   initExperienceCards();
 });
+

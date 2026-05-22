@@ -421,3 +421,77 @@
   line-height: 1.6;
 }
 
+/* ===== Trip Planner Page ===== */
+.planner-page-header {
+  padding: 3.5rem 1rem 2rem;
+  background: var(--color-soft-cream);
+  text-align: center;
+}
+
+.planner-page-header p {
+  max-width: 680px;
+  margin: 0 auto;
+  color: #454240;
+  line-height: 1.7;
+}
+
+.trip-planner-section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 3rem 1rem 4rem;
+}
+
+.trip-planner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.trip-planner-header p {
+  margin: 0;
+  color: var(--color-dark-brown);
+  font-weight: 800;
+}
+
+.trip-planner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.trip-card {
+  overflow: hidden;
+  background: var(--color-white);
+  border-radius: var(--radius-standard);
+  box-shadow: var(--shadow-standard);
+}
+
+.trip-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.trip-card__body {
+  padding: 1.15rem;
+}
+
+.trip-card__body span {
+  color: var(--color-primary-gold);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.trip-card__body h3 {
+  margin: 0.45rem 0;
+  font-size: 1.2rem;
+}
+
+.trip-card__body p {
+  margin: 0 0 1rem;
+  color: #454240;
+}
+

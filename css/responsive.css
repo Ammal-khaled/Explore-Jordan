@@ -239,6 +239,15 @@ img {
     grid-template-columns: 1fr;
   }
 
+  .trip-planner-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .trip-planner-grid {
+    grid-template-columns: 1fr;
+  }
+
   .attraction-actions {
     flex-direction: column;
     align-items: stretch;
