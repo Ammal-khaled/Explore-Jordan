@@ -316,27 +316,22 @@ function activitySearchText(activity) {
 }
 
 function sharesDestinationContext(destination, activity) {
-  const destinationTerms = [
-    destination.name,
-    destination.city,
-    destination.category,
-    ...(destination.tags || [])
-  ].map(normalizeText).filter(Boolean);
+  const destinationCity = normalizeText(destination.city);
+  const activityLocation = normalizeText(activity.location);
+  const destinationCategory = normalizeText(destination.category);
+  const activityCategory = normalizeText(activity.category);
+  const destinationTags = (destination.tags || []).map(normalizeText);
+  const activityTags = (activity.tags || []).map(normalizeText);
 
-  const activityTerms = [
-    activity.name,
-    activity.location,
-    activity.category,
-    ...(activity.tags || [])
-  ].map(normalizeText).filter(Boolean);
+  const sameCityOrLocation = Boolean(destinationCity && activityLocation) &&
+    (destinationCity === activityLocation ||
+      destinationCity.includes(activityLocation) ||
+      activityLocation.includes(destinationCity));
+  const matchingCategory = Boolean(destinationCategory && activityCategory) &&
+    destinationCategory === activityCategory;
+  const matchingTags = destinationTags.some(tag => activityTags.includes(tag));
 
-  return destinationTerms.some(destinationTerm => {
-    return activityTerms.some(activityTerm => {
-      return destinationTerm === activityTerm ||
-        destinationTerm.includes(activityTerm) ||
-        activityTerm.includes(destinationTerm);
-    });
-  });
+  return sameCityOrLocation || matchingCategory || matchingTags;
 }
 
 function filterDestinations(data, filters = {}) {
@@ -534,6 +529,7 @@ function renderAttractionDetail(destination, relatedActivities, container) {
             <p>${escapeHTML(activity.category)} | ${escapeHTML(activity.duration)}</p>
             <h3>${escapeHTML(activity.name)}</h3>
             <span>${escapeHTML(activity.shortDescription)}</span>
+            ${tripButtonMarkup(activityTripItem(activity), 'trip-button--related')}
           </div>
         </article>
       `).join('')}</div>`

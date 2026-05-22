@@ -459,3 +459,8 @@ section .bg-white.rounded-xl img {
   min-height: 64px;
 }
 
+.trip-button--related {
+  width: 100%;
+  margin-top: 1rem;
+}
+
