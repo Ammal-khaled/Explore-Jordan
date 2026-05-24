@@ -357,10 +357,6 @@ img {
     min-height: 320px;
   }
 
-  .lang-switch {
-    top: 72px;
-    right: 14px;
-  }
 }
 
 @media (max-width: 480px) {

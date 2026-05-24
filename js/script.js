@@ -3,13 +3,14 @@ let mapMarkers = [];
 let fadeObserver = null;
 let destinationsData = [];
 let activitiesData = [];
+const fallbackImagePath = 'assets/images/petra.jpg';
 
 const markersData = [
-  { name: "Petra", name_ar: "\u0627\u0644\u0628\u062a\u0631\u0627\u0621", lat: 30.3285, lng: 35.4444 },
-  { name: "Wadi Rum", name_ar: "\u0648\u0627\u062f\u064a \u0631\u0645", lat: 29.5739, lng: 35.4214 },
-  { name: "Dead Sea", name_ar: "\u0627\u0644\u0628\u062d\u0631 \u0627\u0644\u0645\u064a\u062a", lat: 31.5590, lng: 35.4732 },
-  { name: "Amman", name_ar: "\u0639\u0645\u0651\u0627\u0646", lat: 31.9539, lng: 35.9106 },
-  { name: "Aqaba", name_ar: "\u0627\u0644\u0639\u0642\u0628\u0629", lat: 29.5328, lng: 35.0063 }
+  { id: "petra", name: "Petra", name_ar: "\u0627\u0644\u0628\u062a\u0631\u0627\u0621", lat: 30.3285, lng: 35.4444 },
+  { id: "wadi-rum", name: "Wadi Rum", name_ar: "\u0648\u0627\u062f\u064a \u0631\u0645", lat: 29.5739, lng: 35.4214 },
+  { id: "dead-sea", name: "Dead Sea", name_ar: "\u0627\u0644\u0628\u062d\u0631 \u0627\u0644\u0645\u064a\u062a", lat: 31.5590, lng: 35.4732 },
+  { id: "amman", name: "Amman", name_ar: "\u0639\u0645\u0651\u0627\u0646", lat: 31.9539, lng: 35.9106 },
+  { id: "aqaba", name: "Aqaba", name_ar: "\u0627\u0644\u0639\u0642\u0628\u0629", lat: 29.5328, lng: 35.0063 }
 ];
 
 const activityIcons = {
@@ -35,11 +36,42 @@ function getDataPath(fileName) {
 }
 
 function resolveAssetPath(path) {
-  if (!path || /^(https?:)?\/\//.test(path) || path.startsWith('/') || path.startsWith('../')) {
+  if (!path) {
+    return resolveAssetPath(fallbackImagePath);
+  }
+
+  if (/^(https?:)?\/\//.test(path) || path.startsWith('/') || path.startsWith('../')) {
     return path;
   }
 
   return isPagesDirectory() ? `../${path}` : path;
+}
+
+function imageMarkup(path, alt, className = '') {
+  const source = resolveAssetPath(path);
+  const fallback = resolveAssetPath(fallbackImagePath);
+  const classAttribute = className ? ` class="${escapeHTML(className)}"` : '';
+
+  return `<img src="${escapeHTML(source)}" alt="${escapeHTML(alt)}"${classAttribute} loading="lazy" data-fallback-image="${escapeHTML(fallback)}">`;
+}
+
+function applyImageFallbacks(scope = document) {
+  scope.querySelectorAll('img').forEach(image => {
+    if (image.dataset.fallbackReady === 'true') {
+      return;
+    }
+
+    if (!image.dataset.fallbackImage) {
+      image.dataset.fallbackImage = resolveAssetPath(fallbackImagePath);
+    }
+
+    image.dataset.fallbackReady = 'true';
+    image.addEventListener('error', () => {
+      if (image.src !== image.dataset.fallbackImage) {
+        image.src = image.dataset.fallbackImage;
+      }
+    });
+  });
 }
 
 function getAttractionDetailPath(destination) {
@@ -153,7 +185,7 @@ function isInTrip(type, id) {
 }
 
 function updateTripButtons() {
-  document.querySelectorAll('[data-trip-type][data-trip-id]').forEach(button => {
+  document.querySelectorAll('.trip-button[data-trip-type][data-trip-id]').forEach(button => {
     const active = isInTrip(button.dataset.tripType, button.dataset.tripId);
     button.classList.toggle('trip-button--active', active);
     button.setAttribute('aria-pressed', String(active));
@@ -376,7 +408,8 @@ function renderDestinationCards(data, container) {
 
   if (isCarousel) {
     container.innerHTML = data.map((destination, index) => `
-      <div class="item${index === 0 ? ' active' : ''}" style="background-image: url('${resolveAssetPath(destination.image)}');">
+      <div class="item${index === 0 ? ' active' : ''}">
+        ${imageMarkup(destination.image, destination.name, 'item-image')}
         <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="destination" data-favorite-id="${escapeHTML(destination.id)}" aria-label="Add to favorites" aria-pressed="false">
           <i class="far fa-heart"></i>
         </button>
@@ -389,6 +422,7 @@ function renderDestinationCards(data, container) {
         </div>
       </div>
     `).join('');
+    applyImageFallbacks(container);
     updateFavoriteButtons();
     updateTripButtons();
     return;
@@ -398,7 +432,7 @@ function renderDestinationCards(data, container) {
     <div class="destination-card" data-categories="${escapeHTML(destinationCategories(destination))}">
       <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
         <div class="relative">
-          <img src="${resolveAssetPath(destination.image)}" alt="${escapeHTML(destination.name)}" class="w-full h-48 object-cover">
+          ${imageMarkup(destination.image, destination.name, 'w-full h-48 object-cover')}
           <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="destination" data-favorite-id="${escapeHTML(destination.id)}" aria-label="Add to favorites" aria-pressed="false">
             <i class="far fa-heart"></i>
           </button>
@@ -424,6 +458,7 @@ function renderDestinationCards(data, container) {
       </div>
     </div>
   `).join('');
+  applyImageFallbacks(container);
   updateFavoriteButtons();
   updateTripButtons();
 }
@@ -442,7 +477,8 @@ function renderActivityCards(data, container) {
 
   if (isExperienceStrip) {
     container.innerHTML = data.map((activity, index) => `
-      <div class="option${index === 0 ? ' active' : ''}" style="--optionBackground:url('${resolveAssetPath(activity.image)}')">
+      <div class="option${index === 0 ? ' active' : ''}">
+        ${imageMarkup(activity.image, activity.name, 'option-image')}
         <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="activity" data-favorite-id="${escapeHTML(activity.id)}" aria-label="Add to favorites" aria-pressed="false">
           <i class="far fa-heart"></i>
         </button>
@@ -459,6 +495,7 @@ function renderActivityCards(data, container) {
         </div>
       </div>
     `).join('');
+    applyImageFallbacks(container);
     updateFavoriteButtons();
     updateTripButtons();
     return;
@@ -467,7 +504,7 @@ function renderActivityCards(data, container) {
   container.innerHTML = data.map((activity, index) => `
     <div class="experience-card bg-white rounded-xl overflow-hidden" data-category="${escapeHTML(String(activity.category || '').toLowerCase())}" data-aos="fade-up" data-aos-delay="${100 + (index % 3) * 100}">
       <div class="relative">
-        <img src="${resolveAssetPath(activity.image)}" alt="${escapeHTML(activity.name)}" class="w-full h-64 object-cover">
+        ${imageMarkup(activity.image, activity.name, 'w-full h-64 object-cover')}
         <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="activity" data-favorite-id="${escapeHTML(activity.id)}" aria-label="Add to favorites" aria-pressed="false">
           <i class="far fa-heart"></i>
         </button>
@@ -490,6 +527,7 @@ function renderActivityCards(data, container) {
       </div>
     </div>
   `).join('');
+  applyImageFallbacks(container);
   updateFavoriteButtons();
   updateTripButtons();
 }
@@ -506,7 +544,7 @@ function renderAccommodationCards(data, container) {
 
   container.innerHTML = data.map(accommodation => `
     <div class="card-shadow bg-white rounded-lg overflow-hidden">
-      <img src="${resolveAssetPath(accommodation.image)}" alt="${escapeHTML(accommodation.name)}" class="w-full h-48 object-cover">
+      ${imageMarkup(accommodation.image, accommodation.name, 'w-full h-48 object-cover')}
       <div class="p-4">
         <div class="flex flex-wrap gap-2 mb-3">
           ${tagList(accommodation.tags)}
@@ -516,6 +554,7 @@ function renderAccommodationCards(data, container) {
       </div>
     </div>
   `).join('');
+  applyImageFallbacks(container);
 }
 
 function renderAttractionDetail(destination, relatedActivities, container) {
@@ -524,7 +563,7 @@ function renderAttractionDetail(destination, relatedActivities, container) {
   const relatedMarkup = relatedActivities.length > 0
     ? `<div class="attraction-related-grid">${relatedActivities.map(activity => `
         <article class="attraction-related-card">
-          <img src="${resolveAssetPath(activity.image)}" alt="${escapeHTML(activity.name)}">
+          ${imageMarkup(activity.image, activity.name)}
           <div>
             <p>${escapeHTML(activity.category)} | ${escapeHTML(activity.duration)}</p>
             <h3>${escapeHTML(activity.name)}</h3>
@@ -539,7 +578,7 @@ function renderAttractionDetail(destination, relatedActivities, container) {
     <article class="attraction-detail-card">
       <a class="attraction-back" href="top.html">Back to Top Destinations</a>
       <div class="attraction-hero-image">
-        <img src="${resolveAssetPath(destination.image)}" alt="${escapeHTML(destination.name)}">
+        ${imageMarkup(destination.image, destination.name)}
       </div>
       <div class="attraction-content">
         <p class="attraction-meta">${escapeHTML(destination.city)} | ${escapeHTML(destination.category)}</p>
@@ -558,6 +597,7 @@ function renderAttractionDetail(destination, relatedActivities, container) {
       ${relatedMarkup}
     </section>
   `;
+  applyImageFallbacks(container);
   updateTripButtons();
 }
 
@@ -588,7 +628,7 @@ function renderTripPlanner() {
     <div class="trip-planner-grid">
       ${items.map(item => `
         <article class="trip-card">
-          <img src="${resolveAssetPath(item.image)}" alt="${escapeHTML(item.name)}">
+          ${imageMarkup(item.image, item.name)}
           <div class="trip-card__body">
             <span>${escapeHTML(item.type)} | ${escapeHTML(item.category)}</span>
             <h3>${escapeHTML(item.name)}</h3>
@@ -599,6 +639,7 @@ function renderTripPlanner() {
       `).join('')}
     </div>
   `;
+  applyImageFallbacks(container);
 }
 
 async function initAttractionDetailPage() {
@@ -656,6 +697,8 @@ function initMap() {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(jordanMap);
+
+  updateMarkers('en');
 }
 
 function updateMarkers(lang) {
@@ -665,67 +708,14 @@ function updateMarkers(lang) {
 
   mapMarkers.forEach(marker => jordanMap.removeLayer(marker));
   mapMarkers = markersData.map(data => {
+    const destination = destinationsData.find(item => item.id === data.id) || data;
+    const detailPath = getAttractionDetailPath(destination);
+    const label = lang === 'ar' ? data.name_ar : data.name;
+
     return L.marker([data.lat, data.lng])
       .addTo(jordanMap)
-      .bindPopup(lang === 'ar' ? data.name_ar : data.name);
+      .bindPopup(`<a class="map-popup-link" href="${escapeHTML(detailPath)}">${escapeHTML(label)}</a>`);
   });
-}
-
-function setLanguage(lang) {
-  const englishSection = document.getElementById('lang-en');
-  const arabicSection = document.getElementById('lang-ar');
-
-  if (englishSection) {
-    englishSection.classList.toggle('hidden', lang === 'ar');
-  }
-
-  if (arabicSection) {
-    arabicSection.classList.toggle('hidden', lang === 'en');
-  }
-
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-
-  const mapTitle = document.getElementById('map-title');
-  if (mapTitle) {
-    mapTitle.textContent = lang === 'ar'
-      ? '\u0627\u0633\u062a\u0643\u0634\u0641 \u0627\u0644\u0623\u0631\u062f\u0646 \u0639\u0644\u0649 \u0627\u0644\u062e\u0631\u064a\u0637\u0629'
-      : 'Explore Jordan on the Map';
-  }
-
-  updateMarkers(lang);
-
-  const activeSection = document.getElementById(`lang-${lang}`);
-  if (activeSection && fadeObserver) {
-    activeSection.querySelectorAll('.fade-in').forEach(element => {
-      fadeObserver.observe(element);
-      setTimeout(() => element.classList.add('show'), 10);
-    });
-  }
-}
-
-function initLanguageSwitcher() {
-  const switcher = document.getElementById('language-switcher');
-  const englishSection = document.getElementById('lang-en');
-  const arabicSection = document.getElementById('lang-ar');
-
-  if (!englishSection && !arabicSection) {
-    return;
-  }
-
-  let currentLang = document.documentElement.lang || 'en';
-
-  if (!switcher || !englishSection || !arabicSection) {
-    setLanguage(currentLang);
-    return;
-  }
-
-  switcher.addEventListener('click', function() {
-    currentLang = currentLang === 'en' ? 'ar' : 'en';
-    setLanguage(currentLang);
-  });
-
-  setLanguage(currentLang);
 }
 
 function initHeroSlider() {
@@ -797,9 +787,8 @@ function initFadeAnimations() {
     fadeObserver.observe(element);
   });
 
-  const initialLang = document.documentElement.lang || 'en';
   setTimeout(() => {
-    document.querySelectorAll(`#lang-${initialLang} .fade-in`).forEach(element => {
+    document.querySelectorAll('.fade-in').forEach(element => {
       element.classList.add('show');
     });
   }, 100);
@@ -824,6 +813,128 @@ function initExperienceCards() {
   }
 }
 
+function initFeaturedSlider() {
+  const slides = document.querySelectorAll('.featured-slide');
+  const indicators = document.querySelectorAll('.featured-indicator');
+  const previousButton = document.getElementById('featuredPrev');
+  const nextButton = document.getElementById('featuredNext');
+
+  if (slides.length === 0) {
+    return;
+  }
+
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('featured-slide--active', i === index);
+      slide.classList.toggle('opacity-100', i === index);
+      slide.classList.toggle('opacity-0', i !== index);
+    });
+
+    indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('bg-opacity-100', i === index);
+      indicator.classList.toggle('bg-opacity-50', i !== index);
+    });
+
+    currentSlide = index;
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      showSlide((currentSlide + 1) % slides.length);
+    });
+  }
+
+  if (previousButton) {
+    previousButton.addEventListener('click', () => {
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    });
+  }
+
+  indicators.forEach(indicator => {
+    indicator.addEventListener('click', () => {
+      showSlide(Number(indicator.dataset.index) || 0);
+    });
+  });
+
+  showSlide(0);
+  setInterval(() => showSlide((currentSlide + 1) % slides.length), 3000);
+}
+
+function initCitySlider() {
+  const track = document.getElementById('citySliderTrack');
+  const previousButton = document.getElementById('cityPrev');
+  const nextButton = document.getElementById('cityNext');
+
+  if (!track || !previousButton || !nextButton) {
+    return;
+  }
+
+  const slides = Array.from(track.children);
+  let currentSlide = 0;
+
+  function slidesToShow() {
+    return window.matchMedia('(min-width: 768px)').matches ? 3 : 1;
+  }
+
+  function updateCitySlider() {
+    const visibleSlides = slidesToShow();
+    const maxSlide = Math.max(0, slides.length - visibleSlides);
+    currentSlide = Math.min(currentSlide, maxSlide);
+    const slideWidth = slides[0] ? slides[0].getBoundingClientRect().width + 32 : 0;
+    track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+    previousButton.disabled = currentSlide === 0;
+    nextButton.disabled = currentSlide >= maxSlide;
+  }
+
+  nextButton.addEventListener('click', () => {
+    currentSlide += 1;
+    updateCitySlider();
+  });
+
+  previousButton.addEventListener('click', () => {
+    currentSlide -= 1;
+    updateCitySlider();
+  });
+
+  window.addEventListener('resize', updateCitySlider);
+  updateCitySlider();
+}
+
+function initPageInteractions() {
+  applyImageFallbacks(document);
+
+  document.querySelectorAll('[data-scroll-target]').forEach(control => {
+    control.addEventListener('click', () => {
+      const target = document.querySelector(control.dataset.scrollTarget);
+
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', event => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+
+      if (target) {
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      once: true,
+      duration: 800,
+      easing: 'ease-in-out'
+    });
+  }
+}
+
 function initFavorites() {
   document.addEventListener('click', function(event) {
     const button = event.target.closest('[data-favorite-type][data-favorite-id]');
@@ -842,9 +953,21 @@ function initFavorites() {
 
 function initTripPlanner() {
   document.addEventListener('click', function(event) {
-    const addButton = event.target.closest('[data-trip-type][data-trip-id]:not([data-trip-remove])');
     const removeButton = event.target.closest('[data-trip-remove]');
     const clearButton = event.target.closest('[data-trip-clear]');
+    const addButton = event.target.closest('.trip-button[data-trip-type][data-trip-id]');
+
+    if (removeButton) {
+      event.preventDefault();
+      removeFromTrip(removeButton.dataset.tripType, removeButton.dataset.tripId);
+      return;
+    }
+
+    if (clearButton) {
+      event.preventDefault();
+      clearTrip();
+      return;
+    }
 
     if (addButton) {
       event.preventDefault();
@@ -858,17 +981,6 @@ function initTripPlanner() {
         category: addButton.dataset.tripCategory
       });
       return;
-    }
-
-    if (removeButton) {
-      event.preventDefault();
-      removeFromTrip(removeButton.dataset.tripType, removeButton.dataset.tripId);
-      return;
-    }
-
-    if (clearButton) {
-      event.preventDefault();
-      clearTrip();
     }
   });
 
@@ -1103,8 +1215,10 @@ document.addEventListener('DOMContentLoaded', async function() {
   initTripPlanner();
   initMap();
   initFadeAnimations();
-  initLanguageSwitcher();
   initHeroSlider();
+  initFeaturedSlider();
+  initCitySlider();
+  initPageInteractions();
   await initAttractionDetailPage();
   await initDynamicContent();
   initCarousel();

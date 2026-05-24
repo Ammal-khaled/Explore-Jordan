@@ -12,6 +12,22 @@
   opacity: 1;
   z-index: 1;
 }
+
+.hero-slide--petra {
+  background-image: url('../assets/images/petra.jpg');
+}
+
+.hero-slide--wadi-rum {
+  background-image: url('../assets/images/wadi-rum.jpg');
+}
+
+.hero-slide--dead-sea {
+  background-image: url('../assets/images/dead-sea.jpg');
+}
+
+.hero-slide--jerash {
+  background-image: url('../assets/images/jerash.jpg');
+}
 .hero-overlay {
   position: absolute;
   top: 0; left: 0;
@@ -54,6 +70,16 @@
   flex-shrink: 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+}
+
+.Top-Destinations .item-image,
+.option-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+  z-index: 0;
 }
 .Top-Destinations .item.active {
   width: clamp(400px, 90vw, 500px);
@@ -169,7 +195,7 @@
   overflow: hidden;
   min-width: 60px;
   margin: 10px;
-  background: var(--optionBackground) no-repeat center center/cover;
+  background: #343434;
   cursor: pointer;
   transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
   border-radius: 30px;
@@ -493,5 +519,356 @@
 .trip-card__body p {
   margin: 0 0 1rem;
   color: #454240;
+}
+
+/* ===== Top Destinations Page ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-container {
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-item {
+  scroll-snap-align: start;
+}
+
+.soft-yellow-hover:hover {
+  background-color: #facc15;
+}
+
+.dark-gray-text {
+  color: #454240 !important;
+}
+
+.bg-gray-light {
+  background-color: #f9fafb;
+}
+
+.featured-slide {
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.category-active {
+  background-color: var(--color-soft-cream);
+  color: var(--color-primary-gold);
+  font-weight: 600;
+}
+
+.filter-btn {
+  transition: all 0.3s ease;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.gradient-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+}
+
+#citySliderTrack {
+  will-change: transform;
+}
+
+#cityPrev:disabled,
+#cityNext:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ===== Activities Page ===== */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes simpleFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.experience-card {
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.experience-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+}
+
+.category-tab {
+  transition: all 0.3s ease;
+}
+
+.category-tab:hover,
+.category-tab.active {
+  background-color: #4F772D !important;
+  color: var(--color-white) !important;
+  transform: scale(1.05);
+}
+
+.hero-section {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('../assets/images/wadi-rum.jpg') center/cover;
+  animation: pulse 8s infinite;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 50%, transparent 0%, rgba(0,0,0,0.7) 100%);
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #4F772D 0%, #90A955 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.floating {
+  animation: float 4s ease-in-out infinite;
+}
+
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.activity-parallax {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)),
+    url('../assets/images/hiking-dana.jpg');
+}
+
+.hover-grow {
+  transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
+  transform: scale(1.05);
+}
+
+.floating-dots {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.floating-dots span {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  animation: float 15s linear infinite;
+  bottom: -150px;
+}
+
+.floating-dots span:nth-child(1) {
+  left: 25%;
+  width: 80px;
+  height: 80px;
+  animation-duration: 12s;
+}
+
+.floating-dots span:nth-child(2) {
+  left: 10%;
+  animation-delay: 2s;
+  animation-duration: 15s;
+}
+
+.floating-dots span:nth-child(3) {
+  left: 70%;
+  animation-delay: 4s;
+  animation-duration: 18s;
+}
+
+.floating-dots span:nth-child(4) {
+  left: 40%;
+  width: 60px;
+  height: 60px;
+  animation-duration: 22s;
+}
+
+.floating-dots span:nth-child(5) {
+  left: 65%;
+  animation-duration: 14s;
+}
+
+.floating-dots span:nth-child(6) {
+  left: 75%;
+  width: 110px;
+  height: 110px;
+  animation-delay: 3s;
+  animation-duration: 20s;
+}
+
+.floating-dots span:nth-child(7) {
+  left: 35%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 7s;
+  animation-duration: 25s;
+}
+
+.floating-dots span:nth-child(8) {
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  animation-delay: 15s;
+  animation-duration: 45s;
+}
+
+.floating-dots span:nth-child(9) {
+  left: 20%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 2s;
+  animation-duration: 35s;
+}
+
+.floating-dots span:nth-child(10) {
+  left: 85%;
+  width: 150px;
+  height: 150px;
+  animation-duration: 30s;
+}
+
+.scroll-down {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-white);
+  font-size: 30px;
+  animation: float 2s ease-in-out infinite;
+  z-index: 10;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+.rotating-icon {
+  animation: rotate 8s linear infinite;
+}
+
+.slide-in {
+  animation: slideIn 1s ease-out forwards;
+}
+
+.fade-in {
+  animation: simpleFadeIn 2s ease-in forwards;
+}
+
+.animation-delay-short {
+  animation-delay: 0.3s;
+}
+
+.animation-delay-medium {
+  animation-delay: 0.6s;
+}
+
+.animation-delay-long {
+  animation-delay: 0.9s;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.map-popup-link {
+  color: var(--color-dark-brown);
+  font-weight: 800;
+  text-decoration: none;
 }
 

@@ -19,27 +19,6 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Language Toggle Button */
-.lang-switch {
-  position: fixed;
-  top: 84px;
-  right: 20px;
-  z-index: 50;
-  background: #facc15;
-  color: #1f2937;
-  padding: 10px 12px;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* Language-Specific Visibility */
-[lang="en"] .arabic-only,
-[lang="ar"] .english-only {
-  display: none !important;
-}
-
-
 /* ===== Buttons ===== */
 .button-78 {
   align-items: center;

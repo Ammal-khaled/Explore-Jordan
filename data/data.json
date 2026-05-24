@@ -3,14 +3,14 @@
     "name": "Dana Biosphere Reserve",
     "description": "Jordan's largest nature reserve, with rugged valleys, mountain views, ancient villages, and guided trails for different experience levels.",
     "city": "Dana",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Dana_Biosphere_Reserve.jpg",
+    "image": "assets/images/dana-biosphere.jpg",
     "link": "https://www.rscn.org.jo/dana"
   },
   {
     "name": "Wadi Mujib",
     "description": "A dramatic canyon near the Dead Sea where seasonal trails lead through flowing water, narrow cliffs, and refreshing waterfalls.",
     "city": "Dead Sea region",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Wadi_Mujib.jpg",
+    "image": "assets/images/wadi-mujib.jpg",
     "link": "https://www.rscn.org.jo"
   }
 ]

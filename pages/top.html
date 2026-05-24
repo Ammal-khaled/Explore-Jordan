@@ -6,81 +6,6 @@
     <title>Top Destinations in Jordan | Explore Jordan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-fadeIn {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-        
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .scroll-container {
-            scroll-snap-type: x mandatory;
-        }
-        .scroll-item {
-            scroll-snap-align: start;
-        }
-        .gold-accent {
-            background-color: #bfa03e;
-        }
-        .gold-accent-text {
-            color: #bfa03e;
-        }
-        .soft-yellow-hover:hover {
-            background-color: #facc15;
-        }
-        .cream-beige {
-            background-color: #fff7d9;
-        }
-        .dark-brown-text {
-            color: #5C4E3D;
-        }
-        .dark-gray-text {
-            color: #454240;
-        }
-        .bg-gray-light {
-            background-color: #f9fafb;
-        }
-        .featured-slide {
-            transition: transform 0.5s ease, opacity 0.3s ease;
-        }
-        .category-active {
-            background-color: #fff7d9;
-            color: #bfa03e;
-            font-weight: 600;
-        }
-        .filter-btn {
-            transition: all 0.3s ease;
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        .gradient-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
-        }
-    </style>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="bg-gray-light scroll-smooth">
@@ -120,7 +45,7 @@
         <div class="relative h-full w-full" id="featuredSlider">
             <!-- Slide 1 - Petra -->
             <div class="featured-slide absolute inset-0 opacity-100 transition-opacity duration-300">
-                <img src="https://images.unsplash.com/photo-1551784324-9eb8a3009c0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                <img src="../assets/images/petra.jpg" 
                      alt="Petra" class="w-full h-full object-cover">
                 <div class="absolute inset-0 gradient-overlay flex items-center justify-center">
                     <div class="text-center px-4 animate-fadeIn">
@@ -133,7 +58,7 @@
             
             <!-- Slide 2 - Wadi Rum -->
             <div class="featured-slide absolute inset-0 opacity-0 transition-opacity duration-300">
-                <img src="https://images.unsplash.com/photo-1599391409946-1d2ae9ede5c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                <img src="../assets/images/wadi-rum.jpg" 
                      alt="Wadi Rum" class="w-full h-full object-cover">
                 <div class="absolute inset-0 gradient-overlay flex items-center justify-center">
                     <div class="text-center px-4 animate-fadeIn">
@@ -146,7 +71,7 @@
             
             <!-- Slide 3 - Dead Sea -->
             <div class="featured-slide absolute inset-0 opacity-0 transition-opacity duration-300">
-                <img src="https://images.unsplash.com/photo-1605152276897-4f618f831968?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                <img src="../assets/images/dead-sea.jpg" 
                      alt="Dead Sea" class="w-full h-full object-cover">
                 <div class="absolute inset-0 gradient-overlay flex items-center justify-center">
                     <div class="text-center px-4 animate-fadeIn">
@@ -240,7 +165,7 @@
                     <!-- Amman -->
                     <div class="flex-shrink-0 w-full md:w-1/3 lg:w-1/3">
                         <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
-                            <img src="https://images.unsplash.com/photo-1496566303695-8933b5a3e9c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Amman" class="w-full h-48 object-cover">
+                            <img src="../assets/images/amman.jpg" alt="Amman" class="w-full h-48 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Amman</h3>
                                 <p class="dark-gray-text mb-4">Amman is a welcoming capital of hills, Roman ruins, markets, galleries, and neighborhood cafes. It is also one of the best places to taste Jordanian food and see daily life unfold.</p>
@@ -259,7 +184,7 @@
                     <!-- Aqaba -->
                     <div class="flex-shrink-0 w-full md:w-1/3 lg:w-1/3">
                         <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
-                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Aqaba" class="w-full h-48 object-cover">
+                            <img src="../assets/images/aqaba.jpg" alt="Aqaba" class="w-full h-48 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Aqaba</h3>
                                 <p class="dark-gray-text mb-4">Aqaba offers Red Sea beaches, coral reefs, boat trips, and a laid-back waterfront atmosphere. Its location makes it a natural stop between Wadi Rum and southern Jordan's coastal experiences.</p>
@@ -278,7 +203,7 @@
                     <!-- Salt -->
                     <div class="flex-shrink-0 w-full md:w-1/3 lg:w-1/3">
                         <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
-                            <img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Salt" class="w-full h-48 object-cover">
+                            <img src="../assets/images/amman.jpg" alt="Salt" class="w-full h-48 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">As-Salt</h3>
                                 <p class="dark-gray-text mb-4">As-Salt is known for honey-colored Ottoman-era architecture, hillside streets, and a strong sense of community heritage. Its historic core offers a quieter, more local city experience.</p>
@@ -297,7 +222,7 @@
                     <!-- Madaba -->
                     <div class="flex-shrink-0 w-full md:w-1/3 lg:w-1/3">
                         <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
-                            <img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Madaba" class="w-full h-48 object-cover">
+                            <img src="../assets/images/madaba.jpg" alt="Madaba" class="w-full h-48 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Madaba</h3>
                                 <p class="dark-gray-text mb-4">Madaba is known as the City of Mosaics, with churches and workshops preserving detailed Byzantine and Umayyad designs. The famous sixth-century map of the Holy Land remains one of its most important treasures.</p>
@@ -316,7 +241,7 @@
                     <!-- Irbid -->
                     <div class="flex-shrink-0 w-full md:w-1/3 lg:w-1/3">
                         <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
-                            <img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Irbid" class="w-full h-48 object-cover">
+                            <img src="../assets/images/jerash.jpg" alt="Irbid" class="w-full h-48 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Irbid</h3>
                                 <p class="dark-gray-text mb-4">Irbid is a northern city with a youthful university atmosphere and easy access to archaeological sites such as Umm Qais. It is a useful base for exploring Jordan's green highlands and northern heritage routes.</p>
@@ -335,7 +260,7 @@
                     <!-- Zarqa -->
                     <div class="flex-shrink-0 w-full md:w-1/3 lg:w-1/3">
                         <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
-                            <img src="https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Zarqa" class="w-full h-48 object-cover">
+                            <img src="../assets/images/amman.jpg" alt="Zarqa" class="w-full h-48 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Zarqa</h3>
                                 <p class="dark-gray-text mb-4">Zarqa is one of Jordan's largest urban centers and a practical gateway to the eastern desert. Its surrounding region connects travelers with desert castles, open landscapes, and lesser-known routes beyond the capital.</p>
@@ -427,182 +352,6 @@
     </footer>
 
     <script src="../js/script.js"></script>
-    <script>
-        // Featured Slider Functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.featured-slide');
-        const indicators = document.querySelectorAll('.featured-indicator');
-        const totalSlides = slides.length;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.style.opacity = i === index ? '1' : '0';
-            });
-            
-            indicators.forEach((indicator, i) => {
-                if (i === index) {
-                    indicator.classList.add('bg-opacity-100');
-                    indicator.classList.remove('bg-opacity-50');
-                } else {
-                    indicator.classList.add('bg-opacity-50');
-                    indicator.classList.remove('bg-opacity-100');
-                }
-            });
-            
-            currentSlide = index;
-        }
-
-        document.getElementById('featuredNext').addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        });
-
-        document.getElementById('featuredPrev').addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        });
-
-        indicators.forEach(indicator => {
-            indicator.addEventListener('click', () => {
-                const index = parseInt(indicator.getAttribute('data-index'));
-                showSlide(index);
-            });
-        });
-
-        // Auto slide change every 3 seconds (faster than before)
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }, 3000);
-
-        // Category Filter Functionality
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const destinationCards = document.querySelectorAll('.destination-card');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Update active button
-                filterButtons.forEach(btn => {
-                    btn.classList.remove('category-active');
-                    btn.classList.add('dark-gray-text');
-                });
-                button.classList.add('category-active');
-                button.classList.remove('dark-gray-text');
-
-                // Filter cards
-                const category = button.getAttribute('data-category');
-                
-                destinationCards.forEach(card => {
-                    if (category === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        const categories = card.getAttribute('data-categories').split(',');
-                        if (categories.includes(category)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        });
-
-        // Animate elements when they come into view
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.animate-fadeIn');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        };
-
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-// City Slider Functionality
-let currentCitySlide = 0;
-const citySlides = document.querySelectorAll('.city-slide');
-const cityTrack = document.getElementById('citySliderTrack');
-const cityIndicators = document.querySelectorAll('.city-indicator');
-const totalCitySlides = citySlides.length;
-const slidesToShow = 3;
-
-function updateCitySlider() {
-    const slideWidth = 100 / slidesToShow;
-    cityTrack.style.transform = `translateX(-${currentCitySlide * slideWidth}%)`;
-    
-    cityIndicators.forEach((indicator, i) => {
-        if (i === Math.floor(currentCitySlide / slidesToShow)) {
-            indicator.classList.add('bg-yellow-600');
-            indicator.classList.remove('bg-gray-300');
-        } else {
-            indicator.classList.add('bg-gray-300');
-            indicator.classList.remove('bg-yellow-600');
-        }
-    });
-}
-
-document.getElementById('cityNext').addEventListener('click', () => {
-    if (currentCitySlide < totalCitySlides - slidesToShow) {
-        currentCitySlide++;
-        updateCitySlider();
-    }
-});
-
-document.getElementById('cityPrev').addEventListener('click', () => {
-    if (currentCitySlide > 0) {
-        currentCitySlide--;
-        updateCitySlider();
-    }
-});
-
-cityIndicators.forEach(indicator => {
-    indicator.addEventListener('click', () => {
-        const index = parseInt(indicator.getAttribute('data-index'));
-        currentCitySlide = index * slidesToShow;
-        updateCitySlider();
-    });
-});
-// City Slider Functionality
-let currentCitySlide = 0;
-const cityTrack = document.getElementById('citySliderTrack');
-const citySlides = document.querySelectorAll('.city-slide');
-const totalCitySlides = citySlides.length;
-const slidesToShow = 3;
-
-function updateCitySlider() {
-    const slideWidth = citySlides[0].offsetWidth + 32; // width + margin
-    cityTrack.style.transform = `translateX(-${currentCitySlide * slideWidth}px)`;
-}
-
-document.getElementById('cityNext').addEventListener('click', () => {
-    if (currentCitySlide < totalCitySlides - slidesToShow) {
-        currentCitySlide++;
-        updateCitySlider();
-    }
-});
-
-document.getElementById('cityPrev').addEventListener('click', () => {
-    if (currentCitySlide > 0) {
-        currentCitySlide--;
-        updateCitySlider();
-    }
-});
-
-// Initialize slider
-updateCitySlider();
-
-// Handle window resize
-window.addEventListener('resize', updateCitySlider);
-
-// Initialize slider
-updateCitySlider();
-    </script>
 </body>
 </html>
 

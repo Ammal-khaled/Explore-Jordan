@@ -7,7 +7,7 @@
     "priceRange": "$$$",
     "shortDescription": "High-end hotels and resorts with polished service, strong locations, and comfortable amenities for longer itineraries.",
     "longDescription": "Luxury stays in Jordan are strongest in Amman, Petra, the Dead Sea, and Aqaba, where travelers can pair sightseeing with full-service comfort. Expect refined rooms, restaurants, pools, concierge support, and easy access to major routes.",
-    "image": "assets/images/Luxury Stays.jpg",
+    "image": "assets/images/petra.jpg",
     "bookingLink": "https://www.booking.com/searchresults.html?ss=Jordan",
     "tags": ["luxury", "hotel", "comfort", "full service"]
   },
@@ -19,7 +19,7 @@
     "priceRange": "$$",
     "shortDescription": "Nature-focused lodges that support slower travel, local communities, and access to hiking routes.",
     "longDescription": "Eco lodges are ideal for travelers who want quiet landscapes, guided walks, and a lighter environmental footprint. Dana and nearby reserve areas offer some of the best settings for simple, memorable stays connected to nature.",
-    "image": "assets/images/Eco Lodges.jpg",
+    "image": "assets/images/dana-biosphere.jpg",
     "bookingLink": "https://www.rscn.org.jo",
     "tags": ["eco travel", "nature", "hiking", "local community"]
   },
@@ -31,7 +31,7 @@
     "priceRange": "$$",
     "shortDescription": "Wadi Rum camps offer desert views, evening meals, stargazing, and easy access to guided tours.",
     "longDescription": "Desert camps range from simple Bedouin-style tents to more comfortable dome and cabin experiences. The best stays focus on good guiding, respectful hosting, clear transfers, and time to enjoy sunset and the night sky.",
-    "image": "assets/images/Desert Camps.jpg",
+    "image": "assets/images/wadi-rum-camp.jpg",
     "bookingLink": "https://www.booking.com/searchresults.html?ss=Wadi+Rum%2C+Jordan",
     "tags": ["desert", "wadi rum", "stargazing", "bedouin"]
   },
@@ -43,7 +43,7 @@
     "priceRange": "$$$",
     "shortDescription": "Resort stays along the Dead Sea combine floating access, spa treatments, pools, and sunset views.",
     "longDescription": "Dead Sea resorts work well as a restorative stop between cultural touring and outdoor adventure. Many properties offer beach access, mud treatments, restaurants, and comfortable spaces for travelers who want a slower day.",
-    "image": "assets/images/Dead sea.jpg",
+    "image": "assets/images/dead-sea.jpg",
     "bookingLink": "https://www.booking.com/searchresults.html?ss=Dead+Sea%2C+Jordan",
     "tags": ["resort", "wellness", "spa", "dead sea"]
   },
@@ -55,7 +55,7 @@
     "priceRange": "$$",
     "shortDescription": "Small and stylish Amman hotels place travelers close to cafes, galleries, restaurants, and historic neighborhoods.",
     "longDescription": "Boutique hotels are a good fit for visitors who want a more personal base in the capital. Look for locations near Jabal Amman, Rainbow Street, downtown, or Abdali depending on whether the priority is food, culture, business, or nightlife.",
-    "image": "assets/images/Amman.jpg",
+    "image": "assets/images/amman-boutique-hotel.jpg",
     "bookingLink": "https://www.booking.com/searchresults.html?ss=Amman%2C+Jordan",
     "tags": ["boutique", "city", "amman", "restaurants"]
   },
@@ -67,7 +67,7 @@
     "priceRange": "$$",
     "shortDescription": "Aqaba beach hotels offer Red Sea access, warm weather, and an easy base for diving or snorkeling.",
     "longDescription": "Aqaba is a natural place to unwind after Petra and Wadi Rum, especially for travelers who want a few days by the water. Hotels range from practical city stays to beach resorts with pools, dive centers, and boat-trip access.",
-    "image": "assets/images/Aqaba.jpg",
+    "image": "assets/images/aqaba.jpg",
     "bookingLink": "https://www.booking.com/searchresults.html?ss=Aqaba%2C+Jordan",
     "tags": ["beach", "aqaba", "red sea", "diving"]
   }
