@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Advisor | Explore Jordan</title>
+    <meta name="description" content="Choose your trip length, budget, and interests to get suggestions from Explore Jordan's destination, activity, and stay listings." />
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/advisor.css">
+</head>
+<body>
+    <nav class="site-nav" id="navbar">
+        <div class="site-nav__inner">
+            <a class="site-nav__brand" href="../index.html">Explore Jordan</a>
+            <div class="site-nav__links">
+                <a href="../index.html">Home</a>
+                <a href="top.html">Top Destinations</a>
+                <a href="activity.html">Activities</a>
+                <a href="top.html#destinations">Attractions</a>
+                <a href="planner.html">Trip Planner</a>
+                <a href="advisor.html" aria-current="page">Trip Advisor</a>
+            </div>
+            <button class="site-nav__toggle" type="button" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false" data-nav-open>
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="site-nav__backdrop" data-nav-backdrop></div>
+    <aside class="mobile-sidebar" id="mobile-menu" aria-hidden="true" data-mobile-sidebar>
+        <button class="mobile-sidebar__close" type="button" aria-label="Close menu" data-nav-close>X</button>
+        <a class="mobile-sidebar__brand" href="../index.html">Explore Jordan</a>
+        <nav class="mobile-sidebar__links" aria-label="Mobile navigation">
+            <a href="../index.html" data-nav-link>Home</a>
+            <a href="top.html" data-nav-link>Top Destinations</a>
+            <a href="activity.html" data-nav-link>Activities</a>
+            <a href="top.html#destinations" data-nav-link>Attractions</a>
+            <a href="planner.html" data-nav-link>Trip Planner</a>
+            <a href="advisor.html" data-nav-link aria-current="page">Trip Advisor</a>
+        </nav>
+    </aside>
+
+    <header class="advisor-header">
+        <h1>Trip Advisor</h1>
+        <p>Choose a budget and interests to get suggestions from the destinations, activities, and stays listed on Explore Jordan.</p>
+    </header>
+
+    <main class="advisor-shell">
+        <section class="advisor-chat" id="advisorChat" aria-live="polite">
+            <!-- chat messages injected here -->
+        </section>
+
+        <form class="advisor-controls" id="advisorForm">
+            <div class="advisor-field" data-step="days">
+                <label for="tripDays">Trip length (days)</label>
+                <input type="number" id="tripDays" min="1" max="14" value="4" required>
+            </div>
+
+            <div class="advisor-field" data-step="budget">
+                <label>Overall budget level</label>
+                <div class="advisor-chip-group" id="budgetChips" role="group" aria-label="Overall budget level">
+                    <button type="button" class="advisor-chip" data-value="$">$ Budget</button>
+                    <button type="button" class="advisor-chip is-active" data-value="$$" aria-pressed="true">$$ Mid-range</button>
+                    <button type="button" class="advisor-chip" data-value="$$$">$$$ Comfort/Luxury</button>
+                </div>
+            </div>
+
+            <div class="advisor-field" data-step="interests">
+                <label>What are you into? (pick any)</label>
+                <div class="advisor-chip-group" id="interestChips" role="group" aria-label="Trip interests">
+                    <button type="button" class="advisor-chip" data-value="history">History &amp; Heritage</button>
+                    <button type="button" class="advisor-chip" data-value="nature">Nature &amp; Hiking</button>
+                    <button type="button" class="advisor-chip" data-value="adventure">Adventure</button>
+                    <button type="button" class="advisor-chip" data-value="relax">Relax &amp; Wellness</button>
+                    <button type="button" class="advisor-chip" data-value="culture">Local Culture</button>
+                    <button type="button" class="advisor-chip" data-value="desert">Desert</button>
+                </div>
+            </div>
+
+            <button type="submit" class="advisor-submit gold-accent">Build my suggestions</button>
+        </form>
+    </main>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/advisor.js"></script>
+</body>
+</html>

@@ -15,6 +15,7 @@ The current frontend uses structured JSON files as its data source. A Supabase P
 - Loading, empty, and error states for dynamic data
 - Interactive map powered by Leaflet.js
 - Hero slider, carousel, and experience card interactions
+- Trip Advisor suggestions matched against the selected budget and interests
 - Explore Jordan branding across pages
 - Planning structure for future Supabase PostgreSQL integration
 
@@ -38,11 +39,14 @@ Explore Jordan/
 |-- pages/
 |   |-- top.html
 |   |-- activity.html
-|   `-- attraction.html
+|   |-- attraction.html
+|   `-- advisor.html
 |-- css/
-|   `-- styles.css
+|   |-- styles.css
+|   `-- advisor.css
 |-- js/
-|   `-- script.js
+|   |-- script.js
+|   `-- advisor.js
 |-- data/
 |   |-- destinations.json
 |   |-- activities.json
@@ -50,6 +54,7 @@ Explore Jordan/
 |   `-- data.json
 |-- database/
 |   |-- supabase-schema.sql
+|   |-- seed.sql
 |   `-- seed-data-notes.md
 `-- assets/
     `-- images/
@@ -78,7 +83,7 @@ The frontend has not been connected to Supabase yet. JSON remains the active dat
 
 ## Current Product Scope
 
-This is a frontend travel-discovery demo backed by local JSON files. Favorites and saved trip ideas live in the visitor's browser, and the site does not accept booking requests or payments. Maps, fonts, and some interface libraries load from third-party CDNs. Before offering it as a live commercial service, connect a booking or inquiry workflow, add the business's real contact and policy pages, verify travel information and image rights, and choose production hosting.
+This is a frontend travel-discovery demo backed by local JSON files. Trip Advisor uses simple budget and interest filters over those listings; it does not use an AI model or a personalization service. Favorites and saved trip ideas live in the visitor's browser, and the site does not accept booking requests or payments. Maps, fonts, and some interface libraries load from third-party CDNs. Before offering it as a live commercial service, connect a booking or inquiry workflow, add the business's real contact and policy pages, verify travel information and image rights, and choose production hosting.
 
 ## Running Locally
 
@@ -100,6 +105,7 @@ Main pages:
 - `http://127.0.0.1:8000/pages/top.html`
 - `http://127.0.0.1:8000/pages/activity.html`
 - `http://127.0.0.1:8000/pages/attraction.html`
+- `http://127.0.0.1:8000/pages/advisor.html`
 
 ## Future Improvements
 
