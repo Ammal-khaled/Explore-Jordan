@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ammal-khaled.github.io/Explore-Jordan/sitemap.xml

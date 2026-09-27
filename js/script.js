@@ -3,14 +3,46 @@ let mapMarkers = [];
 let fadeObserver = null;
 let destinationsData = [];
 let activitiesData = [];
+let mapLanguage = 'en';
+const BOOKING_AFFILIATE_ID = 'PLACEHOLDER_AID';
 const fallbackImagePath = 'assets/images/petra.jpg';
 
 const markersData = [
-  { id: "petra", name: "Petra", name_ar: "\u0627\u0644\u0628\u062a\u0631\u0627\u0621", lat: 30.3285, lng: 35.4444 },
-  { id: "wadi-rum", name: "Wadi Rum", name_ar: "\u0648\u0627\u062f\u064a \u0631\u0645", lat: 29.5739, lng: 35.4214 },
-  { id: "dead-sea", name: "Dead Sea", name_ar: "\u0627\u0644\u0628\u062d\u0631 \u0627\u0644\u0645\u064a\u062a", lat: 31.5590, lng: 35.4732 },
-  { id: "amman", name: "Amman", name_ar: "\u0639\u0645\u0651\u0627\u0646", lat: 31.9539, lng: 35.9106 },
-  { id: "aqaba", name: "Aqaba", name_ar: "\u0627\u0644\u0639\u0642\u0628\u0629", lat: 29.5328, lng: 35.0063 }
+  {
+    id: 'petra',
+    name: 'Petra',
+    name_ar: '\u0627\u0644\u0628\u062a\u0631\u0627\u0621',
+    lat: 30.3285,
+    lng: 35.4444,
+  },
+  {
+    id: 'wadi-rum',
+    name: 'Wadi Rum',
+    name_ar: '\u0648\u0627\u062f\u064a \u0631\u0645',
+    lat: 29.5739,
+    lng: 35.4214,
+  },
+  {
+    id: 'dead-sea',
+    name: 'Dead Sea',
+    name_ar: '\u0627\u0644\u0628\u062d\u0631 \u0627\u0644\u0645\u064a\u062a',
+    lat: 31.559,
+    lng: 35.4732,
+  },
+  {
+    id: 'amman',
+    name: 'Amman',
+    name_ar: '\u0639\u0645\u0651\u0627\u0646',
+    lat: 31.9539,
+    lng: 35.9106,
+  },
+  {
+    id: 'aqaba',
+    name: 'Aqaba',
+    name_ar: '\u0627\u0644\u0639\u0642\u0628\u0629',
+    lat: 29.5328,
+    lng: 35.0063,
+  },
 ];
 
 const activityIcons = {
@@ -21,7 +53,7 @@ const activityIcons = {
   'petra-by-night': 'fa-moon',
   'dead-sea-floating': 'fa-water',
   'jerash-ruins-tour': 'fa-landmark',
-  'wadi-rum-jeep-tour': 'fa-car'
+  'wadi-rum-jeep-tour': 'fa-car',
 };
 
 const favoritesStorageKey = 'exploreJordanFavorites';
@@ -40,11 +72,54 @@ function resolveAssetPath(path) {
     return resolveAssetPath(fallbackImagePath);
   }
 
-  if (/^(https?:)?\/\//.test(path) || path.startsWith('/') || path.startsWith('../')) {
-    return path;
+  const value = String(path).trim();
+
+  if (/^(https?:)?\/\//i.test(value)) {
+    return safeHttpUrl(value) || resolveAssetPath(fallbackImagePath);
   }
 
-  return isPagesDirectory() ? `../${path}` : path;
+  if (/^[a-z][a-z\d+.-]*:/i.test(value)) {
+    return resolveAssetPath(fallbackImagePath);
+  }
+
+  if (value.startsWith('/') || value.startsWith('../')) {
+    return value;
+  }
+
+  return isPagesDirectory() ? `../${value}` : value;
+}
+
+function safeHttpUrl(value) {
+  try {
+    const rawUrl = String(value || '').trim();
+    if (!/^https?:\/\//i.test(rawUrl)) return null;
+    const url = new URL(rawUrl);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function setStructuredData(id, data) {
+  let script = document.getElementById(id);
+
+  if (!script) {
+    script = document.createElement('script');
+    script.id = id;
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+  }
+
+  script.textContent = JSON.stringify(data);
+}
+
+function absoluteAssetUrl(path) {
+  try {
+    const url = new URL(resolveAssetPath(path), window.location.href);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : undefined;
+  } catch (error) {
+    return undefined;
+  }
 }
 
 function imageMarkup(path, alt, className = '') {
@@ -56,7 +131,7 @@ function imageMarkup(path, alt, className = '') {
 }
 
 function applyImageFallbacks(scope = document) {
-  scope.querySelectorAll('img').forEach(image => {
+  scope.querySelectorAll('img').forEach((image) => {
     if (image.dataset.fallbackReady === 'true') {
       return;
     }
@@ -81,13 +156,13 @@ function getAttractionDetailPath(destination) {
 }
 
 function escapeHTML(value) {
-  return String(value || '').replace(/[&<>"']/g, character => {
+  return String(value || '').replace(/[&<>"']/g, (character) => {
     const entities = {
       '&': '&amp;',
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&#39;'
+      "'": '&#39;',
     };
 
     return entities[character];
@@ -108,12 +183,14 @@ function saveFavorites(favorites) {
 }
 
 function isFavorite(type, id) {
-  return getFavorites().some(favorite => favorite.type === type && favorite.id === id);
+  return getFavorites().some((favorite) => favorite.type === type && favorite.id === id);
 }
 
 function toggleFavorite(type, id) {
   const favorites = getFavorites();
-  const existingIndex = favorites.findIndex(favorite => favorite.type === type && favorite.id === id);
+  const existingIndex = favorites.findIndex(
+    (favorite) => favorite.type === type && favorite.id === id
+  );
 
   if (existingIndex >= 0) {
     favorites.splice(existingIndex, 1);
@@ -126,7 +203,7 @@ function toggleFavorite(type, id) {
 }
 
 function updateFavoriteButtons() {
-  document.querySelectorAll('[data-favorite-type][data-favorite-id]').forEach(button => {
+  document.querySelectorAll('[data-favorite-type][data-favorite-id]').forEach((button) => {
     const active = isFavorite(button.dataset.favoriteType, button.dataset.favoriteId);
     const icon = button.querySelector('i');
 
@@ -156,7 +233,9 @@ function saveTripItems(items) {
 
 function addToTrip(item) {
   const items = getTripItems();
-  const exists = items.some(savedItem => savedItem.type === item.type && savedItem.id === item.id);
+  const exists = items.some(
+    (savedItem) => savedItem.type === item.type && savedItem.id === item.id
+  );
 
   if (!exists) {
     items.push(item);
@@ -168,7 +247,7 @@ function addToTrip(item) {
 }
 
 function removeFromTrip(type, id) {
-  const items = getTripItems().filter(item => !(item.type === type && item.id === id));
+  const items = getTripItems().filter((item) => !(item.type === type && item.id === id));
   saveTripItems(items);
   updateTripButtons();
   renderTripPlanner();
@@ -181,24 +260,31 @@ function clearTrip() {
 }
 
 function isInTrip(type, id) {
-  return getTripItems().some(item => item.type === type && item.id === id);
+  return getTripItems().some((item) => item.type === type && item.id === id);
 }
 
 function updateTripButtons() {
-  document.querySelectorAll('.trip-button[data-trip-type][data-trip-id]').forEach(button => {
+  document.querySelectorAll('.trip-button[data-trip-type][data-trip-id]').forEach((button) => {
     const active = isInTrip(button.dataset.tripType, button.dataset.tripId);
     button.classList.toggle('trip-button--active', active);
     button.setAttribute('aria-pressed', String(active));
     const destinationCard = button.closest('.Top-Destinations .item');
     const experienceCard = button.closest('.option');
-    const compactOverlay = button.classList.contains('trip-button--overlay') && (
-      (destinationCard && !destinationCard.classList.contains('active')) ||
-      (experienceCard && !experienceCard.classList.contains('active'))
-    );
+    const compactOverlay =
+      button.classList.contains('trip-button--overlay') &&
+      ((destinationCard && !destinationCard.classList.contains('active')) ||
+        (experienceCard && !experienceCard.classList.contains('active')));
     button.textContent = compactOverlay
-      ? (active ? '✓' : '+')
-      : (active ? 'Added to Trip' : 'Add to Trip');
-    button.setAttribute('aria-label', `${active ? 'Saved in trip' : 'Add to trip'}: ${button.dataset.tripName}`);
+      ? active
+        ? '✓'
+        : '+'
+      : active
+        ? 'Added to Trip'
+        : 'Add to Trip';
+    button.setAttribute(
+      'aria-label',
+      `${active ? 'Saved in trip' : 'Add to trip'}: ${button.dataset.tripName}`
+    );
   });
 }
 
@@ -254,7 +340,7 @@ function destinationTripItem(destination) {
     name: destination.name,
     location: destination.city,
     image: destination.image,
-    category: destination.category
+    category: destination.category,
   };
 }
 
@@ -265,7 +351,7 @@ function activityTripItem(activity) {
     name: activity.name,
     location: activity.location,
     image: activity.image,
-    category: activity.category
+    category: activity.category,
   };
 }
 
@@ -300,8 +386,14 @@ function renderLoading(container, message) {
     return;
   }
 
-  const skeletonCount = container.classList.contains('custom-carousel') || container.classList.contains('options') ? 4 : 3;
-  const skeletons = Array.from({ length: skeletonCount }, () => '<span class="loading-skeleton-card"></span>').join('');
+  const skeletonCount =
+    container.classList.contains('custom-carousel') || container.classList.contains('options')
+      ? 4
+      : 3;
+  const skeletons = Array.from(
+    { length: skeletonCount },
+    () => '<span class="loading-skeleton-card"></span>'
+  ).join('');
   container.innerHTML = `
     <div class="data-state data-state--loading">
       <p>${escapeHTML(message)}</p>
@@ -337,7 +429,9 @@ function renderEmptyState(container, message) {
 }
 
 function destinationCategories(destination) {
-  const categories = new Set((destination.tags || []).map(tag => String(tag).toLowerCase().replace(/\s+/g, '-')));
+  const categories = new Set(
+    (destination.tags || []).map((tag) => String(tag).toLowerCase().replace(/\s+/g, '-'))
+  );
   const category = String(destination.category || '').toLowerCase();
 
   if (category.includes('heritage')) {
@@ -355,7 +449,10 @@ function destinationCategories(destination) {
     categories.add('cultural');
   }
 
-  if (category.includes('desert') || (destination.tags || []).some(tag => String(tag).toLowerCase().includes('adventure'))) {
+  if (
+    category.includes('desert') ||
+    (destination.tags || []).some((tag) => String(tag).toLowerCase().includes('adventure'))
+  ) {
     categories.add('adventure');
   }
 
@@ -363,31 +460,38 @@ function destinationCategories(destination) {
 }
 
 function tagList(tags) {
-  return (tags || []).slice(0, 3).map(tag => {
-    return `<span class="text-xs px-2 py-1 bg-gray-100 rounded-full">${escapeHTML(tag)}</span>`;
-  }).join('');
+  return (tags || [])
+    .slice(0, 3)
+    .map((tag) => {
+      return `<span class="text-xs px-2 py-1 bg-gray-100 rounded-full">${escapeHTML(tag)}</span>`;
+    })
+    .join('');
 }
 
 function destinationSearchText(destination) {
-  return normalizeText([
-    destination.name,
-    destination.city,
-    destination.category,
-    destination.shortDescription,
-    destination.longDescription,
-    ...(destination.tags || [])
-  ].join(' '));
+  return normalizeText(
+    [
+      destination.name,
+      destination.city,
+      destination.category,
+      destination.shortDescription,
+      destination.longDescription,
+      ...(destination.tags || []),
+    ].join(' ')
+  );
 }
 
 function activitySearchText(activity) {
-  return normalizeText([
-    activity.name,
-    activity.location,
-    activity.category,
-    activity.shortDescription,
-    activity.longDescription,
-    ...(activity.tags || [])
-  ].join(' '));
+  return normalizeText(
+    [
+      activity.name,
+      activity.location,
+      activity.category,
+      activity.shortDescription,
+      activity.longDescription,
+      ...(activity.tags || []),
+    ].join(' ')
+  );
 }
 
 function sharesDestinationContext(destination, activity) {
@@ -398,13 +502,14 @@ function sharesDestinationContext(destination, activity) {
   const destinationTags = (destination.tags || []).map(normalizeText);
   const activityTags = (activity.tags || []).map(normalizeText);
 
-  const sameCityOrLocation = Boolean(destinationCity && activityLocation) &&
+  const sameCityOrLocation =
+    Boolean(destinationCity && activityLocation) &&
     (destinationCity === activityLocation ||
       destinationCity.includes(activityLocation) ||
       activityLocation.includes(destinationCity));
-  const matchingCategory = Boolean(destinationCategory && activityCategory) &&
-    destinationCategory === activityCategory;
-  const matchingTags = destinationTags.some(tag => activityTags.includes(tag));
+  const matchingCategory =
+    Boolean(destinationCategory && activityCategory) && destinationCategory === activityCategory;
+  const matchingTags = destinationTags.some((tag) => activityTags.includes(tag));
 
   return sameCityOrLocation || matchingCategory || matchingTags;
 }
@@ -414,11 +519,12 @@ function filterDestinations(data, filters = {}) {
   const category = normalizeText(filters.category || 'all');
   const city = normalizeText(filters.city || 'all');
 
-  return (Array.isArray(data) ? data : []).filter(destination => {
+  return (Array.isArray(data) ? data : []).filter((destination) => {
     const destinationCategory = normalizeText(destination.category);
     const categories = destinationCategories(destination).split(',').map(normalizeText);
     const matchesQuery = !query || destinationSearchText(destination).includes(query);
-    const matchesCategory = category === 'all' || destinationCategory === category || categories.includes(category);
+    const matchesCategory =
+      category === 'all' || destinationCategory === category || categories.includes(category);
     const matchesCity = city === 'all' || normalizeText(destination.city) === city;
 
     return matchesQuery && matchesCategory && matchesCity;
@@ -429,7 +535,7 @@ function filterActivities(data, filters = {}) {
   const query = normalizeText(filters.query);
   const category = normalizeText(filters.category || 'all');
 
-  return (Array.isArray(data) ? data : []).filter(activity => {
+  return (Array.isArray(data) ? data : []).filter((activity) => {
     const matchesQuery = !query || activitySearchText(activity).includes(query);
     const matchesCategory = activityMatchesTab(activity.category, category);
 
@@ -450,7 +556,9 @@ function renderDestinationCards(data, container) {
   const isCarousel = container.classList.contains('custom-carousel');
 
   if (isCarousel) {
-    container.innerHTML = data.map((destination, index) => `
+    container.innerHTML = data
+      .map(
+        (destination, index) => `
       <div class="item${index === 0 ? ' active' : ''}">
         ${imageMarkup(destination.image, destination.name, 'item-image')}
         <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="destination" data-favorite-id="${escapeHTML(destination.id)}" aria-label="Add to favorites" aria-pressed="false">
@@ -464,14 +572,26 @@ function renderDestinationCards(data, container) {
           <p>${escapeHTML(destination.shortDescription)}</p>
         </div>
       </div>
-    `).join('');
+    `
+      )
+      .join('');
     applyImageFallbacks(container);
     updateFavoriteButtons();
     updateTripButtons();
     return;
   }
 
-  container.innerHTML = data.map(destination => `
+  container.innerHTML = data
+    .map((destination) => {
+      const mapUrl = safeHttpUrl(destination.mapLink);
+      const mapAction = mapUrl
+        ? `
+            <a href="${escapeHTML(mapUrl)}" target="_blank" rel="noopener" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
+              <i class="fas fa-map-marker-alt mr-2"></i> View Map
+            </a>`
+        : '';
+
+      return `
     <div class="destination-card" data-categories="${escapeHTML(destinationCategories(destination))}">
       <div class="bg-white rounded-xl overflow-hidden shadow-lg card-hover h-full">
         <div class="relative">
@@ -487,9 +607,7 @@ function renderDestinationCards(data, container) {
           <h3 class="text-xl font-bold dark-brown-text mb-2">${escapeHTML(destination.name)}</h3>
           <p class="dark-gray-text mb-4">${escapeHTML(destination.longDescription || destination.shortDescription)}</p>
           <div class="flex space-x-3">
-            <a href="${escapeHTML(destination.mapLink)}" target="_blank" rel="noopener" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
-              <i class="fas fa-map-marker-alt mr-2"></i> View Map
-            </a>
+            ${mapAction}
             <a href="${escapeHTML(getAttractionDetailPath(destination))}" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
               <i class="fas fa-info-circle mr-2"></i> Details
             </a>
@@ -500,7 +618,9 @@ function renderDestinationCards(data, container) {
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+    })
+    .join('');
   applyImageFallbacks(container);
   updateFavoriteButtons();
   updateTripButtons();
@@ -519,7 +639,9 @@ function renderActivityCards(data, container) {
   const isExperienceStrip = container.classList.contains('options');
 
   if (isExperienceStrip) {
-    container.innerHTML = data.map((activity, index) => `
+    container.innerHTML = data
+      .map(
+        (activity, index) => `
       <div class="option${index === 0 ? ' active' : ''}">
         ${imageMarkup(activity.image, activity.name, 'option-image')}
         <button class="favorite-button favorite-button--overlay" type="button" data-favorite-type="activity" data-favorite-id="${escapeHTML(activity.id)}" aria-label="Add to favorites" aria-pressed="false">
@@ -537,14 +659,20 @@ function renderActivityCards(data, container) {
           </div>
         </div>
       </div>
-    `).join('');
+    `
+      )
+      .join('');
     applyImageFallbacks(container);
     updateFavoriteButtons();
     updateTripButtons();
     return;
   }
 
-  container.innerHTML = data.map((activity, index) => `
+  container.innerHTML = data
+    .map((activity, index) => {
+      const mapUrl = safeHttpUrl(activity.mapLink);
+
+      return `
     <div class="experience-card bg-white rounded-xl overflow-hidden" data-category="${escapeHTML(String(activity.category || '').toLowerCase())}" data-aos="fade-up" data-aos-delay="${100 + (index % 3) * 100}">
       <div class="relative">
         ${imageMarkup(activity.image, activity.name, 'w-full h-64 object-cover')}
@@ -562,14 +690,16 @@ function renderActivityCards(data, container) {
           <div class="text-sm text-gray-600">
             <i class="fas fa-clock mr-1 text-yellow-500"></i>${escapeHTML(activity.duration)}
           </div>
-          <a href="${escapeHTML(activity.mapLink)}" target="_blank" rel="noopener" class="text-green-700 hover:text-green-800 font-semibold hover-grow">View Map</a>
+          ${mapUrl ? `<a href="${escapeHTML(mapUrl)}" target="_blank" rel="noopener" class="text-green-700 hover:text-green-800 font-semibold hover-grow">View Map</a>` : ''}
         </div>
         <div class="mt-4">
           ${tripButtonMarkup(activityTripItem(activity))}
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+    })
+    .join('');
   applyImageFallbacks(container);
   updateFavoriteButtons();
   updateTripButtons();
@@ -585,7 +715,26 @@ function renderAccommodationCards(data, container) {
     return;
   }
 
-  container.innerHTML = data.map(accommodation => `
+  container.innerHTML = data
+    .map((accommodation) => {
+      const bookingUrl = safeHttpUrl(accommodation.bookingLink);
+      let trackedBookingUrl = bookingUrl;
+      let isBookingAffiliate = false;
+
+      if (bookingUrl) {
+        try {
+          const parsedBookingUrl = new URL(bookingUrl);
+          if (/(^|\.)booking\.com$/i.test(parsedBookingUrl.hostname)) {
+            isBookingAffiliate = true;
+            parsedBookingUrl.searchParams.set('aid', BOOKING_AFFILIATE_ID);
+            trackedBookingUrl = parsedBookingUrl.toString();
+          }
+        } catch (error) {
+          trackedBookingUrl = null;
+        }
+      }
+
+      return `
     <div class="card-shadow bg-white rounded-lg overflow-hidden">
       ${imageMarkup(accommodation.image, accommodation.name, 'w-full h-48 object-cover')}
       <div class="p-4">
@@ -594,17 +743,46 @@ function renderAccommodationCards(data, container) {
         </div>
         <h3 class="font-bold text-xl mb-2">${escapeHTML(accommodation.name)}</h3>
         <p>${escapeHTML(accommodation.shortDescription)}</p>
+        ${trackedBookingUrl ? `<a href="${escapeHTML(trackedBookingUrl)}" target="_blank" rel="noopener" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition w-full text-center mt-4"><i class="fas fa-bed mr-2"></i>${isBookingAffiliate ? 'Book Now' : 'Visit Provider'}</a>${isBookingAffiliate ? '<small class="block mt-2 text-xs text-gray-500">Booking links are affiliate links; we may earn a commission at no extra cost to you.</small>' : ''}` : ''}
       </div>
     </div>
-  `).join('');
+  `;
+    })
+    .join('');
+  setStructuredData('accommodation-structured-data', {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Places to stay in Jordan',
+    itemListElement: data.map((accommodation, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'LodgingBusiness',
+        name: accommodation.name,
+        description: accommodation.shortDescription,
+        image: absoluteAssetUrl(accommodation.image),
+        url: safeHttpUrl(accommodation.bookingLink),
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: accommodation.city,
+          addressCountry: 'JO',
+        },
+      },
+    })),
+  });
   applyImageFallbacks(container);
 }
 
 function renderAttractionDetail(destination, relatedActivities, container) {
-  const tags = (destination.tags || []).map(tag => `<span>${escapeHTML(tag)}</span>`).join('');
+  const tags = (destination.tags || []).map((tag) => `<span>${escapeHTML(tag)}</span>`).join('');
   const tripItem = destinationTripItem(destination);
-  const relatedMarkup = relatedActivities.length > 0
-    ? `<div class="attraction-related-grid">${relatedActivities.map(activity => `
+  const mapUrl = safeHttpUrl(destination.mapLink);
+  const officialUrl = safeHttpUrl(destination.officialLink);
+  const relatedMarkup =
+    relatedActivities.length > 0
+      ? `<div class="attraction-related-grid">${relatedActivities
+          .map(
+            (activity) => `
         <article class="attraction-related-card">
           ${imageMarkup(activity.image, activity.name)}
           <div>
@@ -614,8 +792,10 @@ function renderAttractionDetail(destination, relatedActivities, container) {
             ${tripButtonMarkup(activityTripItem(activity), 'trip-button--related')}
           </div>
         </article>
-      `).join('')}</div>`
-    : '<p class="attraction-muted">No closely related activities are listed yet.</p>';
+      `
+          )
+          .join('')}</div>`
+      : '<p class="attraction-muted">No closely related activities are listed yet.</p>';
 
   container.innerHTML = `
     <article class="attraction-detail-card">
@@ -629,8 +809,8 @@ function renderAttractionDetail(destination, relatedActivities, container) {
         <p>${escapeHTML(destination.longDescription || destination.shortDescription)}</p>
         <div class="attraction-tags">${tags}</div>
         <div class="attraction-actions">
-          <a href="${escapeHTML(destination.mapLink)}" target="_blank" rel="noopener" class="button-78">View Map</a>
-          <a href="${escapeHTML(destination.officialLink)}" target="_blank" rel="noopener" class="button-78 attraction-secondary-action">Official Link</a>
+          ${mapUrl ? `<a href="${escapeHTML(mapUrl)}" target="_blank" rel="noopener" class="button-78">View Map</a>` : ''}
+          ${officialUrl ? `<a href="${escapeHTML(officialUrl)}" target="_blank" rel="noopener" class="button-78 attraction-secondary-action">Official Link</a>` : ''}
           ${tripButtonMarkup(tripItem, 'trip-button--detail')}
         </div>
       </div>
@@ -640,6 +820,28 @@ function renderAttractionDetail(destination, relatedActivities, container) {
       ${relatedMarkup}
     </section>
   `;
+  const marker = markersData.find((item) => item.id === destination.id);
+  setStructuredData('attraction-structured-data', {
+    '@context': 'https://schema.org',
+    '@type': 'TouristAttraction',
+    name: destination.name,
+    description: destination.longDescription || destination.shortDescription,
+    image: absoluteAssetUrl(destination.image),
+    url: safeHttpUrl(destination.officialLink),
+    sameAs: mapUrl ? [mapUrl] : undefined,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: destination.city,
+      addressCountry: 'JO',
+    },
+    geo: marker
+      ? {
+          '@type': 'GeoCoordinates',
+          latitude: marker.lat,
+          longitude: marker.lng,
+        }
+      : undefined,
+  });
   applyImageFallbacks(container);
   updateTripButtons();
 }
@@ -673,7 +875,9 @@ function renderTripPlanner() {
       <button class="trip-clear-button" type="button" data-trip-clear>Clear Trip</button>
     </div>
     <div class="trip-planner-grid">
-      ${items.map(item => `
+      ${items
+        .map(
+          (item) => `
         <article class="trip-card">
           ${imageMarkup(item.image, item.name)}
           <div class="trip-card__body">
@@ -683,7 +887,9 @@ function renderTripPlanner() {
             <button class="trip-remove-button" type="button" data-trip-remove data-trip-type="${escapeHTML(item.type)}" data-trip-id="${escapeHTML(item.id)}">Remove</button>
           </div>
         </article>
-      `).join('')}
+      `
+        )
+        .join('')}
     </div>
   `;
   applyImageFallbacks(container);
@@ -702,27 +908,33 @@ async function initAttractionDetailPage() {
   renderLoading(container, 'Loading destination details...');
 
   if (!destinationId) {
-    renderError(container, 'Choose a destination from the Top Destinations page to view its details.');
+    renderError(
+      container,
+      'Choose a destination from the Top Destinations page to view its details.'
+    );
     return;
   }
 
   try {
     const [destinations, activities] = await Promise.all([
       fetchJSON(getDataPath('destinations.json')),
-      fetchJSON(getDataPath('activities.json'))
+      fetchJSON(getDataPath('activities.json')),
     ]);
-    const destination = (destinations || []).find(item => {
+    const destination = (destinations || []).find((item) => {
       return normalizeText(item.id) === destinationId || normalizeText(item.slug) === destinationId;
     });
 
     if (!destination) {
-      renderError(container, 'We could not find that destination. Please return to Top Destinations and choose another place.');
+      renderError(
+        container,
+        'We could not find that destination. Please return to Top Destinations and choose another place.'
+      );
       return;
     }
 
     document.title = `${destination.name} | Explore Jordan`;
     const relatedActivities = (activities || [])
-      .filter(activity => sharesDestinationContext(destination, activity))
+      .filter((activity) => sharesDestinationContext(destination, activity))
       .slice(0, 3);
 
     renderAttractionDetail(destination, relatedActivities, container);
@@ -742,10 +954,42 @@ function initMap() {
 
   jordanMap = L.map('map').setView([30.5852, 36.2384], 7);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution:
+      'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(jordanMap);
 
-  updateMarkers('en');
+  updateMarkers(mapLanguage);
+}
+
+function initLanguageToggle() {
+  try {
+    mapLanguage = localStorage.getItem('exploreJordanMapLanguage') === 'ar' ? 'ar' : 'en';
+  } catch (error) {
+    mapLanguage = 'en';
+  }
+
+  const toggles = document.querySelectorAll('[data-language-toggle]');
+
+  function updateToggle(button) {
+    const nextLanguage = mapLanguage === 'en' ? 'Arabic' : 'English';
+    button.textContent = mapLanguage === 'en' ? 'العربية' : 'English';
+    button.setAttribute('aria-label', `Switch map labels to ${nextLanguage}`);
+    button.setAttribute('aria-pressed', String(mapLanguage === 'ar'));
+  }
+
+  toggles.forEach((button) => {
+    updateToggle(button);
+    button.addEventListener('click', () => {
+      mapLanguage = mapLanguage === 'en' ? 'ar' : 'en';
+      try {
+        localStorage.setItem('exploreJordanMapLanguage', mapLanguage);
+      } catch (error) {
+        // The map labels still switch for this page when storage is unavailable.
+      }
+      toggles.forEach(updateToggle);
+      updateMarkers(mapLanguage);
+    });
+  });
 }
 
 function updateMarkers(lang) {
@@ -753,15 +997,17 @@ function updateMarkers(lang) {
     return;
   }
 
-  mapMarkers.forEach(marker => jordanMap.removeLayer(marker));
-  mapMarkers = markersData.map(data => {
-    const destination = destinationsData.find(item => item.id === data.id) || data;
+  mapMarkers.forEach((marker) => jordanMap.removeLayer(marker));
+  mapMarkers = markersData.map((data) => {
+    const destination = destinationsData.find((item) => item.id === data.id) || data;
     const detailPath = getAttractionDetailPath(destination);
     const label = lang === 'ar' ? data.name_ar : data.name;
 
     return L.marker([data.lat, data.lng])
       .addTo(jordanMap)
-      .bindPopup(`<a class="map-popup-link" href="${escapeHTML(detailPath)}">${escapeHTML(label)}</a>`);
+      .bindPopup(
+        `<a class="map-popup-link" href="${escapeHTML(detailPath)}">${escapeHTML(label)}</a>`
+      );
   });
 }
 
@@ -792,7 +1038,12 @@ function initHeroSlider() {
 function initCarousel() {
   const carousel = document.querySelector('.custom-carousel');
 
-  if (!carousel || !carousel.querySelector('.item') || typeof $ === 'undefined' || !$.fn.owlCarousel) {
+  if (
+    !carousel ||
+    !carousel.querySelector('.item') ||
+    typeof $ === 'undefined' ||
+    !$.fn.owlCarousel
+  ) {
     return;
   }
 
@@ -816,37 +1067,41 @@ function initCarousel() {
     smartSpeed: 450,
     responsive: {
       0: { margin: 4 },
-      769: { margin: 10 }
+      769: { margin: 10 },
     },
-    onInitialized: event => syncCenteredCarouselItem(event.currentTarget),
-    onTranslated: event => syncCenteredCarouselItem(event.currentTarget)
+    onInitialized: (event) => syncCenteredCarouselItem(event.currentTarget),
+    onTranslated: (event) => syncCenteredCarouselItem(event.currentTarget),
   });
 
   syncCenteredCarouselItem(carousel);
 
   const owlInstance = $carousel.data('owl.carousel');
-  $carousel.find('.owl-prev')
+  $carousel
+    .find('.owl-prev')
     .attr('aria-label', 'Previous destination')
     .off('click')
-    .on('click.exploreJordanNav', event => {
+    .on('click.exploreJordanNav', (event) => {
       event.preventDefault();
       owlInstance.prev();
     });
-  $carousel.find('.owl-next')
+  $carousel
+    .find('.owl-next')
     .attr('aria-label', 'Next destination')
     .off('click')
-    .on('click.exploreJordanNav', event => {
+    .on('click.exploreJordanNav', (event) => {
       event.preventDefault();
       owlInstance.next();
     });
 
-  $carousel.off('click.exploreJordan', '.item').on('click.exploreJordan', '.item', function(event) {
-    if (event.target.closest('button, a')) {
-      return;
-    }
+  $carousel
+    .off('click.exploreJordan', '.item')
+    .on('click.exploreJordan', '.item', function (event) {
+      if (event.target.closest('button, a')) {
+        return;
+      }
 
-    activateCarouselItem(this);
-  });
+      activateCarouselItem(this);
+    });
 }
 
 function initFadeAnimations() {
@@ -856,20 +1111,23 @@ function initFadeAnimations() {
     return;
   }
 
-  fadeObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.1 });
+  fadeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
 
-  fadeElements.forEach(element => {
+  fadeElements.forEach((element) => {
     fadeObserver.observe(element);
   });
 
   setTimeout(() => {
-    document.querySelectorAll('.fade-in').forEach(element => {
+    document.querySelectorAll('.fade-in').forEach((element) => {
       element.classList.add('show');
     });
   }, 100);
@@ -882,19 +1140,19 @@ function initExperienceCards() {
     return;
   }
 
-  options.forEach(option => {
-    option.addEventListener('click', function() {
-      options.forEach(item => item.classList.remove('active'));
+  options.forEach((option) => {
+    option.addEventListener('click', function () {
+      options.forEach((item) => item.classList.remove('active'));
       this.classList.add('active');
     });
     option.tabIndex = 0;
     option.setAttribute('role', 'button');
     option.setAttribute('aria-expanded', String(option.classList.contains('active')));
-    option.addEventListener('keydown', event => {
+    option.addEventListener('keydown', (event) => {
       if (event.target.closest('button, a')) return;
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        options.forEach(item => {
+        options.forEach((item) => {
           item.classList.remove('active');
           item.setAttribute('aria-expanded', 'false');
         });
@@ -902,9 +1160,9 @@ function initExperienceCards() {
         option.setAttribute('aria-expanded', 'true');
       }
     });
-    option.addEventListener('click', event => {
+    option.addEventListener('click', (event) => {
       if (event.target.closest('button, a')) return;
-      options.forEach(item => item.setAttribute('aria-expanded', 'false'));
+      options.forEach((item) => item.setAttribute('aria-expanded', 'false'));
       option.setAttribute('aria-expanded', 'true');
     });
   });
@@ -953,7 +1211,7 @@ function initFeaturedSlider() {
     });
   }
 
-  indicators.forEach(indicator => {
+  indicators.forEach((indicator) => {
     indicator.addEventListener('click', () => {
       showSlide(Number(indicator.dataset.index) || 0);
     });
@@ -1006,7 +1264,7 @@ function initCitySlider() {
 function initPageInteractions() {
   applyImageFallbacks(document);
 
-  document.querySelectorAll('[data-scroll-target]').forEach(control => {
+  document.querySelectorAll('[data-scroll-target]').forEach((control) => {
     control.addEventListener('click', () => {
       const target = document.querySelector(control.dataset.scrollTarget);
 
@@ -1016,8 +1274,8 @@ function initPageInteractions() {
     });
   });
 
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', event => {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (event) => {
       const target = document.querySelector(anchor.getAttribute('href'));
 
       if (target) {
@@ -1031,13 +1289,13 @@ function initPageInteractions() {
     AOS.init({
       once: true,
       duration: 800,
-      easing: 'ease-in-out'
+      easing: 'ease-in-out',
     });
   }
 }
 
 function initFavorites() {
-  document.addEventListener('click', function(event) {
+  document.addEventListener('click', function (event) {
     const button = event.target.closest('[data-favorite-type][data-favorite-id]');
 
     if (!button) {
@@ -1053,7 +1311,7 @@ function initFavorites() {
 }
 
 function initTripPlanner() {
-  document.addEventListener('click', function(event) {
+  document.addEventListener('click', function (event) {
     const removeButton = event.target.closest('[data-trip-remove]');
     const clearButton = event.target.closest('[data-trip-clear]');
     const addButton = event.target.closest('.trip-button[data-trip-type][data-trip-id]');
@@ -1085,7 +1343,7 @@ function initTripPlanner() {
         name: addButton.dataset.tripName,
         location: addButton.dataset.tripLocation,
         image: addButton.dataset.tripImage,
-        category: addButton.dataset.tripCategory
+        category: addButton.dataset.tripCategory,
       });
       return;
     }
@@ -1106,10 +1364,17 @@ function initDestinationFilters() {
   }
 
   if (citySelect && citySelect.options.length <= 1) {
-    const cities = Array.from(new Set(destinationsData.map(destination => destination.city).filter(Boolean))).sort();
-    citySelect.insertAdjacentHTML('beforeend', cities.map(city => {
-      return `<option value="${escapeHTML(city)}">${escapeHTML(city)}</option>`;
-    }).join(''));
+    const cities = Array.from(
+      new Set(destinationsData.map((destination) => destination.city).filter(Boolean))
+    ).sort();
+    citySelect.insertAdjacentHTML(
+      'beforeend',
+      cities
+        .map((city) => {
+          return `<option value="${escapeHTML(city)}">${escapeHTML(city)}</option>`;
+        })
+        .join('')
+    );
   }
 
   function activeCategory() {
@@ -1121,11 +1386,14 @@ function initDestinationFilters() {
     const filtered = filterDestinations(destinationsData, {
       query: searchInput ? searchInput.value : '',
       category: activeCategory(),
-      city: citySelect ? citySelect.value : 'all'
+      city: citySelect ? citySelect.value : 'all',
     });
 
     if (filtered.length === 0) {
-      renderNoResults(container, 'No destinations found. Try a different search, category, or city.');
+      renderNoResults(
+        container,
+        'No destinations found. Try a different search, category, or city.'
+      );
       return;
     }
 
@@ -1141,9 +1409,9 @@ function initDestinationFilters() {
     citySelect.addEventListener('change', renderFilteredDestinations);
   }
 
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      filterButtons.forEach(item => {
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', function () {
+      filterButtons.forEach((item) => {
         item.classList.remove('category-active');
         item.classList.add('dark-gray-text');
       });
@@ -1187,7 +1455,7 @@ function initActivityFilters() {
   function renderFilteredActivities() {
     const filtered = filterActivities(activitiesData, {
       query: searchInput ? searchInput.value : '',
-      category: activeCategory()
+      category: activeCategory(),
     });
 
     if (activitySection) {
@@ -1207,9 +1475,9 @@ function initActivityFilters() {
     searchInput.addEventListener('input', renderFilteredActivities);
   }
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', function() {
-      tabs.forEach(item => {
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', function () {
+      tabs.forEach((item) => {
         item.classList.remove('active', 'bg-green-800', 'text-white');
         item.classList.add('bg-gray-100', 'hover:bg-gray-200');
       });
@@ -1224,6 +1492,89 @@ function initActivityFilters() {
   }
 }
 
+function initAccommodationFilters(data, container) {
+  if (!container || !Array.isArray(data) || data.length === 0) {
+    return;
+  }
+
+  const searchInput = document.querySelector('[data-accommodation-search]');
+  const citySelect = document.querySelector('[data-accommodation-city-filter]');
+  const priceButtons = document.querySelectorAll('[data-price]');
+
+  if (citySelect && citySelect.options.length <= 1) {
+    const cities = Array.from(
+      new Set(
+        data
+          .flatMap((accommodation) => String(accommodation.city || '').split(/,| and /i))
+          .map((city) => city.trim().replace(/^and\s+/i, ''))
+          .filter(Boolean)
+      )
+    ).sort();
+    citySelect.insertAdjacentHTML(
+      'beforeend',
+      cities
+        .map((city) => `<option value="${escapeHTML(city)}">${escapeHTML(city)}</option>`)
+        .join('')
+    );
+  }
+
+  function renderFilteredAccommodations() {
+    const query = String(searchInput ? searchInput.value : '')
+      .trim()
+      .toLowerCase();
+    const city = citySelect ? citySelect.value : 'all';
+    const activePrice = document.querySelector('[data-price].category-active');
+    const price = activePrice ? activePrice.dataset.price : 'all';
+    const filtered = data.filter((accommodation) => {
+      const searchable = [
+        accommodation.name,
+        accommodation.city,
+        accommodation.type,
+        accommodation.shortDescription,
+        accommodation.longDescription,
+        ...(Array.isArray(accommodation.tags) ? accommodation.tags : []),
+      ]
+        .join(' ')
+        .toLowerCase();
+      const cities = String(accommodation.city || '')
+        .split(/,| and /i)
+        .map((value) =>
+          value
+            .trim()
+            .replace(/^and\s+/i, '')
+            .toLowerCase()
+        );
+
+      return (
+        (!query || searchable.includes(query)) &&
+        (city === 'all' || cities.includes(city.toLowerCase())) &&
+        (price === 'all' || accommodation.priceRange === price)
+      );
+    });
+
+    if (filtered.length === 0) {
+      renderNoResults(container, 'No places to stay found. Try a different search or filter.');
+      return;
+    }
+
+    renderAccommodationCards(filtered, container);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', renderFilteredAccommodations);
+  }
+  if (citySelect) {
+    citySelect.addEventListener('change', renderFilteredAccommodations);
+  }
+  priceButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      priceButtons.forEach((item) => item.classList.remove('category-active'));
+      button.classList.add('category-active');
+      renderFilteredAccommodations();
+    });
+  });
+}
+
 function refreshAOS() {
   if (typeof AOS !== 'undefined' && typeof AOS.refresh === 'function') {
     AOS.refresh();
@@ -1236,49 +1587,80 @@ async function initDynamicContent() {
   const homeActivitiesContainer = document.querySelector('[data-render="home-activities"]');
   const pageActivitiesContainer = document.querySelector('[data-render="page-activities"]');
   const homeAccommodationsContainer = document.querySelector('[data-render="home-accommodations"]');
+  const pageAccommodationsContainer = document.querySelector('[data-render="page-accommodations"]');
 
   const tasks = [];
 
   if (homeDestinationsContainer || pageDestinationsContainer) {
     renderLoading(homeDestinationsContainer, 'Loading destinations...');
     renderLoading(pageDestinationsContainer, 'Loading destinations...');
-    tasks.push(fetchJSON(getDataPath('destinations.json'))
-      .then(data => {
-        destinationsData = Array.isArray(data) ? data : [];
-        renderDestinationCards(data, homeDestinationsContainer);
-        renderDestinationCards(data, pageDestinationsContainer);
-      })
-      .catch(error => {
-        console.error('Failed to load destinations.json:', error);
-        renderError(homeDestinationsContainer, 'Destinations could not load. Please try again later.');
-        renderError(pageDestinationsContainer, 'Destinations could not load. Please try again later.');
-      }));
+    tasks.push(
+      fetchJSON(getDataPath('destinations.json'))
+        .then((data) => {
+          destinationsData = Array.isArray(data) ? data : [];
+          renderDestinationCards(data, homeDestinationsContainer);
+          renderDestinationCards(data, pageDestinationsContainer);
+        })
+        .catch((error) => {
+          console.error('Failed to load destinations.json:', error);
+          renderError(
+            homeDestinationsContainer,
+            'Destinations could not load. Please try again later.'
+          );
+          renderError(
+            pageDestinationsContainer,
+            'Destinations could not load. Please try again later.'
+          );
+        })
+    );
   }
 
   if (homeActivitiesContainer || pageActivitiesContainer) {
     renderLoading(homeActivitiesContainer, 'Loading activities...');
     renderLoading(pageActivitiesContainer, 'Loading activities...');
-    tasks.push(fetchJSON(getDataPath('activities.json'))
-      .then(data => {
-        activitiesData = Array.isArray(data) ? data : [];
-        renderActivityCards(data, homeActivitiesContainer);
-        renderActivityCards(data, pageActivitiesContainer);
-      })
-      .catch(error => {
-        console.error('Failed to load activities.json:', error);
-        renderError(homeActivitiesContainer, 'Activities could not load. Please try again later.');
-        renderError(pageActivitiesContainer, 'Activities could not load. Please try again later.');
-      }));
+    tasks.push(
+      fetchJSON(getDataPath('activities.json'))
+        .then((data) => {
+          activitiesData = Array.isArray(data) ? data : [];
+          renderActivityCards(data, homeActivitiesContainer);
+          renderActivityCards(data, pageActivitiesContainer);
+        })
+        .catch((error) => {
+          console.error('Failed to load activities.json:', error);
+          renderError(
+            homeActivitiesContainer,
+            'Activities could not load. Please try again later.'
+          );
+          renderError(
+            pageActivitiesContainer,
+            'Activities could not load. Please try again later.'
+          );
+        })
+    );
   }
 
-  if (homeAccommodationsContainer) {
+  if (homeAccommodationsContainer || pageAccommodationsContainer) {
     renderLoading(homeAccommodationsContainer, 'Loading accommodation ideas...');
-    tasks.push(fetchJSON(getDataPath('accommodations.json'))
-      .then(data => renderAccommodationCards(data, homeAccommodationsContainer))
-      .catch(error => {
-        console.error('Failed to load accommodations.json:', error);
-        renderError(homeAccommodationsContainer, 'Accommodation cards could not load. Please try again later.');
-      }));
+    renderLoading(pageAccommodationsContainer, 'Loading places to stay...');
+    tasks.push(
+      fetchJSON(getDataPath('accommodations.json'))
+        .then((data) => {
+          renderAccommodationCards(data, homeAccommodationsContainer);
+          renderAccommodationCards(data, pageAccommodationsContainer);
+          initAccommodationFilters(data, pageAccommodationsContainer);
+        })
+        .catch((error) => {
+          console.error('Failed to load accommodations.json:', error);
+          renderError(
+            homeAccommodationsContainer,
+            'Accommodation cards could not load. Please try again later.'
+          );
+          renderError(
+            pageAccommodationsContainer,
+            'Accommodation cards could not load. Please try again later.'
+          );
+        })
+    );
   }
 
   await Promise.all(tasks);
@@ -1314,19 +1696,79 @@ function initResponsiveNav() {
   closeButton.addEventListener('click', closeMenu);
   backdrop.addEventListener('click', closeMenu);
 
-  sidebarLinks.forEach(link => {
+  sidebarLinks.forEach((link) => {
     link.addEventListener('click', closeMenu);
   });
 
-  document.addEventListener('keydown', function(event) {
+  document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
       closeMenu();
     }
   });
 }
 
-document.addEventListener('DOMContentLoaded', async function() {
+function injectAdvisorWidget() {
+  if (!document.body || !document.head || typeof document.createElement !== 'function') {
+    return;
+  }
+
+  if (document.querySelector('[data-advisor-widget]')) {
+    return;
+  }
+
+  const assetPrefix = isPagesDirectory() ? '../' : '';
+  const stylesheet = document.createElement('link');
+  stylesheet.rel = 'stylesheet';
+  stylesheet.href = `${assetPrefix}css/advisor.css`;
+  stylesheet.dataset.advisorStyles = 'true';
+  document.head.appendChild(stylesheet);
+
+  const widget = document.createElement('div');
+  widget.className = 'advisor-widget';
+  widget.dataset.advisorWidget = 'true';
+  widget.innerHTML = `
+    <button class="advisor-launcher" type="button" aria-label="Open AI Trip Advisor" aria-controls="advisorPanel" aria-expanded="false" data-advisor-open>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5 8 8 0 0 1-3.3-.7L4 20l1.7-4.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/></svg>
+    </button>
+    <section class="advisor-widget-panel" id="advisorPanel" role="dialog" aria-labelledby="advisorPanelTitle" aria-live="polite" hidden>
+      <header class="advisor-widget-header">
+        <div><h2 id="advisorPanelTitle">Jordan Trip Advisor</h2><p>Personalized ideas from our listings</p></div>
+        <button type="button" class="advisor-widget-close" aria-label="Close Trip Advisor" data-advisor-close>×</button>
+      </header>
+      <div class="advisor-chat" id="advisorChat" aria-live="polite" aria-relevant="additions text"></div>
+      <form class="advisor-composer" id="advisorComposer" hidden>
+        <label class="sr-only" for="advisorMessageInput">Ask a Jordan travel question</label>
+        <input id="advisorMessageInput" name="message" type="text" maxlength="1000" placeholder="Ask a follow-up question..." autocomplete="off" disabled>
+        <button type="submit" class="advisor-submit gold-accent" disabled>Send</button>
+      </form>
+    </section>
+  `;
+
+  const pageMount = document.querySelector('[data-advisor-page-mount]');
+  if (pageMount) {
+    const panel = widget.querySelector('.advisor-widget-panel');
+    panel.classList.add('advisor-widget-panel--page');
+    pageMount.appendChild(panel);
+  }
+  document.body.appendChild(widget);
+
+  const rulesScript = document.createElement('script');
+  rulesScript.src = `${assetPrefix}js/advisor-rules.js`;
+  rulesScript.dataset.advisorModule = 'rules';
+  rulesScript.onload = () => {
+    const advisorScript = document.createElement('script');
+    advisorScript.src = `${assetPrefix}js/advisor.js`;
+    advisorScript.dataset.advisorModule = 'chat';
+    document.body.appendChild(advisorScript);
+  };
+  document.body.appendChild(rulesScript);
+}
+
+injectAdvisorWidget();
+
+document.addEventListener('DOMContentLoaded', async function () {
   initResponsiveNav();
+  initLanguageToggle();
   initFavorites();
   initTripPlanner();
   initMap();
@@ -1340,4 +1782,3 @@ document.addEventListener('DOMContentLoaded', async function() {
   initCarousel();
   initExperienceCards();
 });
-

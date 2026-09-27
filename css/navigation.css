@@ -50,6 +50,29 @@
   color: var(--color-primary-gold);
 }
 
+.language-toggle {
+  min-height: 38px;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(92, 78, 61, 0.2);
+  border-radius: 999px;
+  background: var(--color-soft-cream);
+  color: var(--color-dark-brown);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.language-toggle:hover {
+  border-color: var(--color-primary-gold);
+  color: var(--color-dark-brown);
+}
+
+.mobile-sidebar__links .language-toggle {
+  width: 100%;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
 .site-nav__toggle {
   display: none;
   width: 44px;

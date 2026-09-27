@@ -1,176 +1,306 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Explore Jordan | Discover the Magic of Jordan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Discover Jordan's destinations, experiences, and places to stay, then save ideas to a simple personal trip planner." />
-  <link rel="icon" type="image/jpeg" href="assets/images/petra.jpg" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/styles.css" />
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Explore Jordan | Discover the Magic of Jordan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Discover Jordan's destinations, experiences, and places to stay, then save ideas to a simple personal trip planner."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+      integrity="sha384-HtMZLkYo+pR5/u7zCzXxMJP6QoNnQJt1qkHM0EaOPvGDIzaVZbmYr/TlvUZ/sKAg"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+      integrity="sha384-sR0KJWkU2HZb5fm0n7/DTwkeQw8sVDpyoeKXflqeSYBSomOjj54QiAhlGCak9rpq"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+      integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Owl Carousel CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+      integrity="sha384-kcNNzf7wI8//ZkNUaDd5JwxLoFaBgkj9Z4O4NwtuX9Lkmsz0HoITOxJsGkYxDuyG"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+      integrity="sha384-8/AzSKHReNfZT4HGFTyRyJ1jXhhx/ZMnmX08Cy6TeaKWj0Vzho0AabG06C8mh02i"
+      crossorigin="anonymous"
+    />
 
-<!-- jQuery and Owl Carousel are loaded in order without blocking page rendering. -->
-<script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery and Owl Carousel are loaded in order without blocking page rendering. -->
+    <script
+      defer
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+      crossorigin="anonymous"
+    ></script>
 
-<!-- Owl Carousel JS -->
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-</head>
-<body>
-
-<nav class="site-nav" id="navbar">
-  <div class="site-nav__inner">
-    <a class="site-nav__brand" href="index.html">Explore Jordan</a>
-    <div class="site-nav__links">
-      <a href="index.html">Home</a>
-      <a href="pages/top.html">Top Destinations</a>
-      <a href="pages/activity.html">Activities</a>
-      <a href="pages/top.html#destinations">Attractions</a>
-      <a href="pages/planner.html">Trip Planner</a>
-      <a href="pages/advisor.html">Trip Advisor</a>
-    </div>
-    <button class="site-nav__toggle" type="button" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false" data-nav-open>
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-</nav>
-<div class="site-nav__backdrop" data-nav-backdrop></div>
-<aside class="mobile-sidebar" id="mobile-menu" aria-hidden="true" data-mobile-sidebar>
-  <button class="mobile-sidebar__close" type="button" aria-label="Close menu" data-nav-close>X</button>
-  <a class="mobile-sidebar__brand" href="index.html">Explore Jordan</a>
-  <nav class="mobile-sidebar__links" aria-label="Mobile navigation">
-    <a href="index.html" data-nav-link>Home</a>
-    <a href="pages/top.html" data-nav-link>Top Destinations</a>
-    <a href="pages/activity.html" data-nav-link>Activities</a>
-    <a href="pages/top.html#destinations" data-nav-link>Attractions</a>
-    <a href="pages/planner.html" data-nav-link>Trip Planner</a>
-    <a href="pages/advisor.html" data-nav-link>Trip Advisor</a>
-  </nav>
-</aside>
-
-<div id="lang-en">
-  <!-- Hero Section with Background Slider -->
-  <section class="hero-slider min-h-screen relative flex flex-col justify-center items-center text-white px-5 pt-24 pb-12 text-center">
-    <div class="hero-slide hero-slide--petra active"></div>
-    <div class="hero-slide hero-slide--wadi-rum"></div>
-    <div class="hero-slide hero-slide--dead-sea"></div>
-    <div class="hero-slide hero-slide--jerash"></div>
-    <div class="hero-overlay"></div>
-
-    <div class="max-w-3xl z-10 fade-in">
-      <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Discover the Magic of Jordan</h1>
-      <p class="text-xl mb-8">Explore timeless cities, desert landscapes, warm hospitality, and meaningful cultural experiences.</p>
-      <a href="#home-destinations" class="inline-block px-8 py-3 bg-yellow-400 text-gray-900 font-bold rounded hover:bg-yellow-300 transition">
-        <i class="fas fa-map-marker-alt mr-2"></i>Start Your Journey
-      </a>
-    </div>
-  </section>
-
-  <section class="section-gold py-10 px-5 fade-in">
-    <div class="max-w-5xl mx-auto text-white">
-      <h2 class="text-4xl font-bold mb-4">Jordan: Heritage, Nature, and Hospitality</h2>
-      <p class="mb-2">Discover a country shaped by Nabataean ingenuity, Roman engineering, Islamic heritage, and Bedouin hospitality.</p>
-      <p class="mb-2">From Petra and Jerash to Wadi Rum and the Dead Sea, every journey reveals a different side of the kingdom.</p>
-      <p class="text-left mt-6 text-lg font-semibold" dir="ltr">Travel with curiosity, take time for tea and conversation, and experience the generosity that makes Jordan feel personal.</p>
-    </div>
-  </section>
-<!-- Top Destinations Section: Responsive Card Slider -->
-<section class="Top-Destinations fade-in" id="home-destinations">
-  <h2 class="text-3xl font-bold text-center mb-10">Top Destinations</h2>
-
-  <div class="owl-carousel custom-carousel owl-theme" id="homeDestinationsContainer" data-render="home-destinations"></div>
-
-  <!-- Explore Button -->
-  <div class="text-center my-10">
-    <a href="pages/top.html" class="button-78" role="button">
-      Explore Top Destinations
-    </a>
-  </div>
-</section>
-
-
-<!-- Travel tips -->
-  <section class="section-gold py-12 px-5 fade-in">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-white mb-6 text-center">Travel Tips</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white rounded-lg p-4 flex items-start">
-          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-calendar-alt"></i></span>
-          <div><h3 class="font-bold">Best Time to Visit</h3><p>Spring and autumn bring comfortable temperatures, clear light, and excellent conditions for walking, sightseeing, and desert stays.</p></div>
+    <!-- Owl Carousel JS -->
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+      integrity="sha384-l/y5WJTphApmSlx76Ev6k4G3zxu/+19CVvn9OTKI7gs4Yu5Hm8mjpdtdr5oyhnNo"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="site-nav" id="navbar">
+      <div class="site-nav__inner">
+        <a class="site-nav__brand" href="index.html">Explore Jordan</a>
+        <div class="site-nav__links">
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="pages/top.html">Top Destinations</a>
+          <a href="pages/activity.html">Activities</a>
+          <a href="pages/hotels.html">Hotels</a>
+          <a href="pages/top.html#destinations">Attractions</a>
+          <a href="pages/planner.html">Trip Planner</a>
+          <a href="pages/advisor.html">Trip Advisor</a>
+          <button
+            class="language-toggle"
+            type="button"
+            data-language-toggle
+            aria-label="Switch map labels to Arabic"
+            aria-pressed="false"
+          >
+            العربية
+          </button>
         </div>
-        <div class="bg-white rounded-lg p-4 flex items-start">
-          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-utensils"></i></span>
-          <div><h3 class="font-bold">Cuisine</h3><p>Try mansaf, maqluba, mezze, fresh falafel, local olive oil, and kanafeh for a sweet finish.</p></div>
-        </div>
-        <div class="bg-white rounded-lg p-4 flex items-start">
-          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-handshake"></i></span>
-          <div><h3 class="font-bold">Etiquette</h3><p>Dress modestly at religious and rural sites, greet people politely, and accept tea or coffee as a sign of hospitality when offered.</p></div>
-        </div>
-        <div class="bg-white rounded-lg p-4 flex items-start">
-          <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-money-bill-wave"></i></span>
-          <div><h3 class="font-bold">Currency</h3><p>The Jordanian dinar (JOD) is the local currency. Cards are common in cities, while cash is useful for taxis, markets, and rural areas.</p></div>
-        </div>
+        <button
+          class="site-nav__toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          data-nav-open
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-    </div>
-  </section>
+    </nav>
+    <div class="site-nav__backdrop" data-nav-backdrop></div>
+    <aside class="mobile-sidebar" id="mobile-menu" aria-hidden="true" data-mobile-sidebar>
+      <button class="mobile-sidebar__close" type="button" aria-label="Close menu" data-nav-close>
+        X
+      </button>
+      <a class="mobile-sidebar__brand" href="index.html">Explore Jordan</a>
+      <nav class="mobile-sidebar__links" aria-label="Mobile navigation">
+        <a href="index.html" data-nav-link aria-current="page">Home</a>
+        <a href="pages/top.html" data-nav-link>Top Destinations</a>
+        <a href="pages/activity.html" data-nav-link>Activities</a>
+        <a href="pages/hotels.html" data-nav-link>Hotels</a>
+        <a href="pages/top.html#destinations" data-nav-link>Attractions</a>
+        <a href="pages/planner.html" data-nav-link>Trip Planner</a>
+        <a href="pages/advisor.html" data-nav-link>Trip Advisor</a>
 
-<!-- Experiences Section -->
-<section class="py-14 px-5 bg-white fade-in">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-3xl font-bold text-center mb-10">Experiences Await</h2>
-    
-    <div class="options" id="homeActivitiesContainer" data-render="home-activities"></div>
-  </div>
-</section>
-  <section class="py-14 px-5 bg-gray-50 fade-in">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-10">Accommodation Spotlight</h2>
-      <div class="grid md:grid-cols-3 gap-8" id="homeAccommodationsContainer" data-render="home-accommodations"></div>
-    </div>
-  </section>
+        <button
+          class="language-toggle"
+          type="button"
+          data-language-toggle
+          aria-label="Switch map labels to Arabic"
+          aria-pressed="false"
+        >
+          العربية
+        </button>
+      </nav>
+    </aside>
 
-  <section class="py-12 px-5 bg-gray-50 fade-in">
-    <div class="max-w-5xl mx-auto text-center">
-      <h2 id="map-title" class="text-3xl font-bold mb-6">Explore Jordan on the Map</h2>
-      <div id="map" class="w-full"></div>
-    </div>
-  </section>
+    <div id="lang-en">
+      <!-- Hero Section with Background Slider -->
+      <section
+        class="hero-slider min-h-screen relative flex flex-col justify-center items-center text-white px-5 pt-24 pb-12 text-center"
+      >
+        <div class="hero-slide hero-slide--petra active"></div>
+        <div class="hero-slide hero-slide--wadi-rum"></div>
+        <div class="hero-slide hero-slide--dead-sea"></div>
+        <div class="hero-slide hero-slide--jerash"></div>
+        <div class="hero-overlay"></div>
 
-  <section class="py-16 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-5">
-      <div class="flex flex-col md:flex-row items-center gap-8">
-        <div class="md:w-1/2 text-center md:text-left">
-          <h2 class="text-4xl font-bold mb-4">Ready to Explore Jordan?</h2>
-          <p class="text-lg mb-6">Start planning a route that connects ancient cities, desert scenery, local food, and warm Jordanian hospitality.</p>
-          <a href="pages/planner.html"
-             class="inline-block px-8 py-3 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-600 transition duration-300">
-            Build Your Trip
+        <div class="max-w-3xl z-10 fade-in">
+          <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Discover the Magic of Jordan</h1>
+          <p class="text-xl mb-8">
+            Explore timeless cities, desert landscapes, warm hospitality, and meaningful cultural
+            experiences.
+          </p>
+          <a
+            href="#home-destinations"
+            class="inline-block px-8 py-3 bg-yellow-400 text-gray-900 font-bold rounded hover:bg-yellow-300 transition"
+          >
+            <i class="fas fa-map-marker-alt mr-2"></i>Start Your Journey
           </a>
         </div>
-        <div class="md:w-1/2">
-          <img src="assets/images/camel-trekking.jpg" alt="Wadi Rum desert landscape" 
-               class="rounded-lg shadow-lg w-full h-auto max-h-80 object-cover">
+      </section>
+
+      <section class="section-gold py-10 px-5 fade-in">
+        <div class="max-w-5xl mx-auto text-white">
+          <h2 class="text-4xl font-bold mb-4">Jordan: Heritage, Nature, and Hospitality</h2>
+          <p class="mb-2">
+            Discover a country shaped by Nabataean ingenuity, Roman engineering, Islamic heritage,
+            and Bedouin hospitality.
+          </p>
+          <p class="mb-2">
+            From Petra and Jerash to Wadi Rum and the Dead Sea, every journey reveals a different
+            side of the kingdom.
+          </p>
+          <p class="text-left mt-6 text-lg font-semibold" dir="ltr">
+            Travel with curiosity, take time for tea and conversation, and experience the generosity
+            that makes Jordan feel personal.
+          </p>
         </div>
-      </div>
+      </section>
+      <!-- Top Destinations Section: Responsive Card Slider -->
+      <section class="Top-Destinations fade-in" id="home-destinations">
+        <h2 class="text-3xl font-bold text-center mb-10">Top Destinations</h2>
+
+        <div
+          class="owl-carousel custom-carousel owl-theme"
+          id="homeDestinationsContainer"
+          data-render="home-destinations"
+        ></div>
+
+        <!-- Explore Button -->
+        <div class="text-center my-10">
+          <a href="pages/top.html" class="button-78" role="button"> Explore Top Destinations </a>
+        </div>
+      </section>
+
+      <!-- Travel tips -->
+      <section class="section-gold py-12 px-5 fade-in">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl font-bold text-white mb-6 text-center">Travel Tips</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg p-4 flex items-start">
+              <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-calendar-alt"></i></span>
+              <div>
+                <h3 class="font-bold">Best Time to Visit</h3>
+                <p>
+                  Spring and autumn bring comfortable temperatures, clear light, and excellent
+                  conditions for walking, sightseeing, and desert stays.
+                </p>
+              </div>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-start">
+              <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-utensils"></i></span>
+              <div>
+                <h3 class="font-bold">Cuisine</h3>
+                <p>
+                  Try mansaf, maqluba, mezze, fresh falafel, local olive oil, and kanafeh for a
+                  sweet finish.
+                </p>
+              </div>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-start">
+              <span class="text-yellow-500 text-xl mr-3"><i class="fas fa-handshake"></i></span>
+              <div>
+                <h3 class="font-bold">Etiquette</h3>
+                <p>
+                  Dress modestly at religious and rural sites, greet people politely, and accept tea
+                  or coffee as a sign of hospitality when offered.
+                </p>
+              </div>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-start">
+              <span class="text-yellow-500 text-xl mr-3"
+                ><i class="fas fa-money-bill-wave"></i
+              ></span>
+              <div>
+                <h3 class="font-bold">Currency</h3>
+                <p>
+                  The Jordanian dinar (JOD) is the local currency. Cards are common in cities, while
+                  cash is useful for taxis, markets, and rural areas.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experiences Section -->
+      <section class="py-14 px-5 bg-white fade-in">
+        <div class="max-w-7xl mx-auto">
+          <h2 class="text-3xl font-bold text-center mb-10">Experiences Await</h2>
+
+          <div class="options" id="homeActivitiesContainer" data-render="home-activities"></div>
+        </div>
+      </section>
+      <section class="py-14 px-5 bg-gray-50 fade-in">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="text-3xl font-bold text-center mb-10">Accommodation Spotlight</h2>
+          <div
+            class="grid md:grid-cols-3 gap-8"
+            id="homeAccommodationsContainer"
+            data-render="home-accommodations"
+          ></div>
+        </div>
+      </section>
+
+      <section class="py-12 px-5 bg-gray-50 fade-in">
+        <div class="max-w-5xl mx-auto text-center">
+          <h2 id="map-title" class="text-3xl font-bold mb-6">Explore Jordan on the Map</h2>
+          <div id="map" class="w-full"></div>
+        </div>
+      </section>
+
+      <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-5">
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2 text-center md:text-left">
+              <h2 class="text-4xl font-bold mb-4">Ready to Explore Jordan?</h2>
+              <p class="text-lg mb-6">
+                Start planning a route that connects ancient cities, desert scenery, local food, and
+                warm Jordanian hospitality.
+              </p>
+              <a
+                href="pages/planner.html"
+                class="inline-block px-8 py-3 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-600 transition duration-300"
+              >
+                Build Your Trip
+              </a>
+            </div>
+            <div class="md:w-1/2">
+              <img
+                src="assets/images/camel-trekking.jpg"
+                alt="Wadi Rum desert landscape"
+                class="rounded-lg shadow-lg w-full h-auto max-h-80 object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="english-only">
+        &copy; 2026 Explore Jordan | Travel inspiration and cultural highlights
+      </footer>
     </div>
-  </section>
 
-  <footer class="english-only">
-    &copy; 2026 Explore Jordan | Travel inspiration and cultural highlights
-  </footer> 
-</div>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+      crossorigin="anonymous"
+    ></script>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script src="js/script.js"></script>
-</body>
+    <script src="js/script.js"></script>
+  </body>
 </html>
-
-

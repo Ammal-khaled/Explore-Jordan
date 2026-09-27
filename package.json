@@ -1,0 +1,20 @@
+{
+  "name": "explore-jordan",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "lint": "eslint js/*.js tests/*.cjs",
+    "format": "prettier --write js/*.js tests/*.cjs",
+    "format:check": "prettier --check js/*.js tests/*.cjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.9"
+  }
+}

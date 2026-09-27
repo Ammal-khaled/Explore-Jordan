@@ -1,182 +1,348 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Explore Jordan Experiences - Discover Authentic Adventures</title>
-    <meta name="description" content="Browse Jordan activities by location and category, then save experiences to your personal trip planner." />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body class="bg-gray-50 font-sans">
+    <meta
+      name="description"
+      content="Browse Jordan activities by location and category, then save experiences to your personal trip planner."
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+      integrity="sha384-HtMZLkYo+pR5/u7zCzXxMJP6QoNnQJt1qkHM0EaOPvGDIzaVZbmYr/TlvUZ/sKAg"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+      rel="stylesheet"
+      integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body class="bg-gray-50 font-sans">
     <nav class="site-nav" id="navbar">
-        <div class="site-nav__inner">
-            <a class="site-nav__brand" href="../index.html">Explore Jordan</a>
-            <div class="site-nav__links">
-                <a href="../index.html">Home</a>
-                <a href="top.html">Top Destinations</a>
-                <a href="activity.html">Activities</a>
-                <a href="top.html#destinations">Attractions</a>
-                <a href="planner.html">Trip Planner</a>
-                <a href="advisor.html">Trip Advisor</a>
-            </div>
-            <button class="site-nav__toggle" type="button" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false" data-nav-open>
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+      <div class="site-nav__inner">
+        <a class="site-nav__brand" href="../index.html">Explore Jordan</a>
+        <div class="site-nav__links">
+          <a href="../index.html">Home</a>
+          <a href="top.html">Top Destinations</a>
+          <a href="activity.html" aria-current="page">Activities</a>
+          <a href="hotels.html">Hotels</a>
+          <a href="top.html#destinations">Attractions</a>
+          <a href="planner.html">Trip Planner</a>
+          <a href="advisor.html">Trip Advisor</a>
+          <button
+            class="language-toggle"
+            type="button"
+            data-language-toggle
+            aria-label="Switch map labels to Arabic"
+            aria-pressed="false"
+          >
+            العربية
+          </button>
         </div>
+        <button
+          class="site-nav__toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          data-nav-open
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </nav>
     <div class="site-nav__backdrop" data-nav-backdrop></div>
     <aside class="mobile-sidebar" id="mobile-menu" aria-hidden="true" data-mobile-sidebar>
-        <button class="mobile-sidebar__close" type="button" aria-label="Close menu" data-nav-close>X</button>
-        <a class="mobile-sidebar__brand" href="../index.html">Explore Jordan</a>
-        <nav class="mobile-sidebar__links" aria-label="Mobile navigation">
-            <a href="../index.html" data-nav-link>Home</a>
-            <a href="top.html" data-nav-link>Top Destinations</a>
-            <a href="activity.html" data-nav-link>Activities</a>
-            <a href="top.html#destinations" data-nav-link>Attractions</a>
-            <a href="planner.html" data-nav-link>Trip Planner</a>
-            <a href="advisor.html" data-nav-link>Trip Advisor</a>
-        </nav>
+      <button class="mobile-sidebar__close" type="button" aria-label="Close menu" data-nav-close>
+        X
+      </button>
+      <a class="mobile-sidebar__brand" href="../index.html">Explore Jordan</a>
+      <nav class="mobile-sidebar__links" aria-label="Mobile navigation">
+        <a href="../index.html" data-nav-link>Home</a>
+        <a href="top.html" data-nav-link>Top Destinations</a>
+        <a href="activity.html" data-nav-link aria-current="page">Activities</a>
+        <a href="hotels.html" data-nav-link>Hotels</a>
+        <a href="top.html#destinations" data-nav-link>Attractions</a>
+        <a href="planner.html" data-nav-link>Trip Planner</a>
+        <a href="advisor.html" data-nav-link>Trip Advisor</a>
+
+        <button
+          class="language-toggle"
+          type="button"
+          data-language-toggle
+          aria-label="Switch map labels to Arabic"
+          aria-pressed="false"
+        >
+          العربية
+        </button>
+      </nav>
     </aside>
 
     <!-- Hero Section -->
     <section class="hero-section text-white">
-        <div class="floating-dots">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+      <div class="floating-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="container mx-auto px-4 text-center hero-content">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-shadow slide-in animation-delay-short">
+          Discover Jordan's <span class="gradient-text">Authentic Experiences</span>
+        </h1>
+        <p
+          class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-shadow fade-in animation-delay-medium"
+        >
+          Connect ancient landmarks, desert landscapes, local traditions, and memorable outdoor
+          experiences across Jordan.
+        </p>
+        <div class="flex justify-center space-x-4 fade-in animation-delay-long">
+          <a
+            href="#experience-grid"
+            class="bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full font-semibold mr-4 transition duration-300 hover-grow"
+          >
+            Explore Experiences
+          </a>
+          <a
+            href="planner.html"
+            class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-full font-semibold transition duration-300 hover-grow"
+          >
+            <i class="fas fa-route mr-2"></i> Plan Your Trip
+          </a>
         </div>
-        <div class="container mx-auto px-4 text-center hero-content">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-shadow slide-in animation-delay-short">Discover Jordan's <span class="gradient-text">Authentic Experiences</span></h1>
-            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-shadow fade-in animation-delay-medium">Connect ancient landmarks, desert landscapes, local traditions, and memorable outdoor experiences across Jordan.</p>
-            <div class="flex justify-center space-x-4 fade-in animation-delay-long">
-                <a href="#experience-grid" class="bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full font-semibold mr-4 transition duration-300 hover-grow">
-                    Explore Experiences
-                </a>
-                <a href="planner.html" class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-full font-semibold transition duration-300 hover-grow">
-                    <i class="fas fa-route mr-2"></i> Plan Your Trip
-                </a>
-            </div>
-        </div>
-        <button class="scroll-down" type="button" data-scroll-target="#experience-grid" aria-label="Scroll to experiences">
-            <i class="fas fa-chevron-down"></i>
-        </button>
+      </div>
+      <button
+        class="scroll-down"
+        type="button"
+        data-scroll-target="#experience-grid"
+        aria-label="Scroll to experiences"
+      >
+        <i class="fas fa-chevron-down"></i>
+      </button>
     </section>
 
     <!-- Category Tabs -->
-    <section class="py-8 bg-white sticky top-16 z-40 shadow-sm" data-aos="fade-down" data-aos-duration="800">
-        <div class="container mx-auto px-4">
-            <div class="tourism-search-bar">
-                <label class="tourism-search-field" for="activitySearch">
-                    <i class="fas fa-search"></i>
-                    <input type="search" id="activitySearch" placeholder="Search activities, locations, tags..." autocomplete="off" data-activity-search>
-                </label>
-            </div>
-            <div class="flex overflow-x-auto scroll-container space-x-2 pb-2">
-                <button class="category-tab active px-6 py-2 rounded-full whitespace-nowrap bg-green-800 text-white" data-category="all">
-                    All Experiences
-                </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="cultural">
-                    Cultural
-                </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="adventure">
-                    Adventure
-                </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="water">
-                    Water
-                </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="scenic">
-                    Scenic
-                </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="wellness">
-                    Wellness
-                </button>
-                <button class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200" data-category="history">
-                    History
-                </button>
-            </div>
+    <section
+      class="py-8 bg-white sticky top-16 z-40 shadow-sm"
+      data-aos="fade-down"
+      data-aos-duration="800"
+    >
+      <div class="container mx-auto px-4">
+        <div class="tourism-search-bar">
+          <label class="tourism-search-field" for="activitySearch">
+            <i class="fas fa-search"></i>
+            <input
+              type="search"
+              id="activitySearch"
+              placeholder="Search activities, locations, tags..."
+              autocomplete="off"
+              data-activity-search
+            />
+          </label>
         </div>
+        <div class="flex overflow-x-auto scroll-container space-x-2 pb-2">
+          <button
+            class="category-tab active px-6 py-2 rounded-full whitespace-nowrap bg-green-800 text-white"
+            data-category="all"
+          >
+            All Experiences
+          </button>
+          <button
+            class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200"
+            data-category="cultural"
+          >
+            Cultural
+          </button>
+          <button
+            class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200"
+            data-category="adventure"
+          >
+            Adventure
+          </button>
+          <button
+            class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200"
+            data-category="water"
+          >
+            Water
+          </button>
+          <button
+            class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200"
+            data-category="scenic"
+          >
+            Scenic
+          </button>
+          <button
+            class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200"
+            data-category="wellness"
+          >
+            Wellness
+          </button>
+          <button
+            class="category-tab px-6 py-2 rounded-full whitespace-nowrap bg-gray-100 hover:bg-gray-200"
+            data-category="history"
+          >
+            History
+          </button>
+        </div>
+      </div>
     </section>
     <!-- Experiences Grid -->
     <section class="py-12 bg-gray-50" id="experience-grid">
-        <div class="container mx-auto px-4">
-            <div class="mb-16 experience-section" data-category="all" data-aos="fade-up">
-                <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-800">Jordan Experiences</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="activitiesContainer" data-render="page-activities"></div>
-            </div>
+      <div class="container mx-auto px-4">
+        <div class="mb-16 experience-section" data-category="all" data-aos="fade-up">
+          <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800">Jordan Experiences</h2>
+          </div>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            id="activitiesContainer"
+            data-render="page-activities"
+          ></div>
         </div>
+      </div>
     </section>
 
     <!-- Parallax Section -->
     <section class="py-32 parallax activity-parallax" data-aos="fade" data-aos-duration="1000">
-        <div class="container mx-auto px-4 text-center text-white">
-            <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">Ready for Your Jordan Adventure?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">Plan experiences that balance heritage, nature, food, and local hospitality across Jordan.</p>
-            <a href="planner.html" class="inline-block bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full font-semibold transition duration-300 hover-grow" data-aos="fade-up" data-aos-delay="200">
-                Build Your Trip
-            </a>
-        </div>
+      <div class="container mx-auto px-4 text-center text-white">
+        <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">Ready for Your Jordan Adventure?</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+          Plan experiences that balance heritage, nature, food, and local hospitality across Jordan.
+        </p>
+        <a
+          href="planner.html"
+          class="inline-block bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full font-semibold transition duration-300 hover-grow"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          Build Your Trip
+        </a>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i class="fas fa-mountain text-2xl text-green-500 floating"></i>
-                        <span class="text-xl font-bold">Explore Jordan</span>
-                    </div>
-                    <p class="text-gray-400">Explore heritage sites, desert routes, local traditions, and city culture through warm, practical travel inspiration.</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="../index.html" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
-                        <li><a href="top.html" class="text-gray-400 hover:text-white transition-colors duration-300">Top Destinations</a></li>
-                        <li><a href="activity.html" class="text-gray-400 hover:text-white transition-colors duration-300">Activities</a></li>
-                        <li><a href="top.html#destinations" class="text-gray-400 hover:text-white transition-colors duration-300">Attractions</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Popular Experiences</h3>
-                    <ul class="space-y-2">
-                        <li><a href="activity.html" class="text-gray-400 hover:text-white transition-colors duration-300">Browse all experiences</a></li>
-                        <li><a href="activity.html?q=Hiking%20in%20Dana#experience-grid" class="text-gray-400 hover:text-white transition-colors duration-300">Hiking in Dana</a></li>
-                        <li><a href="activity.html?q=Diving%20in%20Aqaba#experience-grid" class="text-gray-400 hover:text-white transition-colors duration-300">Diving in Aqaba</a></li>
-                        <li><a href="activity.html?q=Wadi%20Rum#experience-grid" class="text-gray-400 hover:text-white transition-colors duration-300">Wadi Rum tours</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Before You Go</h3>
-                    <p class="text-gray-400">This site offers travel inspiration and trip planning. Check current access, seasonal conditions, and booking details with official sites and local providers.</p>
-                </div>
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-2 mb-4">
+              <i class="fas fa-mountain text-2xl text-green-500 floating"></i>
+              <span class="text-xl font-bold">Explore Jordan</span>
             </div>
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>&copy; 2026 Explore Jordan. Travel information can change; confirm current details with official sites and local providers.</p>
-            </div>
+            <p class="text-gray-400">
+              Explore heritage sites, desert routes, local traditions, and city culture through
+              warm, practical travel inspiration.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="../index.html"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="top.html"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Top Destinations</a
+                >
+              </li>
+              <li>
+                <a
+                  href="activity.html"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Activities</a
+                >
+              </li>
+              <li>
+                <a
+                  href="top.html#destinations"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Attractions</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Popular Experiences</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="activity.html"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Browse all experiences</a
+                >
+              </li>
+              <li>
+                <a
+                  href="activity.html?q=Hiking%20in%20Dana#experience-grid"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Hiking in Dana</a
+                >
+              </li>
+              <li>
+                <a
+                  href="activity.html?q=Diving%20in%20Aqaba#experience-grid"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Diving in Aqaba</a
+                >
+              </li>
+              <li>
+                <a
+                  href="activity.html?q=Wadi%20Rum#experience-grid"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Wadi Rum tours</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Before You Go</h3>
+            <p class="text-gray-400">
+              This site offers travel inspiration and trip planning. Check current access, seasonal
+              conditions, and booking details with official sites and local providers.
+            </p>
+          </div>
         </div>
+        <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+          <p>
+            &copy; 2026 Explore Jordan. Travel information can change; confirm current details with
+            official sites and local providers.
+          </p>
+        </div>
+      </div>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script
+      src="https://unpkg.com/aos@2.3.1/dist/aos.js"
+      integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu"
+      crossorigin="anonymous"
+    ></script>
     <script src="../js/script.js"></script>
-</body>
+  </body>
 </html>
-
-
-

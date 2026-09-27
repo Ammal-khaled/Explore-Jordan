@@ -39,6 +39,7 @@ Explore Jordan/
 |-- pages/
 |   |-- top.html
 |   |-- activity.html
+|   |-- hotels.html
 |   |-- attraction.html
 |   `-- advisor.html
 |-- css/
@@ -81,9 +82,31 @@ Supabase PostgreSQL is planned as the future database layer. The file `database/
 
 The frontend has not been connected to Supabase yet. JSON remains the active data source until a future migration.
 
+## AI Trip Advisor Setup
+
+The Trip Advisor can use Gemini through the `trip-advisor-chat` Supabase Edge Function. If Supabase is not configured locally, the widget falls back to its rule-based suggestions. The browser uses only the project's public Supabase URL and anon key; keep the Gemini API key in Edge Function secrets.
+
+Copy `js/supabase-config.example.js` to the ignored local file `js/supabase-config.js`, then replace its URL and anon-key placeholders with values from your Supabase project. `.gitignore` excludes `js/supabase-config.js` so project credentials are not committed.
+
+From the project root, authenticate and link the Supabase CLI, set the Gemini key as a project secret, and deploy the function:
+
+```bash
+supabase login
+supabase projects list
+supabase link --project-ref YOUR_PROJECT_REF
+supabase secrets set GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+supabase functions deploy trip-advisor-chat
+```
+
+The Gemini key is never stored in this repository. The function currently targets Gemini 3.8 Flash; check the provider's model availability and pricing before launch.
+
+## Search Engine Files and Structured Data
+
+`robots.txt` and `sitemap.xml` currently assume the site will be published at `https://ammal-khaled.github.io/Explore-Jordan/`. Replace that base URL in both files before launch if the production domain is different. Attraction detail pages emit `TouristAttraction` JSON-LD from destination data, and the accommodation listing emits `LodgingBusiness` entries in an `ItemList`. Accommodation entries are currently generic categories rather than verified individual properties; replace them with real business records before using them as commercial listings.
+
 ## Current Product Scope
 
-This is a frontend travel-discovery demo backed by local JSON files. Trip Advisor uses simple budget and interest filters over those listings; it does not use an AI model or a personalization service. Favorites and saved trip ideas live in the visitor's browser, and the site does not accept booking requests or payments. Maps, fonts, and some interface libraries load from third-party CDNs. Before offering it as a live commercial service, connect a booking or inquiry workflow, add the business's real contact and policy pages, verify travel information and image rights, and choose production hosting.
+This is a travel-discovery frontend backed by local JSON files. When configured, Trip Advisor sends the conversation and budget-filtered listings through the Supabase Edge Function to Gemini; if the service is not configured or unavailable, it uses local rule-based suggestions. Favorites and saved trip ideas live in the visitor's browser, and the site does not accept booking requests or payments. Maps, fonts, and some interface libraries load from third-party CDNs. Before offering it as a live commercial service, connect a booking or inquiry workflow, add the business's real contact and policy pages, verify travel information and image rights, and choose production hosting.
 
 ## Running Locally
 
@@ -99,11 +122,16 @@ Then open:
 http://127.0.0.1:8000/
 ```
 
+## Developer Checks
+
+Install the development tools with `npm install`, then run `npm test`, `npm run lint`, or `npm run format:check`. The tests use Node's built-in test runner. The project supports Node.js `^20.19.0`, `^22.13.0`, or `>=24` to match ESLint 10's runtime requirements. `npm run format` applies the configured Prettier formatting to `js/*.js` and `tests/*.cjs`; the pre-existing, explicitly excluded Supabase service file stays unchanged.
+
 Main pages:
 
 - `http://127.0.0.1:8000/index.html`
 - `http://127.0.0.1:8000/pages/top.html`
 - `http://127.0.0.1:8000/pages/activity.html`
+- `http://127.0.0.1:8000/pages/hotels.html`
 - `http://127.0.0.1:8000/pages/attraction.html`
 - `http://127.0.0.1:8000/pages/advisor.html`
 

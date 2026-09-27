@@ -1,0 +1,2 @@
+[functions.trip-advisor-chat]
+verify_jwt = false

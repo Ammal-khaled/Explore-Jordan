@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotels &amp; Stays in Jordan | Explore Jordan</title>
+    <meta
+      name="description"
+      content="Search and filter hotels, eco lodges, desert camps, and resorts across Jordan by city and price range, then book directly."
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+      integrity="sha384-HtMZLkYo+pR5/u7zCzXxMJP6QoNnQJt1qkHM0EaOPvGDIzaVZbmYr/TlvUZ/sKAg"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body class="bg-gray-light scroll-smooth">
+    <nav class="site-nav" id="navbar">
+      <div class="site-nav__inner">
+        <a class="site-nav__brand" href="../index.html">Explore Jordan</a>
+        <div class="site-nav__links">
+          <a href="../index.html">Home</a>
+          <a href="top.html">Top Destinations</a>
+          <a href="activity.html">Activities</a>
+          <a href="hotels.html" aria-current="page">Hotels</a>
+          <a href="top.html#destinations">Attractions</a>
+          <a href="planner.html">Trip Planner</a>
+          <a href="advisor.html">Trip Advisor</a>
+          <button
+            class="language-toggle"
+            type="button"
+            data-language-toggle
+            aria-label="Switch map labels to Arabic"
+            aria-pressed="false"
+          >
+            العربية
+          </button>
+        </div>
+        <button
+          class="site-nav__toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          data-nav-open
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="site-nav__backdrop" data-nav-backdrop></div>
+    <aside class="mobile-sidebar" id="mobile-menu" aria-hidden="true" data-mobile-sidebar>
+      <button class="mobile-sidebar__close" type="button" aria-label="Close menu" data-nav-close>
+        X
+      </button>
+      <a class="mobile-sidebar__brand" href="../index.html">Explore Jordan</a>
+      <nav class="mobile-sidebar__links" aria-label="Mobile navigation">
+        <a href="../index.html" data-nav-link>Home</a>
+        <a href="top.html" data-nav-link>Top Destinations</a>
+        <a href="activity.html" data-nav-link>Activities</a>
+        <a href="hotels.html" data-nav-link aria-current="page">Hotels</a>
+        <a href="top.html#destinations" data-nav-link>Attractions</a>
+        <a href="planner.html" data-nav-link>Trip Planner</a>
+        <a href="advisor.html" data-nav-link>Trip Advisor</a>
+        <button
+          class="language-toggle"
+          type="button"
+          data-language-toggle
+          aria-label="Switch map labels to Arabic"
+          aria-pressed="false"
+        >
+          العربية
+        </button>
+      </nav>
+    </aside>
+
+    <header class="pt-24 pb-8 px-5 text-center max-w-3xl mx-auto">
+      <h1 class="text-3xl font-bold dark-brown-text mb-3">Hotels &amp; Stays in Jordan</h1>
+      <p class="dark-gray-text">
+        From desert camps to Dead Sea resorts, search and filter real stays, then book directly with
+        the provider.
+      </p>
+    </header>
+
+    <!-- Search & Filters -->
+    <div class="sticky top-16 bg-white shadow-md z-40">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="tourism-search-bar">
+          <label class="tourism-search-field" for="accommodationSearch">
+            <i class="fas fa-search"></i>
+            <input
+              type="search"
+              id="accommodationSearch"
+              placeholder="Search stays, cities, tags..."
+              autocomplete="off"
+              data-accommodation-search
+            />
+          </label>
+          <label class="tourism-select-field" for="accommodationCityFilter">
+            <span>City</span>
+            <select id="accommodationCityFilter" data-accommodation-city-filter>
+              <option value="all">All cities</option>
+            </select>
+          </label>
+        </div>
+        <div class="flex overflow-x-auto py-4 space-x-4 hide-scrollbar px-2">
+          <button
+            class="filter-btn price-filter-btn whitespace-nowrap px-4 py-2 rounded-full category-active"
+            data-price="all"
+          >
+            <i class="fas fa-tags mr-2"></i>Any Price
+          </button>
+          <button
+            class="filter-btn price-filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text"
+            data-price="$"
+          >
+            $ Budget
+          </button>
+          <button
+            class="filter-btn price-filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text"
+            data-price="$$"
+          >
+            $$ Mid-range
+          </button>
+          <button
+            class="filter-btn price-filter-btn whitespace-nowrap px-4 py-2 rounded-full hover:cream-beige dark-gray-text"
+            data-price="$$$"
+          >
+            $$$ Luxury
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section class="py-14 px-5">
+      <div class="max-w-7xl mx-auto">
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          id="accommodationsContainer"
+          data-render="page-accommodations"
+        ></div>
+      </div>
+    </section>
+
+    <script src="../js/script.js"></script>
+  </body>
+</html>
