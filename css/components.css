@@ -221,7 +221,8 @@ section .bg-white.rounded-xl img {
 
 .Top-Destinations .item img,
 .option img {
-  height: auto !important;
+  /* These card images are absolutely positioned backgrounds and must cover the card. */
+  height: 100% !important;
 }
 
 

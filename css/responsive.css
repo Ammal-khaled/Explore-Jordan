@@ -282,9 +282,26 @@ img {
     justify-content: flex-start;
   }
 
+  .Top-Destinations .owl-stage-outer {
+    overflow: hidden;
+  }
+
   .Top-Destinations .item {
     height: 320px;
+    width: clamp(180px, 38vw, 240px);
     margin: 0 0.5rem 1rem;
+  }
+
+  .Top-Destinations .item.active {
+    width: min(78vw, 420px);
+  }
+
+  .Top-Destinations .owl-nav {
+    margin-top: 0.25rem;
+  }
+
+  .Top-Destinations .owl-dots {
+    max-width: calc(100vw - 2rem);
   }
 
   .Top-Destinations .item-title {
@@ -303,6 +320,7 @@ img {
   .options {
     flex-direction: column;
     height: auto;
+    max-width: 100%;
     min-width: 0;
     overflow: visible;
     gap: 0.85rem;
@@ -342,6 +360,23 @@ img {
   .option:not(.active) .info > div {
     left: 0;
     opacity: 1;
+  }
+
+  .option:not(.active) > .trip-button--overlay {
+    width: auto;
+    height: auto;
+    min-height: 42px;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .option:not(.active) > .trip-button--overlay::before {
+    content: none;
+  }
+
+  .option:not(.active) > .favorite-button--overlay {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .main {
@@ -395,6 +430,14 @@ img {
 
   .option.active {
     height: 210px;
+  }
+
+  .Top-Destinations .item.active {
+    width: min(82vw, 380px);
+  }
+
+  .Top-Destinations .item:not(.active) {
+    width: clamp(150px, 46vw, 210px);
   }
 
   #map {

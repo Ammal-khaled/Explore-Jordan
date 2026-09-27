@@ -76,6 +76,10 @@ Supabase PostgreSQL is planned as the future database layer. The file `database/
 
 The frontend has not been connected to Supabase yet. JSON remains the active data source until a future migration.
 
+## Current Product Scope
+
+This is a frontend travel-discovery demo backed by local JSON files. Favorites and saved trip ideas live in the visitor's browser, and the site does not accept booking requests or payments. Maps, fonts, and some interface libraries load from third-party CDNs. Before offering it as a live commercial service, connect a booking or inquiry workflow, add the business's real contact and policy pages, verify travel information and image rights, and choose production hosting.
+
 ## Running Locally
 
 Because the project loads JSON files with `fetch()`, run it through a local server instead of opening `index.html` directly from the filesystem.

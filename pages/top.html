@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top Destinations in Jordan | Explore Jordan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Search and filter Jordan's heritage sites, desert landscapes, nature reserves, cities, and coastal destinations." />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
@@ -16,7 +17,7 @@
                 <a href="../index.html">Home</a>
                 <a href="top.html">Top Destinations</a>
                 <a href="activity.html">Activities</a>
-                <a href="attraction.html">Attractions</a>
+                <a href="top.html#destinations">Attractions</a>
                 <a href="planner.html">Trip Planner</a>
             </div>
             <button class="site-nav__toggle" type="button" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false" data-nav-open>
@@ -34,7 +35,7 @@
             <a href="../index.html" data-nav-link>Home</a>
             <a href="top.html" data-nav-link>Top Destinations</a>
             <a href="activity.html" data-nav-link>Activities</a>
-            <a href="attraction.html" data-nav-link>Attractions</a>
+            <a href="top.html#destinations" data-nav-link>Attractions</a>
             <a href="planner.html" data-nav-link>Trip Planner</a>
         </nav>
     </aside>
@@ -170,10 +171,10 @@
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Amman</h3>
                                 <p class="dark-gray-text mb-4">Amman is a welcoming capital of hills, Roman ruins, markets, galleries, and neighborhood cafes. It is also one of the best places to taste Jordanian food and see daily life unfold.</p>
                                 <div class="flex space-x-3">
-                                    <a href="https://goo.gl/maps/5XQ9X9X9X9X9X9X9" target="_blank" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=Amman+Jordan" target="_blank" rel="noopener noreferrer" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
                                         <i class="fas fa-map-marker-alt mr-2"></i> View Map
                                     </a>
-                                    <a href="#" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
+                                    <a href="attraction.html?id=amman" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
                                         <i class="fas fa-info-circle mr-2"></i> Details
                                     </a>
                                 </div>
@@ -189,10 +190,10 @@
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Aqaba</h3>
                                 <p class="dark-gray-text mb-4">Aqaba offers Red Sea beaches, coral reefs, boat trips, and a laid-back waterfront atmosphere. Its location makes it a natural stop between Wadi Rum and southern Jordan's coastal experiences.</p>
                                 <div class="flex space-x-3">
-                                    <a href="https://goo.gl/maps/5XQ9X9X9X9X9X9X9" target="_blank" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=Aqaba+Jordan" target="_blank" rel="noopener noreferrer" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
                                         <i class="fas fa-map-marker-alt mr-2"></i> View Map
                                     </a>
-                                    <a href="#" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
+                                    <a href="attraction.html?id=aqaba" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
                                         <i class="fas fa-info-circle mr-2"></i> Details
                                     </a>
                                 </div>
@@ -208,11 +209,8 @@
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">As-Salt</h3>
                                 <p class="dark-gray-text mb-4">As-Salt is known for honey-colored Ottoman-era architecture, hillside streets, and a strong sense of community heritage. Its historic core offers a quieter, more local city experience.</p>
                                 <div class="flex space-x-3">
-                                    <a href="https://goo.gl/maps/5XQ9X9X9X9X9X9X9" target="_blank" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=As-Salt+Jordan" target="_blank" rel="noopener noreferrer" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
                                         <i class="fas fa-map-marker-alt mr-2"></i> View Map
-                                    </a>
-                                    <a href="#" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
-                                        <i class="fas fa-info-circle mr-2"></i> Details
                                     </a>
                                 </div>
                             </div>
@@ -227,10 +225,10 @@
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Madaba</h3>
                                 <p class="dark-gray-text mb-4">Madaba is known as the City of Mosaics, with churches and workshops preserving detailed Byzantine and Umayyad designs. The famous sixth-century map of the Holy Land remains one of its most important treasures.</p>
                                 <div class="flex space-x-3">
-                                    <a href="https://goo.gl/maps/5XQ9X9X9X9X9X9X9" target="_blank" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=Madaba+Jordan" target="_blank" rel="noopener noreferrer" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
                                         <i class="fas fa-map-marker-alt mr-2"></i> View Map
                                     </a>
-                                    <a href="#" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
+                                    <a href="attraction.html?id=madaba" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
                                         <i class="fas fa-info-circle mr-2"></i> Details
                                     </a>
                                 </div>
@@ -246,11 +244,8 @@
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Irbid</h3>
                                 <p class="dark-gray-text mb-4">Irbid is a northern city with a youthful university atmosphere and easy access to archaeological sites such as Umm Qais. It is a useful base for exploring Jordan's green highlands and northern heritage routes.</p>
                                 <div class="flex space-x-3">
-                                    <a href="https://goo.gl/maps/5XQ9X9X9X9X9X9X9" target="_blank" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=Irbid+Jordan" target="_blank" rel="noopener noreferrer" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
                                         <i class="fas fa-map-marker-alt mr-2"></i> View Map
-                                    </a>
-                                    <a href="#" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
-                                        <i class="fas fa-info-circle mr-2"></i> Details
                                     </a>
                                 </div>
                             </div>
@@ -265,11 +260,8 @@
                                 <h3 class="text-xl font-bold dark-brown-text mb-2">Zarqa</h3>
                                 <p class="dark-gray-text mb-4">Zarqa is one of Jordan's largest urban centers and a practical gateway to the eastern desert. Its surrounding region connects travelers with desert castles, open landscapes, and lesser-known routes beyond the capital.</p>
                                 <div class="flex space-x-3">
-                                    <a href="https://goo.gl/maps/5XQ9X9X9X9X9X9X9" target="_blank" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=Zarqa+Jordan" target="_blank" rel="noopener noreferrer" class="inline-block gold-accent text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-600 transition flex-1 text-center">
                                         <i class="fas fa-map-marker-alt mr-2"></i> View Map
-                                    </a>
-                                    <a href="#" class="inline-block border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition flex-1 text-center">
-                                        <i class="fas fa-info-circle mr-2"></i> Details
                                     </a>
                                 </div>
                             </div>
@@ -296,12 +288,6 @@
                 <div>
                     <h3 class="text-xl font-bold gold-accent-text mb-4">Explore Jordan</h3>
                     <p class="text-gray-400">Explore Jordan brings together heritage sites, natural landscapes, city culture, and practical travel inspiration for thoughtful journeys across the kingdom.</p>
-                    <div class="flex space-x-4 mt-6">
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
-                    </div>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
@@ -309,44 +295,26 @@
                         <li><a href="../index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
                         <li><a href="top.html" class="text-gray-400 hover:text-white transition">Top Destinations</a></li>
                         <li><a href="activity.html" class="text-gray-400 hover:text-white transition">Activities</a></li>
-                        <li><a href="attraction.html" class="text-gray-400 hover:text-white transition">Attractions</a></li>
+                        <li><a href="top.html#destinations" class="text-gray-400 hover:text-white transition">Attractions</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Destinations</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Petra</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Wadi Rum</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Dead Sea</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Amman</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Aqaba</a></li>
+                        <li><a href="attraction.html?id=petra" class="text-gray-400 hover:text-white transition">Petra</a></li>
+                        <li><a href="attraction.html?id=wadi-rum" class="text-gray-400 hover:text-white transition">Wadi Rum</a></li>
+                        <li><a href="attraction.html?id=dead-sea" class="text-gray-400 hover:text-white transition">Dead Sea</a></li>
+                        <li><a href="attraction.html?id=amman" class="text-gray-400 hover:text-white transition">Amman</a></li>
+                        <li><a href="attraction.html?id=aqaba" class="text-gray-400 hover:text-white transition">Aqaba</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-yellow-500"></i>
-                            <span>123 Tourism Street, Amman, Jordan</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-3 text-yellow-500"></i>
-                            <span>+962 6 123 4567</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-yellow-500"></i>
-                            <span>info@explorejordan.jo</span>
-                        </li>
-                    </ul>
+                    <h4 class="text-lg font-semibold mb-4">Before You Go</h4>
+                    <p class="text-gray-400">Access, hours, and seasonal conditions can change. Confirm current details with official sites and local providers.</p>
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 Explore Jordan. All rights reserved.</p>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white text-sm transition">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white text-sm transition">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-white text-sm transition">FAQ</a>
-                </div>
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2026 Explore Jordan. Travel information can change; confirm current details with official sites and local providers.</p>
             </div>
         </div>
     </footer>

@@ -189,7 +189,16 @@ function updateTripButtons() {
     const active = isInTrip(button.dataset.tripType, button.dataset.tripId);
     button.classList.toggle('trip-button--active', active);
     button.setAttribute('aria-pressed', String(active));
-    button.textContent = active ? 'Added to Trip' : 'Add to Trip';
+    const destinationCard = button.closest('.Top-Destinations .item');
+    const experienceCard = button.closest('.option');
+    const compactOverlay = button.classList.contains('trip-button--overlay') && (
+      (destinationCard && !destinationCard.classList.contains('active')) ||
+      (experienceCard && !experienceCard.classList.contains('active'))
+    );
+    button.textContent = compactOverlay
+      ? (active ? '✓' : '+')
+      : (active ? 'Added to Trip' : 'Add to Trip');
+    button.setAttribute('aria-label', `${active ? 'Saved in trip' : 'Add to trip'}: ${button.dataset.tripName}`);
   });
 }
 
@@ -201,7 +210,41 @@ function tripButtonMarkup(item, extraClass = '') {
     data-trip-location="${escapeHTML(item.location)}"
     data-trip-image="${escapeHTML(item.image)}"
     data-trip-category="${escapeHTML(item.category)}"
+    aria-label="Add to trip: ${escapeHTML(item.name)}"
     aria-pressed="false">Add to Trip</button>`;
+}
+
+function activateCarouselItem(item) {
+  const carousel = item.closest('.custom-carousel');
+
+  if (!carousel || typeof $ === 'undefined') {
+    return;
+  }
+
+  const $carousel = $(carousel);
+  $carousel.find('.item').removeClass('active');
+  $(item).addClass('active');
+  $carousel.trigger('refresh.owl.carousel');
+}
+
+function syncCenteredCarouselItem(carousel) {
+  const $carousel = $(carousel);
+  const $centeredItem = $carousel.find('.owl-item.center .item').first();
+
+  if (!$centeredItem.length) {
+    return;
+  }
+
+  const selectionChanged = !$centeredItem.hasClass('active');
+  $carousel.find('.item').removeClass('active');
+  $centeredItem.addClass('active');
+  updateTripButtons();
+
+  // Do not refresh Owl during its translated callback; that can reset the
+  // navigation position before the newly centered card is painted.
+  if (selectionChanged) {
+    window.requestAnimationFrame(() => $carousel.trigger('refresh.owl.carousel'));
+  }
 }
 
 function destinationTripItem(destination) {
@@ -615,6 +658,10 @@ function renderTripPlanner() {
       <div class="data-state data-state--empty">
         <i class="fas fa-route"></i>
         <p>Your trip planner is empty. Add destinations and activities to start shaping your Jordan route.</p>
+        <div class="trip-planner-empty-actions">
+          <a class="button-78" href="${isPagesDirectory() ? 'top.html' : 'pages/top.html'}">Browse destinations</a>
+          <a class="button-78" href="${isPagesDirectory() ? 'activity.html' : 'pages/activity.html'}">Browse experiences</a>
+        </div>
       </div>
     `;
     return;
@@ -757,14 +804,48 @@ function initCarousel() {
     $carousel.find('.owl-stage-outer').children().unwrap();
   }
 
+  $carousel.off('.exploreJordanCenter');
+
   $carousel.owlCarousel({
     autoWidth: true,
-    loop: true
+    loop: true,
+    center: true,
+    nav: true,
+    dots: true,
+    navText: ['‹', '›'],
+    smartSpeed: 450,
+    responsive: {
+      0: { margin: 4 },
+      769: { margin: 10 }
+    },
+    onInitialized: event => syncCenteredCarouselItem(event.currentTarget),
+    onTranslated: event => syncCenteredCarouselItem(event.currentTarget)
   });
 
-  $('.custom-carousel .item').off('click').on('click', function() {
-    $('.custom-carousel .item').not($(this)).removeClass('active');
-    $(this).toggleClass('active');
+  syncCenteredCarouselItem(carousel);
+
+  const owlInstance = $carousel.data('owl.carousel');
+  $carousel.find('.owl-prev')
+    .attr('aria-label', 'Previous destination')
+    .off('click')
+    .on('click.exploreJordanNav', event => {
+      event.preventDefault();
+      owlInstance.prev();
+    });
+  $carousel.find('.owl-next')
+    .attr('aria-label', 'Next destination')
+    .off('click')
+    .on('click.exploreJordanNav', event => {
+      event.preventDefault();
+      owlInstance.next();
+    });
+
+  $carousel.off('click.exploreJordan', '.item').on('click.exploreJordan', '.item', function(event) {
+    if (event.target.closest('button, a')) {
+      return;
+    }
+
+    activateCarouselItem(this);
   });
 }
 
@@ -805,6 +886,26 @@ function initExperienceCards() {
     option.addEventListener('click', function() {
       options.forEach(item => item.classList.remove('active'));
       this.classList.add('active');
+    });
+    option.tabIndex = 0;
+    option.setAttribute('role', 'button');
+    option.setAttribute('aria-expanded', String(option.classList.contains('active')));
+    option.addEventListener('keydown', event => {
+      if (event.target.closest('button, a')) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        options.forEach(item => {
+          item.classList.remove('active');
+          item.setAttribute('aria-expanded', 'false');
+        });
+        option.classList.add('active');
+        option.setAttribute('aria-expanded', 'true');
+      }
+    });
+    option.addEventListener('click', event => {
+      if (event.target.closest('button, a')) return;
+      options.forEach(item => item.setAttribute('aria-expanded', 'false'));
+      option.setAttribute('aria-expanded', 'true');
     });
   });
 
@@ -972,6 +1073,12 @@ function initTripPlanner() {
     if (addButton) {
       event.preventDefault();
       event.stopPropagation();
+      const carouselItem = addButton.closest('.custom-carousel .item');
+
+      if (carouselItem) {
+        activateCarouselItem(carouselItem);
+      }
+
       addToTrip({
         id: addButton.dataset.tripId,
         type: addButton.dataset.tripType,
@@ -1067,6 +1174,11 @@ function initActivityFilters() {
     return;
   }
 
+  const initialQuery = new URLSearchParams(window.location.search).get('q');
+  if (searchInput && initialQuery) {
+    searchInput.value = initialQuery;
+  }
+
   function activeCategory() {
     const activeTab = document.querySelector('.category-tab.active');
     return activeTab ? activeTab.dataset.category : 'all';
@@ -1106,6 +1218,10 @@ function initActivityFilters() {
       renderFilteredActivities();
     });
   });
+
+  if (initialQuery) {
+    renderFilteredActivities();
+  }
 }
 
 function refreshAOS() {
